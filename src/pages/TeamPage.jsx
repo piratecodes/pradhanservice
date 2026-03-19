@@ -1,0 +1,145 @@
+import { useState, useEffect } from 'react';
+import { fetchClient } from '@/api/fetchClient';
+import toast from 'react-hot-toast';
+import useDocumentMeta from '@/hooks/useDocumentMeta';
+import { Loader2, UserPlus, Edit3, Trash2, Shield, User, Star } from 'lucide-react';
+
+import AddStaffModal from '@/components/team/AddStaffModal';
+
+export default function TeamPage() {
+  //Title & Description for SEO (and nice browser tab titles!)
+  useDocumentMeta("Staff & Roles | Pradhan Services", "Manage system access, passwords, and permissions for your team members in one secure location.");
+  
+  const [team, setTeam] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Modal State
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedStaff, setSelectedStaff] = useState(null);
+
+  const loadTeam = async () => {
+    setIsLoading(true);
+    try {
+      const response = await fetchClient('/admins?all=true');
+      setTeam(response.data.staff);
+    } catch (error) {
+      toast.error('Failed to load team data');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadTeam();
+  }, []);
+
+  const handleOpenNew = () => {
+    setSelectedStaff(null);
+    setIsModalOpen(true);
+  };
+
+  const handleEdit = (staff) => {
+    setSelectedStaff(staff);
+    setIsModalOpen(true);
+  };
+
+  const handleDelete = async (staffId) => {
+    if (!window.confirm("Are you sure you want to permanently delete this user?")) return;
+    try {
+      await fetchClient(`/admins/${staffId}`, { method: 'DELETE' });
+      toast.success('Staff member permanently removed');
+      loadTeam();
+    } catch (error) {
+      toast.error(error.message || 'Failed to delete user');
+    }
+  };
+
+  // UI Helpers for Roles
+  const roleStyles = {
+    'super-admin': { color: 'bg-purple-100 text-purple-700', icon: Star, label: 'Super Admin' },
+    'admin': { color: 'bg-blue-100 text-blue-700', icon: Shield, label: 'Manager' },
+    'sales-agent': { color: 'bg-orange-100 text-orange-700', icon: User, label: 'Sales Agent' }
+  };
+
+  return (
+    <div className="max-w-[1600px] mx-auto space-y-8">
+      
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <h1 className="text-3xl font-extrabold text-primary tracking-tight">Staff & Roles</h1>
+          <p className="text-gray-500 font-medium mt-1">Manage system access, passwords, and permissions.</p>
+        </div>
+        <button 
+          onClick={handleOpenNew}
+          className="flex items-center justify-center gap-2 bg-primary hover:bg-[#112440] text-white px-5 py-2.5 rounded-xl text-sm font-bold transition-all shadow-md shadow-primary/20 hover:-translate-y-0.5"
+        >
+          <UserPlus size={18} strokeWidth={3} /> Add New Employee
+        </button>
+      </div>
+
+      <div className="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 overflow-hidden">
+        {isLoading ? (
+          <div className="flex justify-center py-20"><Loader2 className="animate-spin text-primary" size={32} /></div>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="min-w-full text-left border-collapse">
+              <thead>
+                <tr className="bg-gray-50 border-b border-gray-100 text-xs font-bold text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-4">Employee</th>
+                  <th className="px-6 py-4">System Role</th>
+                  <th className="px-6 py-4">Contact</th>
+                  <th className="px-6 py-4">Status</th>
+                  <th className="px-6 py-4 text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-50">
+                {team.map((member) => {
+                  const RoleIcon = roleStyles[member.role]?.icon || User;
+                  return (
+                    <tr key={member._id} className="hover:bg-gray-50/50 transition-colors">
+                      <td className="px-6 py-4">
+                        <p className="font-extrabold text-gray-900">{member.name}</p>
+                        <p className="text-xs text-gray-500 font-medium mt-0.5">@{member.username}</p>
+                      </td>
+                      <td className="px-6 py-4">
+                        <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-bold ${roleStyles[member.role]?.color}`}>
+                          <RoleIcon size={12} strokeWidth={3} /> {roleStyles[member.role]?.label}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 text-sm font-medium text-gray-600">
+                        <p>{member.phone}</p>
+                        <p className="text-xs text-gray-400">{member.email}</p>
+                      </td>
+                      <td className="px-6 py-4">
+                        <span className={`text-xs font-bold px-3 py-1 rounded-full ${member.isActive ? 'bg-emerald-50 text-emerald-600' : 'bg-red-50 text-red-600'}`}>
+                          {member.isActive ? 'Active' : 'Deactivated'}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 text-right">
+                        <div className="flex justify-end gap-3">
+                          <button onClick={() => handleEdit(member)} className="text-primary hover:text-secondary transition-colors" title="Edit Profile">
+                            <Edit3 size={18} />
+                          </button>
+                          <button onClick={() => handleDelete(member._id)} className="text-red-400 hover:text-red-600 transition-colors" title="Delete User">
+                            <Trash2 size={18} />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+
+      <AddStaffModal 
+        isOpen={isModalOpen}
+        setIsOpen={setIsModalOpen}
+        staffData={selectedStaff}
+        onSuccess={loadTeam}
+      />
+    </div>
+  );
+}

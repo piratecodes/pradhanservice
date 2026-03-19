@@ -1,0 +1,8 @@
+@import "tailwindcss";
+
+
+@theme {
+  /* Pradhan Packers Branding */
+  --color-primary: #1a365d;    /* Deep Blue */
+  --color-secondary: #c5a059;  /* Action Orange */
+}
