@@ -9,6 +9,16 @@ export default function HeroSection() {
   const [cities, setCities] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
+
+  {/* FBox Cards */}
+  const boxes = [
+    { id: 1, title: "45+ Years of Experience", description: "Trusted packers and movers in Kolkata since 1980, delivering safe and professional relocation services." },
+    { id: 2, title: "50,000+ Moves Pan-India", description: "Handled thousands of home and office shifting projects with safe delivery and customer satisfaction." },
+    { id: 3, title: "Trained Moving Experts", description: "Experienced team using professional packing materials and modern handling techniques." },
+    { id: 4, title: " Safe & Reliable Transport", description: "Organised logistics network ensuring secure and timely delivery across Pan-India." },
+  ]
+
+
   // Form State
   const [formData, setFormData] = useState({
     customerName: '',
@@ -105,21 +115,21 @@ export default function HeroSection() {
     <div className="container px-4 lg:px-8 xl:px-12 py-12 lg:py-20 min-h-[85vh] flex flex-col justify-center">
       
       {/* 1. TOP TYPOGRAPHY SECTION */}
-      <div className="flex flex-col gap-6 max-w-4xl mb-12">
+      <div className="flex flex-col gap-6  mb-12">
         
         {/* Top Review Badge */}
         <div className="inline-flex items-center gap-2 border border-gray-200 backdrop-blur-sm rounded-full px-4 py-1.5 w-max shadow-sm">
           <Star className="w-4 h-4 text-yellow-500 fill-current" />
-          <span className="text-sm text-gray-700 font-bold">Rated 4.8/5 by 10,000+ Happy Clients!</span>
+          <span className="text-sm text-gray-700 font-bold">Rated 4.9/5 by 10,000+ Happy Clients!</span>
         </div>
 
-        <h1 className="text-5xl md:text-6xl lg:text-7xl font-black text-[#112440] leading-[1.1] tracking-tight">
-          India&apos;s Most Trusted <br className="hidden md:block"/>
-          <span className="text-[#c5a059]">Packers & Movers</span>
+        <h1 className="text-center text-5xl md:text-6xl lg:text-7xl font-black text-primary leading-[1.1] tracking-tight">
+          Pradhan Packers and Movers <br className="hidden md:block"/>
+          <span className="text-secondary">Trusted Packers and Movers in Kolkata Since 1980</span>
         </h1>
         
-        <p className="text-lg md:text-xl text-gray-600 font-medium md:w-4/5 leading-relaxed">
-          Top-rated house shifting services with 100% damage & delay protection. Move hassle-free with expert planning and smooth execution. We have you covered!
+        <p className="text-lg md:text-xl text-gray-600 font-medium text-center leading-relaxed">
+          We specialise in household shifting, office relocation, vehicle transportation, packing services, and storage solutions across Kolkata and major cities in India. <br /> With experienced staff, professional packing materials, and organised transportation, we ensure safe handling and timely delivery of your belongings. Many customers searching for the Best Packers and Movers in Kolkata trust our team for secure and hassle-free moving services.
         </p>
       </div>
 
@@ -128,17 +138,17 @@ export default function HeroSection() {
         
         {/* Top Row: User Details */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-          <div className="bg-gray-50 rounded-xl px-4 py-2 border border-gray-200 focus-within:border-[#c5a059] focus-within:ring-1 focus-within:ring-[#c5a059] transition-all">
+          <div className="bg-gray-50 rounded-xl px-4 py-2 border border-gray-200 focus-within:border-secondary focus-within:ring-1 focus-within:ring-secondary transition-all">
             <label className="block text-[10px] uppercase font-black tracking-widest text-gray-400 mb-1">Your Name *</label>
             <input type="text" name="customerName" required value={formData.customerName} onChange={handleChange} className="w-full bg-transparent text-sm font-bold text-gray-800 outline-none placeholder:text-gray-400 placeholder:font-medium" placeholder="John Doe" />
           </div>
           
-          <div className="bg-gray-50 rounded-xl px-4 py-2 border border-gray-200 focus-within:border-[#c5a059] focus-within:ring-1 focus-within:ring-[#c5a059] transition-all">
+          <div className="bg-gray-50 rounded-xl px-4 py-2 border border-gray-200 focus-within:border-secondary focus-within:ring-1 focus-within:ring-secondary transition-all">
             <label className="block text-[10px] uppercase font-black tracking-widest text-gray-400 mb-1">Phone Number *</label>
             <input type="tel" name="customerPhone" required value={formData.customerPhone} onChange={handleChange} className="w-full bg-transparent text-sm font-bold text-gray-800 outline-none placeholder:text-gray-400 placeholder:font-medium" placeholder="10-digit mobile" />
           </div>
           
-          <div className="bg-gray-50 rounded-xl px-4 py-2 border border-gray-200 focus-within:border-[#c5a059] focus-within:ring-1 focus-within:ring-[#c5a059] transition-all">
+          <div className="bg-gray-50 rounded-xl px-4 py-2 border border-gray-200 focus-within:border-secondary focus-within:ring-1 focus-within:ring-secondary transition-all">
             <label className="block text-[10px] uppercase font-black tracking-widest text-gray-400 mb-1">Email Address *</label>
             <input type="email" name="customerEmail" required value={formData.customerEmail} onChange={handleChange} className="w-full bg-transparent text-sm font-bold text-gray-800 outline-none placeholder:text-gray-400 placeholder:font-medium" placeholder="john@example.com" />
           </div>
@@ -154,7 +164,7 @@ export default function HeroSection() {
             </label>
             <Listbox value={formData.originCity} onChange={(val) => setFormData({ ...formData, originCity: val })}>
               <div className="relative">
-                <Listbox.Button className="relative w-full cursor-pointer bg-gray-50 border border-gray-200 py-3.5 pl-4 pr-10 text-left rounded-xl focus:outline-none focus:border-[#c5a059] focus:ring-1 focus:ring-[#c5a059] transition-all">
+                <Listbox.Button className="relative w-full cursor-pointer bg-gray-50 border border-gray-200 py-3.5 pl-4 pr-10 text-left rounded-xl focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-all">
                   <span className={`block truncate ${formData.originCity ? 'text-gray-900 font-bold' : 'text-gray-400 font-medium'}`}>
                     {formData.originCity ? formData.originCity.cityName : 'Select City'}
                   </span>
@@ -165,12 +175,12 @@ export default function HeroSection() {
                 <Transition as={Fragment} leave="transition ease-in duration-100" leaveFrom="opacity-100" leaveTo="opacity-0">
                   <Listbox.Options className="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-xl bg-white py-1 text-sm shadow-2xl ring-1 ring-black/5 focus:outline-none border border-gray-100">
                     {cities.map((city) => (
-                      <Listbox.Option key={city._id} className={({ active }) => `relative cursor-pointer select-none py-3 pl-10 pr-4 ${active ? 'bg-[#c5a059]/10 text-[#112440]' : 'text-gray-700'}`} value={city}>
+                      <Listbox.Option key={city._id} className={({ active }) => `relative cursor-pointer select-none py-3 pl-10 pr-4 ${active ? 'bg-secondary/10 text-[#112440]' : 'text-gray-700'}`} value={city}>
                         {({ selected }) => (
                           <>
                             <span className={`block truncate ${selected ? 'font-bold' : 'font-medium'}`}>{city.cityName}</span>
                             {selected && (
-                              <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-[#c5a059] font-bold">✓</span>
+                              <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-secondary font-bold">✓</span>
                             )}
                           </>
                         )}
@@ -189,7 +199,7 @@ export default function HeroSection() {
             </label>
             <Listbox value={formData.destinationCity} onChange={(val) => setFormData({ ...formData, destinationCity: val })}>
               <div className="relative">
-                <Listbox.Button className="relative w-full cursor-pointer bg-gray-50 border border-gray-200 py-3.5 pl-4 pr-10 text-left rounded-xl focus:outline-none focus:border-[#c5a059] focus:ring-1 focus:ring-[#c5a059] transition-all">
+                <Listbox.Button className="relative w-full cursor-pointer bg-gray-50 border border-gray-200 py-3.5 pl-4 pr-10 text-left rounded-xl focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-all">
                   <span className={`block truncate ${formData.destinationCity ? 'text-gray-900 font-bold' : 'text-gray-400 font-medium'}`}>
                     {formData.destinationCity ? formData.destinationCity.cityName : 'Select City'}
                   </span>
@@ -200,12 +210,12 @@ export default function HeroSection() {
                 <Transition as={Fragment} leave="transition ease-in duration-100" leaveFrom="opacity-100" leaveTo="opacity-0">
                   <Listbox.Options className="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-xl bg-white py-1 text-sm shadow-2xl ring-1 ring-black/5 focus:outline-none border border-gray-100">
                     {cities.map((city) => (
-                      <Listbox.Option key={city._id} className={({ active }) => `relative cursor-pointer select-none py-3 pl-10 pr-4 ${active ? 'bg-[#c5a059]/10 text-[#112440]' : 'text-gray-700'}`} value={city}>
+                      <Listbox.Option key={city._id} className={({ active }) => `relative cursor-pointer select-none py-3 pl-10 pr-4 ${active ? 'bg-secondary/10 text-[#112440]' : 'text-gray-700'}`} value={city}>
                         {({ selected }) => (
                           <>
                             <span className={`block truncate ${selected ? 'font-bold' : 'font-medium'}`}>{city.cityName}</span>
                             {selected && (
-                              <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-[#c5a059] font-bold">✓</span>
+                              <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-secondary font-bold">✓</span>
                             )}
                           </>
                         )}
@@ -227,7 +237,7 @@ export default function HeroSection() {
               name="shiftingDate" 
               value={formData.shiftingDate} 
               onChange={handleChange} 
-              className="w-full bg-gray-50 border border-gray-200 rounded-xl py-3 px-4 text-gray-800 font-bold outline-none focus:border-[#c5a059] focus:ring-1 focus:ring-[#c5a059] transition-all" 
+              className="w-full bg-gray-50 border border-gray-200 rounded-xl py-3 px-4 text-gray-800 font-bold outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-all" 
             />
           </div>
 
@@ -249,7 +259,7 @@ export default function HeroSection() {
         <div className="flex items-center gap-6 md:gap-10 overflow-x-auto pb-4 md:pb-0 md:flex-wrap hide-scrollbar">
           
           <div className="flex items-center gap-3 shrink-0">
-            <div className="w-10 h-10 rounded-full bg-[#c5a059]/10 flex items-center justify-center text-[#c5a059]">
+            <div className="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center text-secondary">
               <ShieldCheck className="w-5 h-5" />
             </div>
             <div>
@@ -259,7 +269,7 @@ export default function HeroSection() {
           </div>
 
           <div className="flex items-center gap-3 shrink-0">
-            <div className="w-10 h-10 rounded-full bg-[#c5a059]/10 flex items-center justify-center text-[#c5a059]">
+            <div className="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center text-secondary">
               <CheckCircle2 className="w-5 h-5" />
             </div>
             <div>
@@ -269,7 +279,7 @@ export default function HeroSection() {
           </div>
 
           <div className="flex items-center gap-3 shrink-0">
-            <div className="w-10 h-10 rounded-full bg-[#c5a059]/10 flex items-center justify-center text-[#c5a059]">
+            <div className="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center text-secondary">
               <Truck className="w-5 h-5" />
             </div>
             <div>
@@ -279,7 +289,7 @@ export default function HeroSection() {
           </div>
 
           <div className="flex items-center gap-3 shrink-0">
-            <div className="w-10 h-10 rounded-full bg-[#c5a059]/10 flex items-center justify-center text-[#c5a059]">
+            <div className="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center text-secondary">
               <Banknote className="w-5 h-5" />
             </div>
             <div>
@@ -289,7 +299,7 @@ export default function HeroSection() {
           </div>
 
           <div className="flex items-center gap-3 shrink-0">
-            <div className="w-10 h-10 rounded-full bg-[#c5a059]/10 flex items-center justify-center text-[#c5a059]">
+            <div className="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center text-secondary">
               <Users className="w-5 h-5" />
             </div>
             <div>
@@ -299,7 +309,7 @@ export default function HeroSection() {
           </div>
 
           <div className="flex items-center gap-3 shrink-0">
-            <div className="w-10 h-10 rounded-full bg-[#c5a059]/10 flex items-center justify-center text-[#c5a059]">
+            <div className="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center text-secondary">
               <Headphones className="w-5 h-5" />
             </div>
             <div>
@@ -311,6 +321,15 @@ export default function HeroSection() {
         </div>
       </div>
       
+      {/* Trust Metrics Cards */}
+      <div className="w-full border-t border-gray-200 pt-8 mt-8 flex flex-wrap gap-4 justify-center">
+        {boxes && boxes.map(box => (
+          <span key={box.id} className="bg-white text-primary rounded-xl block max-w-xs p-4 border border-secondary/75 shadow-xs">
+            <h5 className="mb-3 text-2xl font-semibold tracking-tight text-heading leading-8">{box.title}</h5>
+            <p className="text-body">{box.description}</p>
+          </span>
+        ))}
+      </div>
     </div>
   );
 }

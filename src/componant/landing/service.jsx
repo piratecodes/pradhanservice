@@ -5,42 +5,42 @@ export default function ServicesSection() {
   const servicesData = [
     {
       title: "Local Shifting",
-      description: "The demand for local shifting services is gradually increasing in Kolkata due to the availability of people from different regions. We provide packers and movers for local shifting service in Kolkata within the same day.",
+      description: "Safe and quick local shifting services in Kolkata with professional packing, careful loading, and on-time delivery.",
       image: "https://dummyimage.com/600x400/1e293b/ffffff&text=Local+Shifting"
     },
     {
       title: "Inter State Shifting",
-      description: "No matter which city of the country you are shifting to, you can always rely on Pradhan Packers and Movers in Kolkata. We assist to provide interstate shifting service to our customers because of our strong network.",
+      description: "Reliable interstate relocation services from Kolkata with secure packing, tracking, and safe transportation. ",
       image: "https://dummyimage.com/600x400/1e293b/ffffff&text=Inter+State"
     },
     {
       title: "Industrial Relocation",
-      description: "India is developing rapidly now. Most people are trying to become an entrepreneur by setting up a small-scale or medium-scale industry. We assist door to door industrial product relocation.",
+      description: "Expert industrial shifting services for factories, machinery, and heavy equipment with professional handling. ",
       image: "https://dummyimage.com/600x400/1e293b/ffffff&text=Industrial"
     },
     {
       title: "Car Transport Service",
-      description: "Most people want to transport their car to the new working location instead of purchasing a new one. We assist our customers to transport any kind of car to their new destination safely.",
+      description: "Door-to-door car transportation services from Kolkata using secure car carriers and insured vehicle transport. ",
       image: "https://dummyimage.com/600x400/1e293b/ffffff&text=Car+Transport"
     },
     {
       title: "Secure Storage Services",
-      description: "Our Secure Storage services offer secure, spacious, and efficient storage solutions. With inventory management, 24/7 security, and flexible options, we ensure safe and seamless logistics for your business.",
+      description: "Safe warehouse and storage services in Kolkata with inventory management and 24/7 monitored facilities.",
       image: "https://dummyimage.com/600x400/1e293b/ffffff&text=Secure+Storage"
     },
     {
       title: "Goods Vehicle for Rent",
-      description: "It is a risky thing to shift both new and usable vehicles for a long distance. We assist our customers to transport their vehicles to their destinations with well-protected transporters.",
+      description: "Affordable truck rental and goods vehicle services in Kolkata for commercial transport and logistics needs. ",
       image: "https://dummyimage.com/600x400/1e293b/ffffff&text=Vehicle+Rent"
     },
     {
       title: "Home/Flat Shifting Service",
-      description: "Expert home and flat shifting services with safe packing, secure transport, timely delivery, and professional handling, ensuring a smooth, hassle-free relocation experience at affordable rates.",
+      description: "Professional house shifting services in Kolkata with complete packing, loading, moving, and unpacking support.",
       image: "https://dummyimage.com/600x400/1e293b/ffffff&text=Home+Shifting"
     },
     {
       title: "Home Appliance Fitting",
-      description: "Our home appliance fitting service ensures seamless installation of Fans, ACs, refrigerators, washing machines, geysers, and more. Expert technicians provide safe, efficient, and reliable setup.",
+      description: "Expert AC, TV, and appliance installation services during relocation for safe setup at your new home.",
       image: "https://dummyimage.com/600x400/1e293b/ffffff&text=Appliance+Fitting"
     }
   ];

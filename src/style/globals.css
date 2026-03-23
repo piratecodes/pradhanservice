@@ -3,7 +3,7 @@
 @theme {
   /* Pradhan Packers Branding */
   --color-primary: #112440;    /* Deep Blue */
-  --color-secondary: #c5a059;  /* The luxury gold */
+  --color-secondary: #372fa0;  /* The luxury Blue */
 }
 
 @plugin 'tailwind-scrollbar'{
@@ -32,13 +32,13 @@ body{
 
 ::selection {
   background: #112440;
-  color: #c5a059;
+  color: #675fdf;
   text-shadow: none;
 }
 
 ::-moz-selection {
   background: #112440;
-  color: #c5a059;
+  color: #675fdf;
   text-shadow: none;
 }
 

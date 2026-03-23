@@ -72,7 +72,7 @@ export default function ContactPage() {
             Let's Get <span className="text-primary italic">Moving.</span>
           </h1>
           <p className="text-gray-500 text-lg md:text-xl font-medium">
-            Find our headquarters on the map or reach out via phone and email. We are available 24/7 to assist you.
+            Looking for reliable packers and movers in Kolkata? Contact Pradhan for safe home shifting, office relocation, car ransportation, and storage services. Our team is ready to assist you with quick quotes and professional moving support.
           </p>
         </div>
 

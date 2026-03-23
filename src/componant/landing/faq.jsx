@@ -8,28 +8,43 @@ export default function FaqSection() {
   const faqs = [
     {
       id: 1,
-      question: "Are you only in Gurgaon, or do you also handle intercity moves across India?",
-      answer: "Pradhan Service is focused locally, but you can also plan intercity moves when you're relocating for work, family, or a new lease. The same process works for local shifting and longer routes, so you don't have to juggle different vendors. Share your pickup and destination city, and the team plans the move accordingly."
+      question: "How much do packers and movers cost in Kolkata?",
+      answer: "The cost of packers and movers in Kolkata depends on the size of the move, distance, packing materials, and services required. Local house shifting usually starts from affordable rates based on household items."
     },
     {
       id: 2,
-      question: "What makes Pradhan Service packers and movers different from a local vendor with a truck?",
-      answer: "We provide verified professionals, end-to-end insurance, and a completely transparent pricing model without hidden charges. Our team handles your goods with industry-grade packing materials, ensuring a premium and damage-free experience."
+      question: "How long does house shifting take in Kolkata?",
+      answer: "Most local shifting services in Kolkata are completed within the same day. Long-distance interstate relocations may take 3–7 days depending on the destination."
     },
     {
       id: 3,
-      question: "Can Pradhan Service manage society rules like lift booking and fixed loading hours?",
-      answer: "Absolutely. Our team coordinates with you in advance to understand your building's specific move-in/move-out guidelines, ensuring we schedule the packing and loading perfectly within your allowed time windows."
+      question: "Do you provide car transportation services from Kolkata? ",
+      answer: "Yes, Pradhan Packers and Movers Pvt Ltd offers safe car transport services from Kolkata using secure vehicle carriers with proper handling and delivery. "
     },
     {
       id: 4,
-      question: "How early should I book packers and movers for a smooth shifting day?",
-      answer: "We recommend booking at least 3 to 5 days in advance for local moves, and 7 to 10 days for intercity relocations. This gives us ample time to assign the right vehicle and packing crew for your specific inventory."
+      question: "Do you offer packing materials for relocation? ",
+      answer: "Yes, we use high-quality packing materials including bubble wrap, carton boxes, stretch film, and protective covers to ensure safe relocation."
     },
     {
       id: 5,
-      question: "How do you protect furniture and fragile items during packing and loading?",
-      answer: "We use high-quality bubble wrap, corrugated sheets, foam blankets, and specialized moving cartons. Delicate items like glassware and electronics are given multi-layer protection and loaded into secure compartments in the transport vehicle."
+      question: "Are your packing and moving services insured?",
+      answer: "Yes, we provide transit insurance assistance to protect your goods during transportation and relocation. "
+    },
+    {
+      id: 6,
+      question: "Do you provide warehouse or storage services in Kolkata?",
+      answer: "Yes, we offer secure warehouse and storage services in Kolkata with monitored facilities for short-term and long-term storage."
+    },
+    {
+      id: 7,
+      question: "How early should I book packers and movers in Kolkata?",
+      answer: "It is recommended to book packers and movers at least 5–7 days in advance to ensure availability and proper moving arrangements. "
+    },
+    {
+      id: 8,
+      question: "Do you provide interstate relocation services from Kolkata?",
+      answer: "Yes, we provide interstate packing and moving services from Kolkata to major cities across India with safe and timely delivery."
     }
   ];
 

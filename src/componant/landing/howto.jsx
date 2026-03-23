@@ -1,72 +1,100 @@
-import React from 'react';
-import { 
-  ClipboardList, 
-  FileSignature, 
-  CalendarCheck, 
-  MousePointerClick, 
-  PackageCheck, 
-  Truck, 
-  Home, 
-  Headset 
-} from 'lucide-react';
+"use client";
 
-export default function HowItWorksSection() {
-  const steps = [
-    { id: 1, title: "Survey (Online/Offline)", icon: ClipboardList },
-    { id: 2, title: "Quotation", icon: FileSignature },
-    { id: 3, title: "Date Confirm", icon: CalendarCheck },
-    { id: 4, title: "Booking", icon: MousePointerClick },
-    { id: 5, title: "Packing", icon: PackageCheck },
-    { id: 6, title: "Transport", icon: Truck },
-    { id: 7, title: "Delivery", icon: Home },
-    { id: 8, title: "Follow Up", icon: Headset }
+import React from 'react';
+import { PackageOpen, Clock, Users, IndianRupee, FileCheck2, ShieldCheck } from 'lucide-react';
+
+export default function WhyChooseUs() {
+  const features = [
+    {
+      title: "Safe Packing",
+      description: "High-quality packing materials ensure safe shifting services in Kolkata with maximum protection for your belongings.",
+      icon: <PackageOpen size={24} />
+    },
+    {
+      title: "On-Time Delivery",
+      description: "Reliable packers and movers in Kolkata ensure timely pickup, fast transit, and secure delivery.",
+      icon: <Clock size={24} />
+    },
+    {
+      title: "Skilled Moving Team",
+      description: "Experienced professionals handling packing, loading, and relocation services with care and efficiency.",
+      icon: <Users size={24} />
+    },
+    {
+      title: "Affordable Pricing",
+      description: "Transparent and competitive pricing from the best packers and movers in Kolkata.",
+      icon: <IndianRupee size={24} />
+    },
+    {
+      title: "No Hidden Charges",
+      description: "Clear quotations with zero hidden costs for home shifting and relocation services.",
+      icon: <FileCheck2 size={24} />
+    },
+    {
+      title: "Damage Claim Support",
+      description: "Transit insurance support with quick claim assistance for safe moving services.",
+      icon: <ShieldCheck size={24} />
+    }
   ];
 
   return (
-    <section className="container px-4 py-20 lg:py-28 relative z-10">
+    /* CLEAN WRAPPER: Transparent/White background, strict Domestic logic */
+    <section className="relative w-full py-20 md:py-28 bg-white overflow-hidden border-b border-gray-100">
       
-      {/* Header Section */}
-      <div className="flex flex-col items-center text-center space-y-3 mb-16 max-w-3xl mx-auto">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-secondary/10 border border-secondary/20 text-secondary rounded-full mb-4 font-bold text-xs uppercase tracking-widest">
-          <span className="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
-          The Process
+      {/* 1. CONTENT CONTAINER: Following the 'no-mx-auto' and 'px-4' standard */}
+      <div className="container px-4 relative z-10">
+        
+        {/* Authoritative Header Section */}
+        <div className="flex flex-col md:flex-row md:items-center gap-6 md:gap-12 mb-20 md:mb-28">
+          <div className="flex-grow space-y-4">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-secondary/10 border border-secondary/20 text-secondary rounded-full font-black text-[10px] uppercase tracking-[0.2em]">
+               The Pradhan Standard
+            </div>
+            
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-primary leading-[1.1] tracking-tighter">
+              Why Choose <br className="hidden md:block" />
+              <span className="text-secondary italic">Pradhan Packers and Movers</span>
+            </h2>
+          </div>
+          
+          <p className="text-gray-500 text-lg md:text-xl font-medium leading-relaxed max-w-xl md:border-l-4 md:border-gray-100 md:pl-10">
+            Trusted by thousands, Pradhan Packers and Movers Pvt Ltd delivers safe, reliable, and affordable relocation services across Kolkata and India.
+          </p>
         </div>
-        <h2 className="text-4xl md:text-5xl font-black text-primary tracking-tight">
-          How It <span className="text-secondary italic">Works</span>
-        </h2>
-        <p className="text-gray-500 text-lg md:text-xl font-medium leading-relaxed mt-4">
-          A seamless, transparent 8-step process designed to move you safely and efficiently from your first inquiry to your final destination.
-        </p>
-      </div>
 
-      {/* Steps Flex Area */}
-      <div className="flex flex-wrap justify-center gap-4 lg:gap-6">
-        {steps.map((step) => {
-          const IconComponent = step.icon;
-          return (
+        {/* Tactical Feature Grid: Architectural Spacing */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10 lg:gap-12">
+          {features.map((feature, index) => (
             <div 
-              key={step.id} 
-              className="group relative flex flex-col items-center justify-center bg-white border border-gray-100 rounded-[1.5rem] p-8 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:shadow-secondary/10 hover:border-secondary/50 w-full sm:w-[47%] md:w-[30%] lg:w-[22%] xl:w-[23%]"
+              key={index} 
+              className="group relative flex gap-6 items-start p-8 rounded-[2.5rem] bg-white border border-gray-50 hover:bg-slate-50/50 hover:border-gray-100 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/5"
             >
-              {/* Step Number Badge */}
-              <div className="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs font-black border-2 border-white shadow-sm">
-                0{step.id}
-              </div>
-
-              {/* Icon Container with Hover Animation */}
-              <div className="w-16 h-16 rounded-full bg-slate-50 shadow-sm flex items-center justify-center mb-5 text-primary group-hover:bg-secondary group-hover:text-white transition-colors duration-300">
-                <IconComponent className="w-8 h-8" strokeWidth={1.5} />
+              
+              {/* Dynamic Icon Structure */}
+              <div className="w-14 h-14 rounded-2xl bg-slate-100 text-secondary flex items-center justify-center shrink-0 border border-gray-200 transition-all duration-500 group-hover:bg-primary group-hover:text-white group-hover:border-primary shadow-sm">
+                {feature.icon}
               </div>
               
-              {/* Text Content */}
-              <h3 className="text-base font-bold text-primary text-center">
-                {step.title}
-              </h3>
-            </div>
-          );
-        })}
-      </div>
+              <div className="space-y-3">
+                {/* Numbering Detail (Blueprint Style) */}
+                <span className="text-[10px] font-black text-secondary group-hover:text-primary transition-colors">0{index + 1} //</span>
+                
+                <h3 className="text-2xl font-black text-primary leading-tight">
+                  {feature.title}
+                </h3>
+                
+                <p className="text-gray-500 text-sm font-medium leading-relaxed max-w-[280px]">
+                  {feature.description}
+                </p>
+              </div>
 
+              {/* Decorative Accent on Hover */}
+              <div className="absolute top-8 right-8 w-1 h-1 rounded-full bg-secondary scale-0 group-hover:scale-100 transition-transform"></div>
+            </div>
+          ))}
+        </div>
+
+      </div>
     </section>
   );
 }

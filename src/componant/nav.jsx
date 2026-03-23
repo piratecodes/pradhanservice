@@ -32,6 +32,7 @@ export default function Nav() {
     const fetchCities = async () => {
       try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cities`);
+        console.log(`${process.env.NEXT_PUBLIC_API_URL}/cities`);
         const data = await res.json();
         if (data.success) setCities(data.data.cities || []);
       } catch (err) {
