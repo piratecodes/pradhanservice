@@ -59,7 +59,7 @@ export default function FaqSection() {
                Help Center
             </div>
             <h2 className="text-4xl md:text-5xl font-black text-primary leading-tight tracking-tight">
-              Common <span className="text-secondary italic">Questions</span>
+              People <span className="text-secondary italic">Also Ask</span>
             </h2>
             <p className="text-gray-500 text-lg font-medium leading-relaxed">
               Find answers to common concerns about relocation, pricing, and safety. Still have questions? Our support team is active 24/7.
@@ -83,10 +83,10 @@ export default function FaqSection() {
             </div>
 
             <a 
-              href="tel:+918588886465"
+              href="tel:+919830070983"
               className="group flex items-center justify-between bg-primary text-white p-2 pl-6 rounded-2xl transition-all hover:shadow-xl hover:shadow-primary/20"
             >
-              <span className="font-bold tracking-tight">+91 8588886465</span>
+              <span className="font-bold tracking-tight">+91 9830070983</span>
               <div className="bg-secondary p-3 rounded-xl group-hover:scale-110 transition-transform">
                 <Phone size={20} fill="currentColor" />
               </div>

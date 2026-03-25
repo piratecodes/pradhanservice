@@ -39,7 +39,7 @@ export default function WhyChooseUs() {
 
   return (
     /* CLEAN WRAPPER: Transparent/White background, strict Domestic logic */
-    <section className="relative w-full py-20 md:py-28 bg-white overflow-hidden border-b border-gray-100">
+    <section className="relative w-full py-20 md:py-28 overflow-hidden border-b border-gray-100">
       
       {/* 1. CONTENT CONTAINER: Following the 'no-mx-auto' and 'px-4' standard */}
       <div className="container px-4 relative z-10">

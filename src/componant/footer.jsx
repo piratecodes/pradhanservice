@@ -47,7 +47,7 @@ export default function Footer() {
           <div className="flex flex-col gap-4 w-full lg:w-1/3 lg:pr-8">
             <Link href="/" className="inline-block">
               <Image 
-                src="https://dummyimage.com/200x60/1e293b/ffffff&text=Pradhan+Packers" 
+                src="https://dummyimage.com/200x60/1e293b/ffffff&text=Pradhan+Services" 
                 alt="Pradhan Packers Logo" 
                 width={200} 
                 height={60} 

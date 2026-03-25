@@ -13,42 +13,42 @@ export default function WhyChooseUsSection() {
   const leftFeatures = [
     {
       id: 1,
-      title: "Background Check",
+      title: "Legacy Experience",
       icon: UserCheck,
-      description: "Every member who enters your home has been verified and trained before joining an active crew. We check identity, behaviour and on-job performance so you are not opening your door to unknown, untested labour."
+      description: "Operating since 1980, handling diverse relocation challenges across India with proven execution, not theoretical processes or recent market entry."
     },
     {
       id: 2,
-      title: "Professional Teams",
+      title: "Pan-India Network",
       icon: Users,
-      description: "Our teams work in a clear sequence - packing, labelling, loading and setup. Supervisors coordinate with you, the driver, and building staff so the shift feels controlled, not chaotic."
+      description: "Pan India service through controlled teams and routes, reducing dependency on unknown third parties and maintaining consistency in long-distance moves."
     },
     {
       id: 3,
-      title: "Safe Packing & Handling",
+      title: "Ground Expertise",
       icon: PackageSearch,
-      description: "From TV units to wardrobes, we use appropriate packing material and smart stacking inside the vehicle. The goal is to reduce impact and tilt so your goods arrive in the exact same condition."
+      description: "Experienced in handling narrow lanes, old buildings, and no-lift moves common in Indian cities, ensuring practical execution without damage risk."
     }
   ];
 
   const rightFeatures = [
     {
       id: 4,
-      title: "24-Hour Moves Available",
+      title: "Controlled Handling",
       icon: Clock,
-      description: "Some moves cannot wait. For urgent relocations, we can plan late-night or early-morning operations, aligning with your society rules so the job gets done without disturbing everyone around."
+      description: "Structured packing, item segregation, and supervised loading methods to minimize breakage instead of rushed or unplanned shifting practices."
     },
     {
       id: 5,
-      title: "Clear Coordination",
+      title: "Verified Teams",
       icon: BellRing,
-      description: "You should always know what is happening. Our team keeps you informed about packing progress, vehicle departure and expected arrival, so you are never guessing where your belongings are."
+      description: "Use of trained and repeat workforce with supervision, avoiding random daily labor and ensuring accountability throughout the relocation process."
     },
     {
       id: 6,
-      title: "Pan-India Network",
+      title: "Cost Clarity",
       icon: Globe,
-      description: "If your new address is outside the state, we plan the route through our wider network. A single team remains responsible for your consignment's journey, instead of leaving you to manage multiple vendors."
+      description: "Transparent pricing based on requirments, volume, distance, and access conditions, reducing unexpected hidden charges during or after the move."
     }
   ];
 

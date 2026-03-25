@@ -35,7 +35,7 @@ export default function TestimonialsSection() {
           Direct Proof
         </div>
         <h2 className="text-4xl md:text-5xl font-black text-primary tracking-tight">
-          What Customers Say About <span className="text-secondary italic">Pradhan Service</span>
+          What People <span className="text-secondary italic">Say</span>
         </h2>
         <p className="text-gray-500 text-lg md:text-xl font-medium leading-relaxed mt-4">
           Directly synced 5-star reviews from our Google Business Profile.
@@ -48,7 +48,7 @@ export default function TestimonialsSection() {
         <div className="w-full lg:w-1/2 relative min-h-[300px] lg:min-h-full bg-primary">
           <iframe 
             className="absolute inset-0 w-full h-full border-0"
-            src="https://www.youtube.com/embed/YOUR_VIDEO_ID?rel=0&modestbranding=1" 
+            src="https://youtube.com/shorts/VquJBvIxVTE?si=JZGm9C0Osx7MueSr" 
             title="Customer Experience Video" 
             allowFullScreen
           ></iframe>
@@ -87,7 +87,7 @@ export default function TestimonialsSection() {
       </div>
 
       {/* Google Verified Business Badge */}
-      <div className="mt-12 flex flex-wrap justify-center gap-8 opacity-70 hover:opacity-100 transition-all duration-500">
+      {/* <div className="mt-12 flex flex-wrap justify-center gap-8 opacity-70 hover:opacity-100 transition-all duration-500">
          <div className="flex items-center gap-3 px-6 py-3 bg-white border border-gray-100 rounded-2xl shadow-sm">
             <div className="w-8 h-8 rounded-full bg-white shadow-sm flex items-center justify-center font-black text-blue-600 border border-gray-100 text-xl">
               G
@@ -97,7 +97,7 @@ export default function TestimonialsSection() {
               <span className="text-secondary font-bold text-[10px] uppercase tracking-widest mt-1 text-center">Professional Business</span>
             </div>
          </div>
-      </div>
+      </div> */}
 
     </section>
   );

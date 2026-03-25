@@ -47,8 +47,8 @@ export default function AboutSection() {
             <div className="flex flex-col gap-2 p-4 rounded-2xl bg-[#f8fafc] border border-gray-100 hover:border-secondary/30 transition-colors">
               <Map className="w-6 h-6 text-secondary" />
               <div>
-                <span className="block text-gray-400 text-xs font-bold uppercase tracking-wider mb-0.5">Operating In</span>
-                <span className="block text-primary font-black text-lg">29+ States</span>
+                <span className="block text-gray-400 text-xs font-bold uppercase tracking-wider mb-0.5">Total Moves</span>
+                <span className="block text-primary font-black text-lg">5000+ </span>
               </div>
             </div>
 
@@ -56,8 +56,8 @@ export default function AboutSection() {
             <div className="col-span-2 md:col-span-1 flex flex-col gap-2 p-4 rounded-2xl bg-[#f8fafc] border border-gray-100 hover:border-secondary/30 transition-colors">
               <Award className="w-6 h-6 text-secondary" />
               <div>
-                <span className="block text-gray-400 text-xs font-bold uppercase tracking-wider mb-0.5">Backed By</span>
-                <span className="block text-primary font-black text-lg">Industry Best</span>
+                <span className="block text-gray-400 text-xs font-bold uppercase tracking-wider mb-0.5">Happy Clients</span>
+                <span className="block text-primary font-black text-lg">2500+</span>
               </div>
             </div>
 
@@ -84,8 +84,8 @@ export default function AboutSection() {
           
           {/* Design Upgrade: Floating Badge over the image */}
           <div className="absolute -bottom-6 -left-6 bg-white p-4 rounded-2xl shadow-xl border border-gray-100 flex items-center gap-4">
-              <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-secondary font-black text-xl">
-                10+
+              <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-gray-100 font-black text-xl">
+                45+
               </div>
               <div>
                 <p className="text-primary font-black leading-tight">Years of<br/>Experience</p>

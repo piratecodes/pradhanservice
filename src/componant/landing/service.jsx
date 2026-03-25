@@ -4,44 +4,24 @@ import Image from 'next/image';
 export default function ServicesSection() {
   const servicesData = [
     {
-      title: "Local Shifting",
-      description: "Safe and quick local shifting services in Kolkata with professional packing, careful loading, and on-time delivery.",
+      title: "Packers And Movers",
+      description: "Reliable packers and movers for home and office shifting, offering safe, fast and affordable packing and moving services.",
       image: "https://dummyimage.com/600x400/1e293b/ffffff&text=Local+Shifting"
     },
     {
-      title: "Inter State Shifting",
-      description: "Reliable interstate relocation services from Kolkata with secure packing, tracking, and safe transportation. ",
-      image: "https://dummyimage.com/600x400/1e293b/ffffff&text=Inter+State"
+      title: "Storage Solutions",
+      description: "Secure storage solutions by expert packers and movers, offering safe, flexible and affordable warehouse storage services.",
+      image: "https://dummyimage.com/600x400/1e293b/ffffff&text=Storage"
     },
     {
-      title: "Industrial Relocation",
-      description: "Expert industrial shifting services for factories, machinery, and heavy equipment with professional handling. ",
-      image: "https://dummyimage.com/600x400/1e293b/ffffff&text=Industrial"
-    },
-    {
-      title: "Car Transport Service",
-      description: "Door-to-door car transportation services from Kolkata using secure car carriers and insured vehicle transport. ",
+      title: "Car Transportation",
+      description: "Safe car transportation by professional packers and movers, ensuring quick, damage-free and secure vehicle shifting.",
       image: "https://dummyimage.com/600x400/1e293b/ffffff&text=Car+Transport"
     },
     {
-      title: "Secure Storage Services",
-      description: "Safe warehouse and storage services in Kolkata with inventory management and 24/7 monitored facilities.",
-      image: "https://dummyimage.com/600x400/1e293b/ffffff&text=Secure+Storage"
-    },
-    {
-      title: "Goods Vehicle for Rent",
-      description: "Affordable truck rental and goods vehicle services in Kolkata for commercial transport and logistics needs. ",
-      image: "https://dummyimage.com/600x400/1e293b/ffffff&text=Vehicle+Rent"
-    },
-    {
-      title: "Home/Flat Shifting Service",
-      description: "Professional house shifting services in Kolkata with complete packing, loading, moving, and unpacking support.",
-      image: "https://dummyimage.com/600x400/1e293b/ffffff&text=Home+Shifting"
-    },
-    {
-      title: "Home Appliance Fitting",
-      description: "Expert AC, TV, and appliance installation services during relocation for safe setup at your new home.",
-      image: "https://dummyimage.com/600x400/1e293b/ffffff&text=Appliance+Fitting"
+      title: "Bike Transportation",
+      description: "Trusted bike transportation by best packers and movers, offering door to door, safe and affordable bike shifting services.",
+      image: "https://dummyimage.com/600x400/1e293b/ffffff&text=Bike+Transport"
     }
   ];
 
@@ -50,16 +30,12 @@ export default function ServicesSection() {
       
       {/* Section Header */}
       <div className="flex flex-col items-center text-center mb-16 max-w-3xl mx-auto">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-secondary/10 border border-secondary/20 text-secondary rounded-full mb-6 font-bold text-xs uppercase tracking-widest">
-          <span className="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
-          Our Expertise
-        </div>
         <h2 className="text-4xl md:text-5xl font-black text-primary mb-6 tracking-tight">
-          Comprehensive <span className="text-secondary italic">Logistics</span>
+          Our <span className="text-secondary italic">Services</span>
         </h2>
-        <p className="text-gray-500 text-lg md:text-xl font-medium leading-relaxed">
+        <h2 className="text-gray-500 text-lg md:text-xl font-medium leading-relaxed">
           From local apartment moves to massive industrial relocations across India, Pradhan Packers & Movers delivers uncompromising quality and safety.
-        </p>
+        </h2>
       </div>
 
       {/* Services Grid */}

@@ -118,14 +118,13 @@ export default function HeroSection() {
       <div className="flex flex-col gap-6  mb-12">
         
         {/* Top Review Badge */}
-        <div className="inline-flex items-center gap-2 border border-gray-200 backdrop-blur-sm rounded-full px-4 py-1.5 w-max shadow-sm">
+        <div className="inline-flex items-center mx-auto gap-2 border border-gray-200 backdrop-blur-sm rounded-full px-4 py-1.5 w-max shadow-sm">
           <Star className="w-4 h-4 text-yellow-500 fill-current" />
           <span className="text-sm text-gray-700 font-bold">Rated 4.9/5 by 10,000+ Happy Clients!</span>
         </div>
 
-        <h1 className="text-center text-5xl md:text-6xl lg:text-7xl font-black text-primary leading-[1.1] tracking-tight">
-          Pradhan Packers and Movers <br className="hidden md:block"/>
-          <span className="text-secondary">Trusted Packers and Movers in Kolkata Since 1980</span>
+        <h1 className="text-center text-5xl md:text-6xl lg:text-7xl font-black text-secondary leading-[1.1] tracking-tight">
+          Trusted Packers and Movers in Kolkata
         </h1>
         
         <p className="text-lg md:text-xl text-gray-600 font-medium text-center leading-relaxed">
@@ -256,14 +255,14 @@ export default function HeroSection() {
       {/* 3. TRUST METRICS BAR (Horizontal Scroll on Mobile) */}
       <div className="w-full border-t border-gray-200 pt-8">
         {/* Mobile: scrollable. Desktop: wrap naturally */}
-        <div className="flex items-center gap-6 md:gap-10 overflow-x-auto pb-4 md:pb-0 md:flex-wrap hide-scrollbar">
+        <div className="flex flex-row items-center gap-6 md:gap-10 overflow-x-auto pb-4 md:pb-0 hide-scrollbar justify-center">
           
           <div className="flex items-center gap-3 shrink-0">
             <div className="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center text-secondary">
               <ShieldCheck className="w-5 h-5" />
             </div>
             <div>
-              <p className="text-sm font-black text-[#112440]">Insurance Included</p>
+              <p className="text-sm font-black text-primary">Insurance Included</p>
               <p className="text-xs font-medium text-gray-500">Up to ₹10,000 Cover</p>
             </div>
           </div>
@@ -320,16 +319,7 @@ export default function HeroSection() {
 
         </div>
       </div>
-      
-      {/* Trust Metrics Cards */}
-      <div className="w-full border-t border-gray-200 pt-8 mt-8 flex flex-wrap gap-4 justify-center">
-        {boxes && boxes.map(box => (
-          <span key={box.id} className="bg-white text-primary rounded-xl block max-w-xs p-4 border border-secondary/75 shadow-xs">
-            <h5 className="mb-3 text-2xl font-semibold tracking-tight text-heading leading-8">{box.title}</h5>
-            <p className="text-body">{box.description}</p>
-          </span>
-        ))}
-      </div>
+       
     </div>
   );
 }
