@@ -131,7 +131,7 @@ export default function HeroSection() {
         perPage: 4,
       },
       767: {
-        perPage: 3,
+        perPage: 2,
       },
     },
   };
