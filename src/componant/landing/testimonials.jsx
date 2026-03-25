@@ -46,12 +46,7 @@ export default function TestimonialsSection() {
         
         {/* LEFT SIDE: YouTube Video */}
         <div className="w-full lg:w-1/2 relative min-h-[300px] lg:min-h-full bg-primary">
-          <iframe 
-            className="absolute inset-0 w-full h-full border-0"
-            src="https://youtube.com/shorts/VquJBvIxVTE?si=JZGm9C0Osx7MueSr" 
-            title="Customer Experience Video" 
-            allowFullScreen
-          ></iframe>
+          <iframe className="absolute inset-0 w-full h-full border-0" src="https://www.youtube.com/watch?v=68S9B_VHIRQ" title="Customer Experience Video" allowFullScreen></iframe>
         </div>
 
         {/* RIGHT SIDE: Shapo Widget with "Healed" Container */}
