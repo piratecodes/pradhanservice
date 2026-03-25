@@ -2,6 +2,9 @@ import React from 'react';
 import Image from 'next/image';
 import { ShieldCheck, Map, Award } from 'lucide-react';
 
+//Image
+import AboutImage from "@/assets/hero.png";
+
 export default function AboutSection() {
   return (
     <section className="container px-4 relative z-10">
@@ -73,11 +76,8 @@ export default function AboutSection() {
           <figure className="relative w-full rounded-[2.5rem] overflow-hidden shadow-2xl shadow-primary/10 border-4 border-white">
             {/* Strict Image Sizing Rule Applied */}
             <Image 
-              src="https://dummyimage.com/800x600/112440/c5a059&text=Pradhan+Packers" 
-              alt="Safe and Premium Relocation Services" 
-              height={0} 
-              width={0} 
-              sizes="100vw"
+              src={AboutImage} alt="Safe and Premium Relocation Services" 
+              height={0} width={0} sizes="100vw" draggable={false}
               className="w-full h-auto object-cover transform hover:scale-105 transition-transform duration-700"
             />
           </figure>

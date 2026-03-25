@@ -3,6 +3,9 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { Listbox, Transition } from '@headlessui/react';
 import toast from 'react-hot-toast';
+import { Splide, SplideSlide, SplideTrack } from '@splidejs/react-splide';
+import { AutoScroll } from '@splidejs/splide-extension-auto-scroll';
+import '@splidejs/react-splide/css'; // Import default Splide CSS
 import { ChevronDown, CheckCircle2, ShieldCheck, Truck, Banknote, Users, Headphones, Star, Loader2 } from 'lucide-react';
 
 export default function HeroSection() {
@@ -109,6 +112,28 @@ export default function HeroSection() {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  // Splide AutoScroll Options
+  const options = {
+    type: 'loop',
+    drag: 'free',
+    arrows: false,
+    pagination: false,
+    perPage: 6, // Adjust the number of visible items as needed
+    autoScroll: {
+      speed: 0.85, // Control the scrolling speed
+      pauseOnHover: false, // Pause the scroll on hover
+      pauseOnFocus: false,
+    },
+    breakpoints: { // Make the marquee responsive
+      991: {
+        perPage: 4,
+      },
+      767: {
+        perPage: 3,
+      },
+    },
   };
 
   return (
@@ -253,11 +278,11 @@ export default function HeroSection() {
       </form>
 
       {/* 3. TRUST METRICS BAR (Horizontal Scroll on Mobile) */}
-      <div className="w-full border-t border-gray-200 pt-8">
+      <Splide options={options} extensions={{ AutoScroll }} hasTrack={ false } className="w-full border-t border-gray-200 pt-8">
         {/* Mobile: scrollable. Desktop: wrap naturally */}
-        <div className="flex flex-row items-center gap-6 md:gap-10 overflow-x-auto pb-4 md:pb-0 hide-scrollbar justify-center">
+        <SplideTrack>
           
-          <div className="flex items-center gap-3 shrink-0">
+          <SplideSlide className="flex items-center gap-3 shrink-0">
             <div className="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center text-secondary">
               <ShieldCheck className="w-5 h-5" />
             </div>
@@ -265,9 +290,9 @@ export default function HeroSection() {
               <p className="text-sm font-black text-primary">Insurance Included</p>
               <p className="text-xs font-medium text-gray-500">Up to ₹10,000 Cover</p>
             </div>
-          </div>
+          </SplideSlide>
 
-          <div className="flex items-center gap-3 shrink-0">
+          <SplideSlide className="flex items-center gap-3 shrink-0">
             <div className="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center text-secondary">
               <CheckCircle2 className="w-5 h-5" />
             </div>
@@ -275,9 +300,9 @@ export default function HeroSection() {
               <p className="text-sm font-black text-[#112440]">No Outsourcing</p>
               <p className="text-xs font-medium text-gray-500">100% In-house Team</p>
             </div>
-          </div>
+          </SplideSlide>
 
-          <div className="flex items-center gap-3 shrink-0">
+          <SplideSlide className="flex items-center gap-3 shrink-0">
             <div className="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center text-secondary">
               <Truck className="w-5 h-5" />
             </div>
@@ -285,9 +310,9 @@ export default function HeroSection() {
               <p className="text-sm font-black text-[#112440]">Timely Delivery</p>
               <p className="text-xs font-medium text-gray-500">GPS Tracked Fleet</p>
             </div>
-          </div>
+          </SplideSlide>
 
-          <div className="flex items-center gap-3 shrink-0">
+          <SplideSlide className="flex items-center gap-3 shrink-0">
             <div className="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center text-secondary">
               <Banknote className="w-5 h-5" />
             </div>
@@ -295,9 +320,9 @@ export default function HeroSection() {
               <p className="text-sm font-black text-[#112440]">Best Price</p>
               <p className="text-xs font-medium text-gray-500">Transparent Quotes</p>
             </div>
-          </div>
+          </SplideSlide>
 
-          <div className="flex items-center gap-3 shrink-0">
+          <SplideSlide className="flex items-center gap-3 shrink-0">
             <div className="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center text-secondary">
               <Users className="w-5 h-5" />
             </div>
@@ -305,9 +330,9 @@ export default function HeroSection() {
               <p className="text-sm font-black text-[#112440]">Verified Staff</p>
               <p className="text-xs font-medium text-gray-500">Background Checked</p>
             </div>
-          </div>
+          </SplideSlide>
 
-          <div className="flex items-center gap-3 shrink-0">
+          <SplideSlide className="flex items-center gap-3 shrink-0">
             <div className="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center text-secondary">
               <Headphones className="w-5 h-5" />
             </div>
@@ -315,10 +340,14 @@ export default function HeroSection() {
               <p className="text-sm font-black text-[#112440]">24/7 Support</p>
               <p className="text-xs font-medium text-gray-500">Always Available</p>
             </div>
-          </div>
-
-        </div>
-      </div>
+          </SplideSlide>
+        </SplideTrack>
+        <style jsx global>{`
+        .splide__list {
+          transition-timing-function: linear !important;
+        }
+      `}</style>
+      </Splide>
        
     </div>
   );

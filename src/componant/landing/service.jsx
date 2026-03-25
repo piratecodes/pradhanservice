@@ -1,22 +1,28 @@
 import React from 'react';
 import Image from 'next/image';
 
+
+// Images
+import LocalShiftingImage from "@/assets/LocalShifting.png";
+import SecureStorageImage from "@/assets/SecureStorage.png";
+import CarTransportImage from "@/assets/CarTransport.png";
+
 export default function ServicesSection() {
   const servicesData = [
     {
       title: "Packers And Movers",
       description: "Reliable packers and movers for home and office shifting, offering safe, fast and affordable packing and moving services.",
-      image: "https://dummyimage.com/600x400/1e293b/ffffff&text=Local+Shifting"
+      image: LocalShiftingImage
     },
     {
       title: "Storage Solutions",
       description: "Secure storage solutions by expert packers and movers, offering safe, flexible and affordable warehouse storage services.",
-      image: "https://dummyimage.com/600x400/1e293b/ffffff&text=Storage"
+      image: SecureStorageImage
     },
     {
       title: "Car Transportation",
       description: "Safe car transportation by professional packers and movers, ensuring quick, damage-free and secure vehicle shifting.",
-      image: "https://dummyimage.com/600x400/1e293b/ffffff&text=Car+Transport"
+      image: CarTransportImage
     },
     {
       title: "Bike Transportation",
@@ -57,7 +63,7 @@ export default function ServicesSection() {
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-90 group-hover:opacity-100"
               />
               {/* Subtle gradient overlay using dynamic primary color */}
-              <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-60"></div>
+              <div className="absolute inset-0 bg-linear-to-t from-primary/80 via-transparent to-transparent opacity-60"></div>
             </div>
 
             {/* Text Content */}
