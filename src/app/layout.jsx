@@ -19,36 +19,33 @@ export const metadata = {
     template: "%s | Pradhan Service",
     default: "Pradhan Service",
   },
-  description: "A modern twist on a beloved classic. Our Chocolate Hazelnut Baklava features layers of crispy phyllo, a fragrant blend of cinnamon and walnuts, all enveloped",
-  canonical: "https://staging.pradhanservice.com/",
-  sitename: "Yia Yia's Baklava",
+  description: "Pradhan Services - Your trusted partner for all your needs.",
+  canonical: "https://www.pradhanservice.com/",
+  sitename: "Pradhan Services",
   openGraph: {
-    url: 'https://staging.pradhanservice.com',
-    title: "Yia Yia's Baklava",
+    url: 'https://www.pradhanservice.com',
+    title: "Pradhan Services",
     type: 'website',
-    siteName: "Yia Yia's Baklava",
-    description: 'A modern twist on a beloved classic. Our Chocolate Hazelnut Baklava features layers of crispy phyllo, a fragrant blend of cinnamon and walnuts, all enveloped',
+    siteName: "Pradhan Services",
+    description: "Pradhan Services - Your trusted partner for all your needs.",
     images: [
-      {url: "https://staging.pradhanservice.com/32x32.webp", alt: "pradhanservice | Logo", type: 'image/webp', sizes:"32x32", fetchPriority: "auto"},
-      {url: "https://staging.pradhanservice.com/192x192.webp", alt: "pradhanservice | Logo", type: 'image/webp', sizes:"192x192", fetchPriority: "auto"}
+      {url: "https://www.pradhanservice.com/icon.png", alt: "pradhanservice | Logo", type: 'image/png', sizes:"192x192", fetchPriority: "auto"},
     ],
   },
   twitter:{
-    card: "Yia Yia's Baklava",
-    title: "Home - Yia Yia's Baklava",
-    creator: "Yia Yia's Baklava",
-    description: 'A modern twist on a beloved classic. Our Chocolate Hazelnut Baklava features layers of crispy phyllo, a fragrant blend of cinnamon and walnuts, all enveloped',
+    card: "Pradhan Services",
+    title: "Home - Pradhan Services",
+    creator: "Pradhan Services",
+    description: "Pradhan Services - Your trusted partner for all your needs.",
     images: [
-      {url: "https://staging.pradhanservice.com/32x32.webp", alt: "pradhanservice | Logo", type: 'image/webp', sizes:"32x32", fetchPriority: "auto"},
-      {url: "https://staging.pradhanservice.com/192x192.webp", alt: "pradhanservice | Logo", type: 'image/webp', sizes:"192x192", fetchPriority: "auto"}
+      {url: "https://www.pradhanservice.com/icon.png", alt: "pradhanservice | Logo", type: 'image/png', sizes:"192x192", fetchPriority: "auto"},
     ],
   },
   icons:{
     icon:[
-      {url: '/32x32.webp', type: "image/webp", sizes:"32x32", rel:"icon", fetchPriority: "auto"},
-      {url: '/192x192.webp', type: "image/webp", sizes:"192x192", rel:"icon", fetchPriority: "auto"},
+      {url: '/icon.png', type: "image/png", sizes:"192x192", rel:"icon", fetchPriority: "auto"},
     ],
-    shortcut: {url: '/192x192.webp', type: "image/webp", fetchPriority: "auto"},
+    shortcut: {url: '/icon.png', type: "image/png", fetchPriority: "auto"},
   }
 };
 
