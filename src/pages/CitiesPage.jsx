@@ -9,11 +9,13 @@ import CityGrid from '@/components/cities/CityGrid';
 import CityFormDrawer from '@/components/cities/CityFormDrawer';
 
 export default function CitiesPage() {
-  //Title & Description for SEO (and nice browser tab titles!)
   useDocumentMeta("Network Map | Pradhan Services", "Manage the cities you operate in, update their operational status, and ensure your network map is always up-to-date for customers and SEO.");
   
   const [cities, setCities] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  
+  // 👇 NEW: Search State 👇
+  const [searchQuery, setSearchQuery] = useState('');
   
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [selectedCity, setSelectedCity] = useState(null);
@@ -22,7 +24,7 @@ export default function CitiesPage() {
     setIsLoading(true);
     try {
       const response = await fetchClient('/cities?all=true');
-      setCities(response.data.cities);
+      setCities(response.data.cities || []);
     } catch (error) {
       toast.error('Failed to load the network map.');
       console.error(error);
@@ -57,26 +59,41 @@ export default function CitiesPage() {
     }
   };
 
-  // --- NEW: THE DELETE FUNCTION ---
   const handleDeleteCity = async (citySlug) => {
-    // Safety check!
     const isConfirmed = window.confirm("Are you sure you want to permanently delete this city? This action cannot be undone.");
-    
     if (!isConfirmed) return;
 
     try {
-      // Hits your backend: deleteCityBySlug controller
       await fetchClient(`/cities/${citySlug}`, { method: 'DELETE' });
       toast.success('City permanently deleted');
-      loadCities(); // Refresh the grid to remove the card
+      loadCities();
     } catch (error) {
       toast.error(error.message || 'Failed to delete city');
     }
   };
 
+  // 👇 NEW: The Search Filter Engine 👇
+  const filteredCities = cities.filter((city) => {
+    const searchLower = searchQuery.toLowerCase();
+    const nameMatch = city.cityName.toLowerCase().includes(searchLower);
+    const slugMatch = city.citySlug.toLowerCase().includes(searchLower);
+    
+    // Check if the search term matches any of the sub-towns (e.g., searching "Salt Lake")
+    const subTownMatch = city.subTowns && city.subTowns.some(town => 
+      town.toLowerCase().includes(searchLower)
+    );
+    
+    return nameMatch || slugMatch || subTownMatch;
+  });
+
   return (
     <div className="max-w-[1600px] mx-auto">
-      <CityHeader onOpenDrawer={handleOpenNew} />
+      {/* Pass search state and setter down to the Header */}
+      <CityHeader 
+        onOpenDrawer={handleOpenNew} 
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
+      />
 
       {isLoading ? (
         <div className="flex flex-col items-center justify-center py-20 bg-white rounded-2xl border border-gray-100 shadow-sm">
@@ -85,10 +102,11 @@ export default function CitiesPage() {
         </div>
       ) : (
         <CityGrid 
-          cities={cities} 
+          cities={filteredCities} // 👈 Feed the filtered array into the Grid!
           onEditCity={handleEdit} 
           onToggleStatus={handleToggleStatus} 
-          onDeleteCity={handleDeleteCity} // Pass the new prop here!
+          onDeleteCity={handleDeleteCity} 
+          isSearchActive={searchQuery.length > 0} // Tell the grid if we are searching
         />
       )}
 

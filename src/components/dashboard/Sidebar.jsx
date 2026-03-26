@@ -5,6 +5,7 @@ import {
   LayoutDashboard, 
   Users, 
   MapPin, 
+  FileText,
   PackageSearch, 
   Image as ImageIcon, 
   Settings, 
@@ -36,6 +37,7 @@ export default function Sidebar() {
     { name: 'Dashboard', path: '/', icon: LayoutDashboard, allowed: ['super-admin', 'admin', 'sales-agent'] },
     { name: 'CRM (Leads)', path: '/crm', icon: Users, allowed: ['super-admin', 'admin', 'sales-agent'] },
     { name: 'The Network', path: '/cities', icon: MapPin, allowed: ['super-admin', 'admin', 'sales-agent'] },
+    { name: 'SEO Pages', path: '/seo-pages', icon: FileText, allowed: ['super-admin', 'admin'] }, // Protected from sales agents
     { name: 'Fleet & Services', path: '/services', icon: PackageSearch, allowed: ['super-admin', 'admin', 'sales-agent'] },
     { name: 'Media Gallery', path: '/gallery', icon: ImageIcon, allowed: ['super-admin', 'admin', 'sales-agent'] },
     

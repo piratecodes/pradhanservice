@@ -32,8 +32,12 @@ export default function LeadsTable({ leads, onOpenSlideOver, onStatusChange, onD
           <tbody className="divide-y divide-gray-100 bg-white">
             {leads.length === 0 ? (
               <tr>
-                <td colSpan="5" className="px-6 py-12 text-center text-gray-500 font-medium">
-                  No leads found matching your criteria.
+                <td colSpan="5" className="px-6 py-20 text-center">
+                  <div className="flex flex-col items-center justify-center">
+                    <Search className="h-10 w-10 text-gray-300 mb-3" />
+                    <p className="text-gray-500 font-extrabold text-lg">No leads found</p>
+                    <p className="text-gray-400 font-medium mt-1">Try adjusting your search or clearing your filters.</p>
+                  </div>
                 </td>
               </tr>
             ) : (

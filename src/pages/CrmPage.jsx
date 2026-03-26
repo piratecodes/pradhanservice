@@ -9,17 +9,19 @@ import LeadsTable from '@/components/leads/LeadsTable';
 import LeadSlideOver from '@/components/leads/LeadSlideOver';
 
 export default function CrmPage() {
-  //Title & Description for SEO (and nice browser tab titles!)
   useDocumentMeta("CRM | Pradhan Services", "Manage and track all your leads in one place.");
 
   const [leads, setLeads] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   
-  // Slide-Over State
+  // 👇 NEW: Search & Filter State 👇
+  const [searchQuery, setSearchQuery] = useState('');
+  const [statusFilter, setStatusFilter] = useState('All');
+  const [serviceFilter, setServiceFilter] = useState('All');
+  
   const [isSlideOverOpen, setIsSlideOverOpen] = useState(false);
   const [selectedLead, setSelectedLead] = useState(null);
 
-  // 1. Fetch leads when the page loads
   useEffect(() => {
     fetchLeads();
   }, []);
@@ -27,7 +29,7 @@ export default function CrmPage() {
   const fetchLeads = async () => {
     try {
       const response = await fetchClient('/leads');
-      setLeads(response.data.leads);
+      setLeads(response.data.leads || []);
     } catch (error) {
       toast.error('Failed to load leads from the server.');
       console.error(error);
@@ -36,48 +38,36 @@ export default function CrmPage() {
     }
   };
 
-  // 2. Handle Status Dropdown changes from the Table
   const handleStatusChange = async (leadId, newStatus) => {
-    // Optimistic UI Update: Change it immediately on screen so it feels blazing fast
     const originalLeads = [...leads];
     setLeads(leads.map(lead => lead._id === leadId ? { ...lead, status: newStatus } : lead));
 
     try {
-      // Hit your Node.js API to save it
       await fetchClient(`/leads/${leadId}`, {
         method: 'PATCH',
         body: JSON.stringify({ status: newStatus }),
       });
       toast.success(`Lead status moved to ${newStatus}`);
     } catch (error) {
-      // If it fails, revert the UI back to how it was
       setLeads(originalLeads);
       toast.error(error.message || 'Failed to update status');
     }
   };
 
-  // 3. Open the Slide-Over Drawer
   const openSlideOver = (lead) => {
     setSelectedLead(lead);
     setIsSlideOverOpen(true);
   };
 
-  // 4. When notes are saved inside the Drawer, update the table data silently
   const handleLeadUpdated = (updatedLead) => {
     setLeads(leads.map(lead => lead._id === updatedLead._id ? updatedLead : lead));
   };
 
-  // 5. Delete Lead Handler
   const handleDeleteLead = async (leadId) => {
-    // Add a quick confirmation so users don't misclick and lose data!
     if (!window.confirm("Are you sure you want to delete this lead? This action cannot be undone.")) return;
 
     try {
-      await fetchClient(`/leads/${leadId}`, {
-        method: 'DELETE',
-      });
-      
-      // Remove it from the local state so it vanishes from the table instantly
+      await fetchClient(`/leads/${leadId}`, { method: 'DELETE' });
       setLeads(leads.filter((lead) => lead._id !== leadId));
       toast.success('Lead permanently deleted.');
     } catch (error) {
@@ -85,9 +75,36 @@ export default function CrmPage() {
     }
   };
 
+  // 👇 NEW: The Filter Engine 👇
+  const filteredLeads = leads.filter((lead) => {
+    // 1. Search Query Match
+    const query = searchQuery.toLowerCase();
+    const matchesSearch = 
+      (lead.customerName && lead.customerName.toLowerCase().includes(query)) ||
+      (lead.customerPhone && lead.customerPhone.toLowerCase().includes(query)) ||
+      (lead.originCity && lead.originCity.toLowerCase().includes(query)) ||
+      (lead.destinationCity && lead.destinationCity.toLowerCase().includes(query));
+
+    // 2. Status Match
+    const matchesStatus = statusFilter === 'All' || lead.status === statusFilter;
+
+    // 3. Service Match
+    const matchesService = serviceFilter === 'All' || lead.serviceRequested === serviceFilter;
+
+    return matchesSearch && matchesStatus && matchesService;
+  });
+
   return (
     <div className="max-w-[1600px] mx-auto">
-      <LeadsHeader />
+      {/* 👇 Pass state to Header 👇 */}
+      <LeadsHeader 
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
+        statusFilter={statusFilter}
+        onStatusFilterChange={setStatusFilter}
+        serviceFilter={serviceFilter}
+        onServiceFilterChange={setServiceFilter}
+      />
 
       {isLoading ? (
         <div className="flex flex-col items-center justify-center py-20 bg-white rounded-2xl border border-gray-100 shadow-sm">
@@ -96,14 +113,14 @@ export default function CrmPage() {
         </div>
       ) : (
         <LeadsTable 
-          leads={leads} 
+          leads={filteredLeads} // 👈 Feed filtered data to Table
           onOpenSlideOver={openSlideOver} 
           onStatusChange={handleStatusChange} 
           onDeleteLead={handleDeleteLead}
+          isFiltering={searchQuery !== '' || statusFilter !== 'All' || serviceFilter !== 'All'}
         />
       )}
 
-      {/* The Headless UI Drawer sits hidden here until `isSlideOverOpen` becomes true */}
       <LeadSlideOver 
         isOpen={isSlideOverOpen} 
         setIsOpen={setIsSlideOverOpen} 

@@ -20,6 +20,7 @@ import ServicesPage from '@/pages/ServicesPage.jsx'
 import GalleryPage from '@/pages/GalleryPage.jsx'
 import SettingsPage from '@/pages/SettingsPage.jsx'
 import TeamPage from '@/pages/TeamPage.jsx'
+import SeoPages from '@/pages/SeoPages.jsx'
 
 const router = createBrowserRouter([
   {
@@ -60,6 +61,10 @@ const router = createBrowserRouter([
           {
             path: '/cities',    // <-- ADD THIS ROUTE
             element: <CitiesPage />,
+          },
+          {
+            path: '/seo-pages',
+            element: <SeoPages />,
           },
           {
             path: '/services',  // <-- ADD THIS ROUTE

@@ -40,7 +40,7 @@ export const fetchClient = async (endpoint, options = {}) => {
     // 8. Catch backend AppError messages 
     if (!response.ok) {
       // If it's just a 404 (Empty Data), don't throw a massive error, just return empty!
-      if (response.status === 404) {
+      if (response.status === 404 || options.method === 'GET') {
         return { data: {} }; 
       }
       throw new Error(data.message || 'An error occurred with the server.');

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Package, Car, Briefcase, Palette, Truck, Factory, Shield, Wrench, CheckSquare, Plus, Edit3, Trash2, Loader2 } from 'lucide-react';
+import { Package, Car, Bike, Briefcase, Palette, Truck, Factory, Shield, Wrench, CheckSquare, Plus, Edit3, Trash2, Loader2 } from 'lucide-react';
 import { fetchClient } from '@/api/fetchClient';
 import toast from 'react-hot-toast';
 import useDocumentMeta from '@/hooks/useDocumentMeta';
@@ -9,14 +9,17 @@ import CategoryModal from '@/components/services/CategoryModal';
 // Your exact Backend ENUMS mapped to UI labels and icons
 const SERVICE_TYPES = [
   { id: 'packers-and-movers', label: 'Packers & Movers', icon: Package },
-  { id: 'car-and-bike-transport', label: 'Car & Bike', icon: Car },
-  { id: 'office-relocation', label: 'Office Relocation', icon: Briefcase },
-  { id: 'fine-art-movement', label: 'Fine Art Movement', icon: Palette },
+  { id: 'storage-solutions', label: 'Storage Solutions', icon: Factory },
+  { id: 'car-transportation', label: 'Car Transportation', icon: Car },
+  { id: 'bike-transportation', label: 'Bike Transportation', icon: Bike },
+  // { id: 'car-and-bike-transport', label: 'Car & Bike', icon: Car },
+  // { id: 'office-relocation', label: 'Office Relocation', icon: Briefcase },
+  // { id: 'fine-art-movement', label: 'Fine Art Movement', icon: Palette },
   // { id: 'transport-and-logistics', label: 'Transport & Logistics', icon: Truck },
-  { id: 'factory-moving', label: 'Factory Moving', icon: Factory },
-  { id: 'defence-relocation-service', label: 'Defence Relocation', icon: Shield },
-  { id: 'home-appliance-uninstall-and-install', label: 'Appliance Setup', icon: Wrench },
-  { id: 'after-shifting-services', label: 'After Shifting', icon: CheckSquare }
+  // { id: 'factory-moving', label: 'Factory Moving', icon: Factory },
+  // { id: 'defence-relocation-service', label: 'Defence Relocation', icon: Shield },
+  // { id: 'home-appliance-uninstall-and-install', label: 'Appliance Setup', icon: Wrench },
+  // { id: 'after-shifting-services', label: 'After Shifting', icon: CheckSquare }
 ];
 
 export default function ServicesPage() {

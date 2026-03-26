@@ -1,7 +1,19 @@
-import { MapPin, Edit3, Navigation, Globe, Trash2 } from 'lucide-react'; // Added Trash2
+import { MapPin, Edit3, Navigation, Globe, Trash2, Search } from 'lucide-react';
 
-export default function CityGrid({ cities, onEditCity, onToggleStatus, onDeleteCity }) { // Added onDeleteCity
+export default function CityGrid({ cities, onEditCity, onToggleStatus, onDeleteCity, isSearchActive }) {
+  
+  // Handle empty states gracefully
   if (cities.length === 0) {
+    if (isSearchActive) {
+      return (
+        <div className="text-center py-20 bg-white rounded-2xl border border-gray-100 shadow-sm">
+          <Search className="mx-auto h-12 w-12 text-gray-300 mb-4" />
+          <h3 className="text-lg font-extrabold text-gray-900">No matches found</h3>
+          <p className="text-gray-500 font-medium mt-1">We couldn't find any cities or sub-towns matching your search.</p>
+        </div>
+      );
+    }
+    
     return (
       <div className="text-center py-20 bg-white rounded-2xl border border-gray-100 shadow-sm">
         <Globe className="mx-auto h-12 w-12 text-gray-300 mb-4" />
@@ -40,12 +52,6 @@ export default function CityGrid({ cities, onEditCity, onToggleStatus, onDeleteC
                   {city.subTowns?.length || 0} Sub-towns
                 </span>
               </div>
-              <div className="flex items-center gap-2 text-sm">
-                <Globe size={16} className="text-secondary/80" />
-                <span className="font-medium text-gray-600">
-                  {city.activeServices?.length || 0} Services Active
-                </span>
-              </div>
             </div>
 
             {/* ACTION BUTTONS */}
@@ -61,18 +67,11 @@ export default function CityGrid({ cities, onEditCity, onToggleStatus, onDeleteC
                 {city.isActive ? 'Deactivate' : 'Activate'}
               </button>
               
-              {/* Grouped Edit and Delete together */}
               <div className="flex items-center gap-4">
-                <button
-                  onClick={() => onEditCity(city)}
-                  className="flex items-center gap-1 text-sm font-bold text-primary hover:text-secondary transition-colors"
-                >
+                <button onClick={() => onEditCity(city)} className="flex items-center gap-1 text-sm font-bold text-primary hover:text-secondary transition-colors">
                   <Edit3 size={16} /> Edit
                 </button>
-                <button
-                  onClick={() => onDeleteCity(city.citySlug)} // Passing the slug!
-                  className="flex items-center gap-1 text-sm font-bold text-red-400 hover:text-red-600 transition-colors"
-                >
+                <button onClick={() => onDeleteCity(city.citySlug)} className="flex items-center gap-1 text-sm font-bold text-red-400 hover:text-red-600 transition-colors">
                   <Trash2 size={16} /> Delete
                 </button>
               </div>

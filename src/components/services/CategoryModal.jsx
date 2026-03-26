@@ -7,14 +7,17 @@ import toast from 'react-hot-toast';
 // We add the list so the Dashboard can use a dropdown if needed!
 const SERVICE_TYPES = [
   { id: 'packers-and-movers', label: 'Packers & Movers' },
-  { id: 'car-and-bike-transport', label: 'Car & Bike' },
-  { id: 'office-relocation', label: 'Office Relocation' },
-  { id: 'fine-art-movement', label: 'Fine Art Movement' },
-  { id: 'transport-and-logistics', label: 'Transport & Logistics' },
-  { id: 'factory-moving', label: 'Factory Moving' },
-  { id: 'defence-relocation-service', label: 'Defence Relocation' },
-  { id: 'home-appliance-uninstall-and-install', label: 'Appliance Setup' },
-  { id: 'after-shifting-services', label: 'After Shifting' }
+  { id: 'storage-solutions', label: 'Storage Solutions' },
+  { id: 'car-transportation', label: 'Car Transportation' },
+  { id: 'bike-transportation', label: 'Bike Transportation' },
+  // { id: 'car-and-bike-transport', label: 'Car & Bike' },
+  // { id: 'office-relocation', label: 'Office Relocation' },
+  // { id: 'fine-art-movement', label: 'Fine Art Movement' },
+  // { id: 'transport-and-logistics', label: 'Transport & Logistics' },
+  // { id: 'factory-moving', label: 'Factory Moving' },
+  // { id: 'defence-relocation-service', label: 'Defence Relocation' },
+  // { id: 'home-appliance-uninstall-and-install', label: 'Appliance Setup' },
+  // { id: 'after-shifting-services', label: 'After Shifting' }
 ];
 
 export default function CategoryModal({ isOpen, setIsOpen, categoryData, activeServiceId, onSuccess }) {

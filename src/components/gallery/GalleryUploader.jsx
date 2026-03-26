@@ -106,9 +106,9 @@ export default function GalleryUploader({ onUploadSuccess }) {
               <label className="block text-sm font-bold text-gray-700 mb-1">Service Category</label>
               <select value={formData.category} onChange={e => setFormData({...formData, category: e.target.value})} className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:bg-white outline-none font-medium text-gray-700">
                 <option value="packers-and-movers">Packers & Movers</option>
-                <option value="car-and-bike-transport">Car & Bike</option>
-                <option value="office-relocation">Office Relocation</option>
-                <option value="transport-and-logistics">Transport Fleet</option>
+                <option value="storage-solutions">Storage Solutions</option>
+                <option value="car-transportation">Car Transportation</option>
+                <option value="bike-transportation">Bike Transportation</option>
               </select>
             </div>
             <div>
