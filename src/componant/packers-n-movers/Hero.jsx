@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { Tab, TabGroup, TabList, TabPanels, TabPanel } from '@headlessui/react';
 import toast from 'react-hot-toast'; // Assuming you are using hot-toast for alerts
 
-export default function Hero({ cityName }) {
+export default function Hero({ cityName, dynamicTitle, dynamicIntro }) {
   const classNames = (...classes) => classes.filter(Boolean).join(' ');
 
   const [isLoading, setIsLoading] = useState(false);
@@ -71,19 +71,21 @@ export default function Hero({ cityName }) {
         <div className="flex justify-center mb-6">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-gray-200 bg-white shadow-sm">
             <span className="text-secondary">★</span>
-            <span className="text-xs md:text-sm font-medium text-gray-700">Rated 4.6/5 by 475+ Happy Clients!</span>
+            <span className="text-xs md:text-sm font-medium text-gray-700">Rated 4.9/5 by 10,000+ Happy Clients!</span>
           </div>
         </div>
 
+        {/* 🚀 DYNAMIC H1 FROM VITE ADMIN */}
         <div className="text-center mb-6">
-          <h1 className="text-4xl md:text-6xl font-bold text-gray-900 leading-tight">
-            <span className="text-secondary">Best</span> Packers and <br className="hidden md:block" /> Movers in {cityName}
+          <h1 className="text-4xl md:text-6xl font-black text-primary leading-tight tracking-tight">
+            {dynamicTitle || <>Best Packers and Movers in <span className="text-secondary italic">{cityName}</span></>}
           </h1>
         </div>
 
-        <div className="max-w-3xl mx-auto text-center mb-12">
-          <p className="text-sm md:text-base text-gray-600 leading-relaxed">
-            Shifting in {cityName} is not just about booking a truck for one day...
+        {/* 🚀 DYNAMIC INTRO FROM VITE ADMIN */}
+        <div className="max-w-6xl mx-auto text-center mb-12">
+          <p className="text-lg md:text-xl text-gray-500 font-medium leading-relaxed">
+            {dynamicIntro || `Professional, secure, and on-time shifting services in ${cityName}. Get a free estimate today.`}
           </p>
         </div>
 

@@ -2,35 +2,32 @@ import React from 'react';
 import { notFound } from 'next/navigation';
 
 import PackersMoversTemplate from '@/componant/templates/PackersMoversTemplate';
-import CarAndBikeTemplate from '@/componant/templates/CarAndBikeTemplate';
-import OfficeRelocationTemplate from '@/componant/templates/OfficeRelocationTemplate';
-import FineArtTemplate from '@/componant/templates/FineArtTemplate';
 import WarehousingTemplate from '@/componant/templates/WarehousingTemplate';
-import TransportTemplate from '@/componant/templates/TransportTemplate';
-import FactoryTemplate from '@/componant/templates/FactoryTemplate';
-import DefenceTemplate from '@/componant/templates/DefenceTemplate';
-import ApplianceTemplate from '@/componant/templates/ApplianceTemplate';
-import AfterShiftingTemplate from '@/componant/templates/AfterShiftingTemplate';
+import CarTemplate from '@/componant/templates/CarTemplate';
+import BikeTemplate from '@/componant/templates/BikeTemplate';
 
-// --- 1. THE DATA FETCHER ---
-// We use a helper function so both SEO and the Page can use it safely
+// --- 1. DATA FETCHERS ---
 async function getCityData(citySlug) {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cities/slug/${citySlug}`, { 
-      next: { revalidate: 3600 } 
-    });
-    
-    // If backend returns 404, this res.ok will be false
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cities/slug/${citySlug}`, { next: { revalidate: 3600 } });
     if (!res.ok) return null; 
-    
     const data = await res.json();
     return data?.data?.city;
-  } catch (error) {
-    return null;
-  }
+  } catch (error) { return null; }
 }
 
-// --- 2. THE COMPOSITE SEO ENGINE ---
+async function getPageData(citySlug, serviceSlug) {
+  try {
+    // Note: 'cache: no-store' ensures Next.js always asks the backend, 
+    // which is incredibly fast now because of our RAM cache middleware!
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/location-pages/${citySlug}/${serviceSlug}`, { cache: 'no-store' });
+    if (!res.ok) return null; 
+    const data = await res.json();
+    return data?.data?.page;
+  } catch (error) { return null; }
+}
+
+// --- 2. DYNAMIC SEO ENGINE ---
 export async function generateMetadata({ params }) {
   const resolvedParams = await params;
   const fullUrlPath = resolvedParams.Services || ""; 
@@ -41,30 +38,31 @@ export async function generateMetadata({ params }) {
   const serviceSlug = urlParts[0]; 
   const citySlug = urlParts[1];
 
-  // Fetch from DB to get the backend meta tags
-  const cityData = await getCityData(citySlug);
-  
-  // If city is invalid, we return nothing here (the page component will throw the 404)
+  const [cityData, pageData] = await Promise.all([
+    getCityData(citySlug),
+    getPageData(citySlug, serviceSlug)
+  ]);
+
   if (!cityData) return {};
 
-  // Format the service string beautifully (e.g., "packers-and-movers" -> "Packers And Movers")
-  const formattedService = serviceSlug
-    .split('-')
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ');
-
-  // Use the actual capitalized City Name from your database!
   const cityName = cityData.cityName;
+  const formattedService = serviceSlug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
 
-  // Extract the raw backend data
-  const backendMetaTitle = cityData.seo?.metaTitle || "";
-  const backendMetaDesc = cityData.seo?.metaDescription || "";
-
-  // Stitch them together exactly as you requested!
   return {
-    title: `Pradhan Services - ${formattedService} in ${cityName} at ${backendMetaTitle}`.trim(),
-    description: `Looking for top-rated ${formattedService} in ${cityName}? ${backendMetaDesc}`.trim(),
-    keywords: cityData.seo?.keywords || `${formattedService.toLowerCase()}, ${cityName.toLowerCase()}`
+    title: pageData?.seo?.metaTitle || `Pradhan Services - Best ${formattedService} in ${cityName}`,
+    description: pageData?.seo?.metaDescription || `Looking for top-rated ${formattedService} in ${cityName}? Get a free quote today.`,
+    
+    keywords: pageData?.seo?.metaKeywords 
+      ? pageData.seo.metaKeywords.split(',').map(k => k.trim()) 
+      : [`${formattedService} in ${cityName}`, 'relocation', 'shifting', cityName],
+      
+    alternates: {
+      canonical: pageData?.seo?.canonicalUrl || undefined,
+    },
+    robots: {
+      index: !(pageData?.seo?.isNoIndex),
+      follow: !(pageData?.seo?.isNoIndex),
+    }
   };
 }
 
@@ -73,62 +71,39 @@ export default async function MasterServiceRouter({ params }) {
   const resolvedParams = await params;
   const fullUrlPath = resolvedParams.Services || ""; 
 
-  // Strict URL Validation
-  if (!fullUrlPath.includes('-in-')) {
-    return notFound();
-  }
+  if (!fullUrlPath.includes('-in-')) return notFound();
 
   const urlParts = fullUrlPath.split('-in-');
   const serviceSlug = urlParts[0]; 
   const citySlug = urlParts[1];
 
-  if (!serviceSlug || !citySlug) {
-    return notFound();
-  }
+  if (!serviceSlug || !citySlug) return notFound();
 
-  // 🚀 THE DATABASE VALIDATION LOCK 🚀
-  // If the city doesn't exist in MongoDB, instantly throw a 404!
-  const cityData = await getCityData(citySlug);
-  if (!cityData) {
-    return notFound(); 
-  }
+  // PARALLEL FETCHING
+  const [cityData, pageData] = await Promise.all([
+    getCityData(citySlug),
+    getPageData(citySlug, serviceSlug)
+  ]);
 
-  // Use the exact database name (e.g., "Kolkata") instead of formatting the URL slug
-  const cityName = cityData.cityName; 
+  if (!cityData) return notFound(); 
 
-  // THE PROXY SWITCHBOARD
+  // 🌟 THE PROXY SWITCHBOARD
   switch (serviceSlug) {
     case 'packers-and-movers':
     case 'packers-n-movers':
-      return <PackersMoversTemplate cityName={cityName} />;
+      return <PackersMoversTemplate cityData={cityData} pageData={pageData} />;
       
-    case 'car-transport':
-    case 'car-and-bike-transport':
-      return <CarAndBikeTemplate cityName={cityName} />;
+    // 🚗 CAR ONLY
+    case 'car-transportation':
+      return <CarTemplate cityData={cityData} pageData={pageData} />;
       
-    case 'office-relocation':
-      return <OfficeRelocationTemplate cityName={cityName} />;
-
-    case 'fine-art-movement':
-      return <FineArtTemplate cityName={cityName} />;
-
+    // 🏍️ BIKE ONLY
+    case 'bike-transportation':
+      return <BikeTemplate cityData={cityData} pageData={pageData} />;
+      
+    case 'storage-solutions':
     case 'ware-housing':
-      return <WarehousingTemplate cityName={cityName} />;
-    
-    case 'transport-and-logistics':
-      return <TransportTemplate cityName={cityName} />;
-      
-    case 'factory-moving':
-      return <FactoryTemplate cityName={cityName} />;
-
-    case 'defence-relocation-service':
-      return <DefenceTemplate cityName={cityName} />;
-      
-    case 'home-appliance-uninstall-and-install':
-      return <ApplianceTemplate cityName={cityName} />;
-
-    case 'after-shifting-services':
-      return <AfterShiftingTemplate cityName={cityName} />;
+      return <WarehousingTemplate cityData={cityData} pageData={pageData} />;
 
     default:
       return notFound(); 

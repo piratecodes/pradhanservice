@@ -4,20 +4,22 @@ import React, { useState, useEffect, useRef, Fragment } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Transition, Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react';
-import { ChevronDown, MapPin, Package, Car, Briefcase, Palette, Truck, Factory, Shield, Wrench, CheckSquare, Menu, X } from 'lucide-react';
+import { ChevronDown, MapPin, Package, Car, Briefcase, Palette, Factory, Shield, Wrench, CheckSquare, Menu, X } from 'lucide-react';
 
 import icon from '@/assets/icon.png';
 
 const SERVICES = [
   { name: 'Packers & Movers', slug: 'packers-and-movers', icon: Package },
-  { name: 'Car & Bike Transport', slug: 'car-and-bike-transport', icon: Car },
-  { name: 'Office Relocation', slug: 'office-relocation', icon: Briefcase },
-  { name: 'Fine Art Movement', slug: 'fine-art-movement', icon: Palette },
-  // { name: 'Warehousing', slug: 'ware-housing', icon: Truck },
-  { name: 'Factory Moving', slug: 'factory-moving', icon: Factory },
-  { name: 'Defence Relocation', slug: 'defence-relocation-service', icon: Shield },
-  { name: 'Appliance Setup', slug: 'home-appliance-uninstall-and-install', icon: Wrench },
-  { name: 'After Shifting', slug: 'after-shifting-services', icon: CheckSquare }
+  { name: 'Storage Solutions', slug: 'storage-solutions', icon: Package },
+  { name: 'Car Transportation', slug: 'car-transportation', icon: Car },
+  { name: 'Bike Transportation', slug: 'bike-transportation', icon: Car },
+
+  // { name: 'Office Relocation', slug: 'office-relocation', icon: Briefcase },
+  // { name: 'Fine Art Movement', slug: 'fine-art-movement', icon: Palette },
+  // { name: 'Factory Moving', slug: 'factory-moving', icon: Factory },
+  // { name: 'Defence Relocation', slug: 'defence-relocation-service', icon: Shield },
+  // { name: 'Appliance Setup', slug: 'home-appliance-uninstall-and-install', icon: Wrench },
+  // { name: 'After Shifting', slug: 'after-shifting-services', icon: CheckSquare }
 ];
 
 export default function Nav() {
@@ -25,14 +27,12 @@ export default function Nav() {
   const [hoveredService, setHoveredService] = useState(SERVICES[0]);
   const [isDesktopMenuOpen, setIsDesktopMenuOpen] = useState(false);
   
-  // Tracking just the Services dropdown area for outside clicks
   const servicesMenuRef = useRef(null);
 
   useEffect(() => {
     const fetchCities = async () => {
       try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cities`);
-        console.log(`${process.env.NEXT_PUBLIC_API_URL}/cities`);
         const data = await res.json();
         if (data.success) setCities(data.data.cities || []);
       } catch (err) {
@@ -41,7 +41,7 @@ export default function Nav() {
     };
     fetchCities();
 
-    // Global Listener: Forces menu to close when clicking outside the 'servicesMenuRef'
+    // Close menu when clicking outside
     const handleClickOutside = (event) => {
       if (servicesMenuRef.current && !servicesMenuRef.current.contains(event.target)) {
         setIsDesktopMenuOpen(false);
@@ -53,8 +53,7 @@ export default function Nav() {
   }, []);
 
   return (
-    <nav className="bg-white sticky top-0 left-0 w-full z-50 border-b bg-blue-50/50 backdrop-blur-md">
-      {/* Standard Tailwind max-w-7xl instead of max-w-8xl */}
+    <nav className="sticky top-0 left-0 w-full z-50 border-b bg-blue-50/50 backdrop-blur-md">
       <div className="max-w-7xl mx-auto flex items-center justify-between p-4 relative">
         
         {/* LOGO */}
@@ -66,15 +65,19 @@ export default function Nav() {
             draggable={false} 
             priority
           />
-          <span className="self-center text-xl text-[#112440] font-black whitespace-nowrap tracking-tight">Pradhan Services</span>
+          <span className="self-center text-xl text-primary font-black whitespace-nowrap tracking-tight">Pradhan Services</span>
         </Link>
 
         {/* --- DESKTOP NAVIGATION --- */}
         <div className="hidden md:flex items-center space-x-8">
           <ul className="flex items-center space-x-6 lg:space-x-8 font-bold text-sm text-gray-700">
-            {/* Standard rounded-full for pill shape */}
-            <li><Link href="/" className="border border-black block py-2 px-5 rounded-full hover:bg-black hover:text-white transition-all leading-none">Home</Link></li>
-            <li><Link href="/about" className="border border-black block py-2 px-5 rounded-full hover:bg-black hover:text-white transition-all leading-none">About</Link></li>
+            {/* Original Pill Shapes */}
+            <li>
+              <Link href="/" className="border border-black block py-2 px-5 rounded-full hover:bg-black hover:text-white transition-all leading-none">Home</Link>
+            </li>
+            <li>
+              <Link href="/about" className="border border-black block py-2 px-5 rounded-full hover:bg-black hover:text-white transition-all leading-none">About</Link>
+            </li>
 
             {/* SERVICES MEGA MENU (DESKTOP) */}
             <div className="relative" ref={servicesMenuRef}>
@@ -95,27 +98,28 @@ export default function Nav() {
                 leaveFrom="opacity-100 translate-y-0"
                 leaveTo="opacity-0 translate-y-1"
               >
-                {/* 🚀 STANDARD TAILWIND CENTERING: absolute top-full left-1/2 -translate-x-1/2 🚀 */}
-                <div className="absolute top-full left-1/2 -translate-x-1/2 z-50 mt-4 w-screen max-w-4xl px-4 sm:px-0">
-                  <div className="overflow-hidden rounded-3xl shadow-2xl bg-white flex border border-gray-100 min-h-[500px]">
+                {/* 🚀 WIDE MENU SHELL (Fits 3 Columns Easily) 🚀 */}
+                <div className="absolute top-full left-1/2 -translate-x-1/2 z-50 mt-4 w-[850px] px-4 sm:px-0">
+                  <div className="overflow-hidden rounded-3xl shadow-2xl bg-white flex border border-gray-100 min-h-[450px]">
                     
-                    {/* LEFT: Categories */}
-                    <div className="w-5/12 bg-gray-50/80 p-8 border-r border-gray-100">
+                    {/* LEFT: Categories (Original Color Scheme) */}
+                    <div className="w-[35%] bg-gray-50/80 p-8 border-r border-gray-100">
                       <p className="text-[10px] uppercase tracking-widest text-gray-400 font-black mb-6 pl-2">Categories</p>
                       <div className="space-y-1">
                         {SERVICES.map((item) => {
                           const Icon = item.icon;
+                          const isActive = hoveredService.slug === item.slug;
                           return (
                             <button
                               key={item.slug}
                               onMouseEnter={() => setHoveredService(item)}
                               className={`w-full flex items-center gap-4 px-5 py-3 rounded-2xl transition-all text-left ${
-                                hoveredService.slug === item.slug 
+                                isActive 
                                 ? 'bg-[#112440] text-white shadow-xl' 
                                 : 'text-gray-600 hover:bg-white hover:text-[#112440]'
                               }`}
                             >
-                              <Icon size={18} className={hoveredService.slug === item.slug ? 'text-[#c5a059]' : ''} />
+                              <Icon size={18} className={isActive ? 'text-[#c5a059]' : ''} />
                               <span className="text-sm font-bold">{item.name}</span>
                             </button>
                           );
@@ -123,25 +127,31 @@ export default function Nav() {
                       </div>
                     </div>
 
-                    {/* RIGHT: Dynamic Cities for selected service */}
-                    <div className="w-7/12 p-8 bg-white overflow-y-auto max-h-[550px]">
+                    {/* RIGHT: Dynamic Cities (The New 3-Column Grid Fix) */}
+                    <div className="w-[65%] p-8 bg-white">
                       <p className="text-[10px] uppercase tracking-widest text-[#c5a059] font-black mb-6 flex items-center gap-2">
-                        <MapPin size={12} /> Coverage Locations
+                        <MapPin size={12} /> Coverage for {hoveredService.name}
                       </p>
-                      <div className="grid grid-cols-1 gap-1">
-                        {cities.map((city) => (
-                          <Link
-                            key={city._id}
-                            href={`/${hoveredService.slug}-in-${city.citySlug}`}
-                            onClick={() => setIsDesktopMenuOpen(false)}
-                            className="group flex items-center justify-between px-6 py-3 rounded-xl hover:bg-gray-50 transition-colors"
-                          >
-                            <span className="text-sm font-bold text-gray-700 group-hover:text-[#112440]">
-                              {hoveredService.name} <span className="text-gray-400 font-normal mx-1">in</span> {city.cityName}
-                            </span>
-                            <span className="text-[#c5a059] opacity-0 group-hover:opacity-100 transition-opacity font-bold">→</span>
-                          </Link>
-                        ))}
+                      
+                      {/* 🚀 3-COLUMN GRID: Pure city names only 🚀 */}
+                      <div className="grid grid-cols-3 gap-y-5 gap-x-6 overflow-y-auto max-h-[400px] pr-2 custom-scrollbar">
+                        {cities.length > 0 ? (
+                          cities.map((city) => (
+                            <Link
+                              key={city._id}
+                              href={`/${hoveredService.slug}-in-${city.citySlug}`}
+                              onClick={() => setIsDesktopMenuOpen(false)}
+                              className="group flex items-center gap-2 transition-colors"
+                            >
+                              <div className="w-1.5 h-1.5 rounded-full bg-gray-300 group-hover:bg-[#c5a059] transition-colors" />
+                              <span className="text-sm font-bold text-gray-600 group-hover:text-[#112440] truncate">
+                                {city.cityName}
+                              </span>
+                            </Link>
+                          ))
+                        ) : (
+                          <div className="col-span-3 text-sm text-gray-400 font-medium">Loading locations...</div>
+                        )}
                       </div>
                     </div>
 
@@ -149,8 +159,13 @@ export default function Nav() {
                 </div>
               </Transition>
             </div>
-            <li><a target="_blank" href="https://blog.pradhanservice.com" className="border border-black block py-2 px-5 rounded-full hover:bg-black hover:text-white transition-all leading-none">Blogs</a></li>
-            <li><Link href="/contact" className="border border-black block py-2 px-5 rounded-full hover:bg-black hover:text-white transition-all leading-none">Contact</Link></li>
+
+            <li>
+              <a target="_blank" href="https://blog.pradhanservice.com" className="border border-black block py-2 px-5 rounded-full hover:bg-black hover:text-white transition-all leading-none">Blogs</a>
+            </li>
+            <li>
+              <Link href="/contact" className="border border-black block py-2 px-5 rounded-full hover:bg-black hover:text-white transition-all leading-none">Contact</Link>
+            </li>
           </ul>
         </div>
 
@@ -197,19 +212,23 @@ export default function Nav() {
                                     </DisclosureButton>
                                     
                                     <DisclosurePanel className="mt-2 ml-8 space-y-2 border-l-2 border-gray-100 pl-4 py-2">
-                                      {cities.length > 0 ? (
-                                        cities.map(city => (
-                                          <Link 
-                                            key={city._id} 
-                                            href={`/${s.slug}-in-${city.citySlug}`}
-                                            className="block text-sm font-semibold text-gray-500 py-1.5 hover:text-[#112440]"
-                                          >
-                                            {city.cityName}
-                                          </Link>
-                                        ))
-                                      ) : (
-                                        <p className="text-xs text-gray-400">Loading cities...</p>
-                                      )}
+                                      {/* Mobile grid for locations so they don't scroll forever */}
+                                      <div className="grid grid-cols-2 gap-y-2 gap-x-4">
+                                        {cities.length > 0 ? (
+                                          cities.map(city => (
+                                            <Link 
+                                              key={city._id} 
+                                              href={`/${s.slug}-in-${city.citySlug}`}
+                                              className="flex items-center gap-2 text-sm font-semibold text-gray-500 hover:text-[#112440]"
+                                            >
+                                              <span className="w-1 h-1 rounded-full bg-gray-300"></span>
+                                              <span className="truncate">{city.cityName}</span>
+                                            </Link>
+                                          ))
+                                        ) : (
+                                          <p className="text-xs text-gray-400 col-span-2">Loading cities...</p>
+                                        )}
+                                      </div>
                                     </DisclosurePanel>
                                   </>
                                 )}

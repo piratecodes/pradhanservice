@@ -6,6 +6,7 @@ import Image from 'next/image';
 import LocalShiftingImage from "@/assets/LocalShifting.png";
 import SecureStorageImage from "@/assets/SecureStorage.png";
 import CarTransportImage from "@/assets/CarTransport.png";
+import BikeTransportImage from "@/assets/BikeTransport.png";
 
 export default function ServicesSection() {
   const servicesData = [
@@ -27,7 +28,7 @@ export default function ServicesSection() {
     {
       title: "Bike Transportation",
       description: "Trusted bike transportation by best packers and movers, offering door to door, safe and affordable bike shifting services.",
-      image: "https://dummyimage.com/600x400/1e293b/ffffff&text=Bike+Transport"
+      image: BikeTransportImage
     }
   ];
 

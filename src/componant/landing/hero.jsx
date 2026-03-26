@@ -158,7 +158,7 @@ export default function HeroSection() {
       </div>
 
       {/* 2. FLOATING QUOTE FORM (Responsive Grid) */}
-      <form onSubmit={handleSubmit} className="w-full bg-white rounded-[2rem] shadow-2xl shadow-[#112440]/10 border border-gray-100 p-6 md:p-8 mb-16 relative z-20">
+      <form onSubmit={handleSubmit} className="w-full bg-white rounded-4xl shadow-2xl shadow-primary/10 border border-gray-100 p-6 md:p-8 mb-16 relative z-20">
         
         {/* Top Row: User Details */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
@@ -199,7 +199,7 @@ export default function HeroSection() {
                 <Transition as={Fragment} leave="transition ease-in duration-100" leaveFrom="opacity-100" leaveTo="opacity-0">
                   <Listbox.Options className="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-xl bg-white py-1 text-sm shadow-2xl ring-1 ring-black/5 focus:outline-none border border-gray-100">
                     {cities.map((city) => (
-                      <Listbox.Option key={city._id} className={({ active }) => `relative cursor-pointer select-none py-3 pl-10 pr-4 ${active ? 'bg-secondary/10 text-[#112440]' : 'text-gray-700'}`} value={city}>
+                      <Listbox.Option key={city._id} className={({ active }) => `relative cursor-pointer select-none py-3 pl-10 pr-4 ${active ? 'bg-secondary/10 text-primary' : 'text-gray-700'}`} value={city}>
                         {({ selected }) => (
                           <>
                             <span className={`block truncate ${selected ? 'font-bold' : 'font-medium'}`}>{city.cityName}</span>
@@ -234,7 +234,7 @@ export default function HeroSection() {
                 <Transition as={Fragment} leave="transition ease-in duration-100" leaveFrom="opacity-100" leaveTo="opacity-0">
                   <Listbox.Options className="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-xl bg-white py-1 text-sm shadow-2xl ring-1 ring-black/5 focus:outline-none border border-gray-100">
                     {cities.map((city) => (
-                      <Listbox.Option key={city._id} className={({ active }) => `relative cursor-pointer select-none py-3 pl-10 pr-4 ${active ? 'bg-secondary/10 text-[#112440]' : 'text-gray-700'}`} value={city}>
+                      <Listbox.Option key={city._id} className={({ active }) => `relative cursor-pointer select-none py-3 pl-10 pr-4 ${active ? 'bg-secondary/10 text-primary' : 'text-gray-700'}`} value={city}>
                         {({ selected }) => (
                           <>
                             <span className={`block truncate ${selected ? 'font-bold' : 'font-medium'}`}>{city.cityName}</span>
@@ -269,7 +269,7 @@ export default function HeroSection() {
           <button 
             type="submit" 
             disabled={isLoading}
-            className="w-full h-[50px] rounded-xl bg-[#112440] hover:bg-opacity-90 disabled:bg-gray-400 text-white font-black flex items-center justify-center gap-2 transition-all uppercase tracking-widest text-xs shadow-lg shadow-[#112440]/20"
+            className="w-full h-[50px] rounded-xl bg-primary hover:bg-opacity-90 disabled:bg-gray-400 text-white font-black flex items-center justify-center gap-2 transition-all uppercase tracking-widest text-xs shadow-lg shadow-primary/20"
           >
             {isLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Get Instant Quote'}
           </button>
@@ -297,7 +297,7 @@ export default function HeroSection() {
               <CheckCircle2 className="w-5 h-5" />
             </div>
             <div>
-              <p className="text-sm font-black text-[#112440]">No Outsourcing</p>
+              <p className="text-sm font-black text-primary">No Outsourcing</p>
               <p className="text-xs font-medium text-gray-500">100% In-house Team</p>
             </div>
           </SplideSlide>
@@ -307,7 +307,7 @@ export default function HeroSection() {
               <Truck className="w-5 h-5" />
             </div>
             <div>
-              <p className="text-sm font-black text-[#112440]">Timely Delivery</p>
+              <p className="text-sm font-black text-primary">Timely Delivery</p>
               <p className="text-xs font-medium text-gray-500">GPS Tracked Fleet</p>
             </div>
           </SplideSlide>
@@ -317,7 +317,7 @@ export default function HeroSection() {
               <Banknote className="w-5 h-5" />
             </div>
             <div>
-              <p className="text-sm font-black text-[#112440]">Best Price</p>
+              <p className="text-sm font-black text-primary">Best Price</p>
               <p className="text-xs font-medium text-gray-500">Transparent Quotes</p>
             </div>
           </SplideSlide>
@@ -327,7 +327,7 @@ export default function HeroSection() {
               <Users className="w-5 h-5" />
             </div>
             <div>
-              <p className="text-sm font-black text-[#112440]">Verified Staff</p>
+              <p className="text-sm font-black text-primary">Verified Staff</p>
               <p className="text-xs font-medium text-gray-500">Background Checked</p>
             </div>
           </SplideSlide>
@@ -337,7 +337,7 @@ export default function HeroSection() {
               <Headphones className="w-5 h-5" />
             </div>
             <div>
-              <p className="text-sm font-black text-[#112440]">24/7 Support</p>
+              <p className="text-sm font-black text-primary">24/7 Support</p>
               <p className="text-xs font-medium text-gray-500">Always Available</p>
             </div>
           </SplideSlide>

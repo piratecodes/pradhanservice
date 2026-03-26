@@ -5,6 +5,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { MapPin, Phone, Mail, Facebook, Twitter, Instagram, Linkedin, Loader2, MessageCircle } from 'lucide-react';
 
+import icon from '@/assets/icon.png';
+
 export default function Footer() {
   // 1. Create state with fallbacks that perfectly match your API keys
   const [contactData, setContactData] = useState({
@@ -45,14 +47,15 @@ export default function Footer() {
           
           {/* LEFT SIDE: Brand & About */}
           <div className="flex flex-col gap-4 w-full lg:w-1/3 lg:pr-8">
-            <Link href="/" className="inline-block">
+            <Link href="/" className="flex items-center space-x-3 shrink-0">
               <Image 
-                src="https://dummyimage.com/200x60/1e293b/ffffff&text=Pradhan+Services" 
-                alt="Pradhan Packers Logo" 
-                width={200} 
-                height={60} 
-                className="object-contain"
+                src={icon} 
+                alt="Pradhan Logo" 
+                className="h-10 w-auto object-contain" 
+                draggable={false} 
+                priority
               />
+              <span className="self-center text-xl text-gray-200 font-black whitespace-nowrap tracking-tight">Pradhan Services</span>
             </Link>
             <p className="text-sm leading-relaxed text-slate-400 mt-2">
               Your trusted partner for safe, hassle-free, and premium relocation services across India. We ensure your belongings reach their destination securely and on time.
@@ -84,7 +87,7 @@ export default function Footer() {
           </div>
 
           {/* RIGHT SIDE: The 3 Columns */}
-          <div className="w-full lg:w-2/5 grid grid-cols-1 sm:grid-cols-2 gap-8 lg:pl-12 xl:pl-24">
+          <div className="w-full lg:w-2/5 grid grid-cols-2 md:gap-8 lg:pl-12 xl:pl-24">
             
             {/* Column 1: Quick Links */}
             <div className="flex flex-col gap-4">
@@ -92,7 +95,6 @@ export default function Footer() {
               <ul className="flex flex-col gap-3 text-sm">
                 <li><Link href="/" className="hover:text-secondary transition-colors">Home</Link></li>
                 <li><Link href="/about" className="hover:text-secondary transition-colors">About Us</Link></li>
-                <li><Link href="/how-it-works" className="hover:text-secondary transition-colors">How It Works</Link></li>
                 <li><Link href="/testimonials" className="hover:text-secondary transition-colors">Testimonials</Link></li>
                 <li><Link href="/contact" className="hover:text-secondary transition-colors">Contact Us</Link></li>
               </ul>

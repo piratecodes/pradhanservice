@@ -1,21 +1,19 @@
 import React from 'react';
-import Hero from '@/componant/ware-housing/Hero';
-
-// IMPORT THE COMPONENT WE JUST BUILT! (Check your folder path to make sure this is correct)
+import Hero from '@/componant/bike-transportation/Hero';
 import DynamicSections from '@/componant/DynamicSections'; 
 import ServiceComparison from '@/componant/packers-n-movers/ServiceComparison';
 import Testimonials from '@/componant/landing/testimonials';
 
-export default async function WarehousingTemplate({ cityData, pageData }) {
+export default async function BikeTemplate({ cityData, pageData }) {
   const cityName = cityData?.cityName || "City";
   return (
     <main className="bg-white">
-      {/* 1. Static Storage Hero Form */}
+      
+      {/* 1. Placeholder Hero (Replace with your custom Car Hero later) */}
       <Hero cityData={cityData} pageData={pageData} />
       
-      {/* 2. Dynamic Editorial Sections (Injected straight from your Database) */}
+      {/* 2. The Magic Dynamic Component */}
       <DynamicSections cityData={cityData} pageData={pageData} />
-
       <ServiceComparison cityName={cityName} />
       <Testimonials />
     </main>
