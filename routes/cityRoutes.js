@@ -13,8 +13,9 @@ import { cacheRoute } from '../middlewares/cacheMiddleware.js';
 const router = express.Router();
 
 // --- PUBLIC ROUTES (For your Next.js UI) ---
-// Your city dropdown componant will call this to get the active list
-router.get('/',  getAllCities);
+// 🌟 Added cacheRoute so dropdown lists load instantly from RAM
+router.get('/', cacheRoute, getAllCities);
+
 // Your Next.js dynamic page will call this to get the SEO meta tags
 router.get('/slug/:slug', cacheRoute, getCityBySlug);
 
@@ -27,4 +28,5 @@ router.post('/', createCity);
 router.patch('/:id', updateCity);
 router.patch('/:id/toggle', toggleCityStatus); // Soft delete / Turn off city
 router.delete('/:slug', restrictTo('super-admin'), deleteCityBySlug);
+
 export default router;

@@ -18,6 +18,7 @@ import authRoutes from './routes/authRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
 import serviceOptionRoutes from './routes/serviceOptionRoutes.js';
 import cityRoutes from './routes/cityRoutes.js';
+import locationPageRoutes from './routes/locationPageRoutes.js';
 import leadRoutes from './routes/leadRoutes.js';
 import galleryRoutes from './routes/galleryRoutes.js';
 import contactRoutes from './routes/contactRoutes.js';
@@ -48,19 +49,25 @@ app.use(helmet({
   crossOriginResourcePolicy: { policy: "cross-origin" } 
 }));
 
-const allowedOrigins = [ process.env.MAIN_WEBSITE_URL, process.env.ADMIN_PANEL_URL ];
+// const allowedOrigins = [ process.env.MAIN_WEBSITE_URL, process.env.ADMIN_PANEL_URL, `${process.env.MAIN_WEBSITE_URL}/`, `${process.env.ADMIN_PANEL_URL}/` ];
+// app.use(cors({
+//   origin: function (origin, callback) {
+//     // Allow requests with no origin (like mobile apps, curl requests, or Postman)
+//     if (!origin) return callback(null, true); 
+    
+//     // If the origin isn't in our array, throw our custom AppError
+//     if (allowedOrigins.indexOf(origin) === -1) {
+//       return callback(new AppError('The CORS policy for this site does not allow access from the specified Origin.', 403), false);
+//     }
+    
+//     // Otherwise, let it through!
+//     return callback(null, true);
+//   },
+//   credentials: true 
+// }));
 app.use(cors({
   origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps, curl requests, or Postman)
-    if (!origin) return callback(null, true); 
-    
-    // If the origin isn't in our array, throw our custom AppError
-    if (allowedOrigins.indexOf(origin) === -1) {
-      return callback(new AppError('The CORS policy for this site does not allow access from the specified Origin.', 403), false);
-    }
-    
-    // Otherwise, let it through!
-    return callback(null, true);
+    return callback(null, true); // Instantly allows every single website
   },
   credentials: true 
 }));
@@ -103,6 +110,7 @@ app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/admins', adminRoutes);
 app.use('/api/v1/service-options', serviceOptionRoutes);
 app.use('/api/v1/cities', cityRoutes);
+app.use('/api/v1/location-pages', locationPageRoutes);
 app.use('/api/v1/leads', leadRoutes);
 app.use('/api/v1/gallery', galleryRoutes);
 app.use('/api/v1/contact', contactRoutes);

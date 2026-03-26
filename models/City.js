@@ -26,26 +26,6 @@ const citySchema = new mongoose.Schema(
         trim: true,
       }
     ],
-    
-    // --- THE SEO ENGINE ---
-    seo: {
-      metaTitle: {
-        type: String,
-        trim: true,
-        // e.g., "Top Packers and Movers in {City} | Pradhan Service"
-      },
-      metaDescription: {
-        type: String,
-        trim: true,
-        // e.g., "Looking for safe and fast relocation in {City}? Get a free quote today..."
-      },
-      keywords: {
-        type: String,
-        trim: true,
-        // e.g., "packers, movers, relocation, {City}"
-      }
-    },
-
     isActive: {
       type: Boolean,
       default: true,

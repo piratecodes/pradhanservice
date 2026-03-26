@@ -11,14 +11,18 @@ const serviceOptionSchema = new mongoose.Schema({
     type: String,
     enum: [
       'packers-and-movers',
-      'car-and-bike-transport',
-      'office-relocation',
-      'fine-art-movement',
+      'packers-and-movers',
+      'storage-solutions',
+      'car-transportation',
+      'bike-transportation',
+      // 'car-and-bike-transport',
+      // 'office-relocation',
+      // 'fine-art-movement',
       // 'transport-and-logistics',
-      'factory-moving',
-      'defence-relocation-service',
-      'home-appliance-uninstall-and-install',
-      'after-shifting-services'
+      // 'factory-moving',
+      // 'defence-relocation-service',
+      // 'home-appliance-uninstall-and-install',
+      // 'after-shifting-services'
     ],
     required: [true, 'An option must belong to a specific static service']
   },

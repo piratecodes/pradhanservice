@@ -2,11 +2,15 @@ import ServiceOption from '../models/ServiceOption.js';
 import catchAsync from '../utils/catchAsync.js';
 import AppError from '../utils/AppError.js';
 import { successResponse } from '../utils/apiResponse.js';
-import mongoose from 'mongoose';
+import { clearCache } from '../middlewares/cacheMiddleware.js'; // 🌟 IMPORTED CLEAR TOOL
 
 // --- 1. ADD NEW DROPDOWN CATEGORY ---
 export const createOption = catchAsync(async (req, res, next) => {
   const newOption = await ServiceOption.create(req.body);
+  
+  // 🌟 SURGICAL CLEAR: Only clear the cache for this specific service type
+  clearCache(`/service/${newOption.serviceType}`);
+  
   successResponse(res, 201, 'Service option category created successfully', { option: newOption });
 });
 
@@ -26,6 +30,7 @@ export const getAllOptions = catchAsync(async (req, res, next) => {
     options 
   });
 });
+
 // (Next.js calls this! E.g., GET /api/service-options/car-and-bike-transport)
 export const getOptionsByService = catchAsync(async (req, res, next) => {
   const options = await ServiceOption.find({ 
@@ -50,6 +55,9 @@ export const updateOption = catchAsync(async (req, res, next) => {
     return next(new AppError('No service option found with that ID', 404));
   }
 
+  // 🌟 SURGICAL CLEAR
+  clearCache(`/service/${updatedOption.serviceType}`);
+
   successResponse(res, 200, 'Service option updated successfully', { option: updatedOption });
 });
 
@@ -64,6 +72,9 @@ export const toggleOptionStatus = catchAsync(async (req, res, next) => {
   option.isActive = !option.isActive;
   await option.save();
 
+  // 🌟 SURGICAL CLEAR
+  clearCache(`/service/${option.serviceType}`);
+
   successResponse(res, 200, `Service option is now ${option.isActive ? 'Active' : 'Inactive'}`, { option });
 });
 
@@ -74,6 +85,9 @@ export const deleteOption = catchAsync(async (req, res, next) => {
   if (!option) {
     return next(new AppError('No service option found with that ID', 404));
   }
+
+  // 🌟 SURGICAL CLEAR
+  clearCache(`/service/${option.serviceType}`);
 
   successResponse(res, 200, 'Service option permanently deleted', null);
 });

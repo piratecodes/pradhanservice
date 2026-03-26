@@ -2,12 +2,14 @@ import City from '../models/City.js';
 import catchAsync from '../utils/catchAsync.js';
 import AppError from '../utils/AppError.js';
 import { successResponse } from '../utils/apiResponse.js';
-import { appCache } from '../middlewares/cacheMiddleware.js';
+import { clearCache } from '../middlewares/cacheMiddleware.js'; // 🌟 Cleaned up import
 
 // --- ADMIN: CREATE A NEW CITY ---
 export const createCity = catchAsync(async (req, res, next) => {
   const newCity = await City.create(req.body);
-  appCache.flushAll(); // 🧹 Wipe the RAM cache so the new city shows up instantly!
+  
+  clearCache('/cities'); // 🌟 Targeted clear instead of flushing the whole website
+  
   successResponse(res, 201, 'City added successfully', { city: newCity });
 });
 
@@ -54,6 +56,8 @@ export const updateCity = catchAsync(async (req, res, next) => {
     return next(new AppError('No city found with that ID', 404));
   }
 
+  clearCache('/cities'); // 🌟 Clear cache on update
+
   successResponse(res, 200, 'City updated successfully', { city: updatedCity });
 });
 
@@ -68,6 +72,8 @@ export const toggleCityStatus = catchAsync(async (req, res, next) => {
   city.isActive = !city.isActive;
   await city.save();
 
+  clearCache('/cities'); // 🌟 Clear cache when toggling status
+
   successResponse(res, 200, `City is now ${city.isActive ? 'Active' : 'Inactive'}`, { city });
 });
 
@@ -80,8 +86,7 @@ export const deleteCityBySlug = catchAsync(async (req, res, next) => {
     return next(new AppError('No city found with that slug', 404));
   }
 
-  // Clear cache so the public list updates immediately
-  if (appCache) appCache.flushAll(); 
+  clearCache('/cities'); // 🌟 Targeted clear instead of flushing the whole website
 
   successResponse(res, 200, `City '${req.params.slug}' deleted successfully`, null);
 });
