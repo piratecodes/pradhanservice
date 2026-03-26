@@ -5,7 +5,7 @@ import { Toaster } from 'react-hot-toast'
 import '@/style/global.css'
 
 // 1. Guards & Layouts
-import AuthGuard from '@/components/common/AuthGuard.jsx'
+import AuthGuard from '@/components/common/authGuard.jsx'
 import GuestGuard from '@/components/common/GuestGuard.jsx'
 import ForgotPassword from '@/pages/ForgotPassword'
 import ResetPassword from '@/pages/ResetPassword'
