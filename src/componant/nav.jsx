@@ -229,8 +229,7 @@ export default function Nav() {
                         </div>
                       </div>
                       
-                      <Link href="/contact" onClick={() => close()} className="block text-xl font-bold pt-4">Contact</Link>
-                      <button onClick={() => close()} className="w-full bg-black text-white font-bold py-4 rounded-full mt-10 text-lg">Book a Service</button>
+                      <Link href="/contact" onClick={() => close()} className="w-full bg-black text-white font-bold py-4 rounded-full mt-10 text-lg">Contact</Link>
                     </div>
                   </DisclosurePanel>
                 </Transition>
