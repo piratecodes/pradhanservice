@@ -5,18 +5,15 @@ import Image from 'next/image';
 import { Dialog, Transition, TransitionChild, DialogPanel, DialogTitle } from '@headlessui/react';
 import { X, Images as ImagesIcon } from 'lucide-react';
 
-// 🌟 NEW: Import Splide
 import { Splide, SplideSlide } from '@splidejs/react-splide';
-import '@splidejs/react-splide/css'; // Default Splide theme
+import '@splidejs/react-splide/css'; 
 
 export default function GalleryShowcase({ albums }) {
   const [selectedAlbum, setSelectedAlbum] = useState(null);
   
-  // Splide references for syncing Main Image + Thumbnails
   const mainRef = useRef(null);
   const thumbsRef = useRef(null);
 
-  // Sync the two sliders when the album opens
   useEffect(() => {
     if (mainRef.current && thumbsRef.current && thumbsRef.current.splide) {
       mainRef.current.sync(thumbsRef.current.splide);
@@ -45,9 +42,6 @@ export default function GalleryShowcase({ albums }) {
 
   return (
     <>
-      {/* =========================================
-          1. THE MAIN ALBUM GRID
-          ========================================= */}
       <section className="container px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
           {albums.map((album) => (
@@ -85,61 +79,61 @@ export default function GalleryShowcase({ albums }) {
         </div>
       </section>
 
-      {/* =========================================
-          2. CINEMATIC SPLIDE POPUP
-          ========================================= */}
       <Transition show={!!selectedAlbum} as={Fragment}>
         <Dialog as="div" className="relative z-50" onClose={() => setSelectedAlbum(null)}>
           
-          {/* Pitch Black Cinematic Backdrop */}
+          {/* 🌟 FIX 1: The Glassmorphic Background */}
+          {/* Changed from pitch black to a heavily blurred, semi-transparent dark layer */}
           <TransitionChild as={Fragment} enter="ease-out duration-300" enterFrom="opacity-0" enterTo="opacity-100" leave="ease-in duration-200" leaveFrom="opacity-100" leaveTo="opacity-0">
-            <div className="fixed inset-0 bg-black/95 backdrop-blur-xl transition-opacity" />
+            <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-2xl transition-opacity" />
           </TransitionChild>
 
           <div className="fixed inset-0 overflow-hidden">
             <div className="absolute inset-0 flex flex-col h-full max-w-7xl mx-auto px-4 py-6">
               
-              {/* Header */}
               <div className="flex justify-between items-start shrink-0 mb-6 px-2">
                 <div>
-                  <DialogTitle className="text-2xl md:text-3xl font-black text-white">
+                  <DialogTitle className="text-2xl md:text-3xl font-black text-white drop-shadow-md">
                     {selectedAlbum?.categoryName}
                   </DialogTitle>
-                  <p className="text-secondary font-bold text-sm tracking-widest uppercase mt-1">
+                  <p className="text-secondary font-bold text-sm tracking-widest uppercase mt-1 drop-shadow-md">
                     {selectedAlbum?.allImages?.length || 0} Photos
                   </p>
                 </div>
-                <button onClick={() => setSelectedAlbum(null)} className="p-3 bg-white/10 hover:bg-secondary text-white rounded-full transition-colors outline-none backdrop-blur-sm">
+                <button onClick={() => setSelectedAlbum(null)} className="p-3 bg-white/10 hover:bg-secondary text-white rounded-full transition-colors outline-none backdrop-blur-md shadow-lg border border-white/10">
                   <X size={24} />
                 </button>
               </div>
 
-              {/* 🌟 MAIN SPLIDE CAROUSEL */}
-              <div className="flex-1 min-h-0 relative w-full rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-black">
+              {/* 🌟 FIX 2: The Glassmorphic Frame & Invisible Image Fix */}
+              {/* Removed bg-black, added bg-white/5 with backdrop-blur */}
+              <div className="flex-1 min-h-0 relative w-full rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-white/5 backdrop-blur-lg">
                 <Splide
                   ref={mainRef}
                   options={{
-                    type: 'fade', // Smooth fading transition
+                    type: 'fade', 
                     rewind: true,
                     pagination: false,
                     arrows: true,
-                    drag: true, // Native swipe on mobile!
+                    drag: true, 
                     height: '100%',
                     width: '100%',
                   }}
                   className="h-full w-full custom-splide-arrows"
                 >
                   {selectedAlbum?.allImages?.map((img, idx) => (
-                    <SplideSlide key={idx} className="flex items-center justify-center h-full w-full">
-                      <div className="relative w-full h-full">
+                    // 🚨 THE CRITICAL FIX: Added !h-full to the Slide, and absolute inset-0 to the wrapper
+                    // This forces Next.js to respect the height of the Splide track!
+                    <SplideSlide key={idx} className="!h-full w-full">
+                      <div className="absolute inset-0 p-2 md:p-8">
                         <Image 
                           src={img.url}
                           alt={img.alt || "Gallery image"}
                           fill
                           sizes="100vw"
-                          className="object-contain"
-                          priority={idx === 0} // Load first image instantly
-                          unoptimized // 🚀 THE SPEED FIX: Stops Next.js from double-optimizing Cloudinary images
+                          className="object-contain drop-shadow-2xl"
+                          priority={idx === 0} 
+                          unoptimized 
                         />
                       </div>
                     </SplideSlide>
@@ -147,15 +141,15 @@ export default function GalleryShowcase({ albums }) {
                 </Splide>
               </div>
 
-              {/* 🌟 THUMBNAILS SPLIDE CAROUSEL */}
+              {/* THUMBNAILS SPLIDE CAROUSEL */}
               {selectedAlbum?.allImages?.length > 1 && (
-                <div className="h-24 mt-4 shrink-0 px-8">
+                <div className="h-24 mt-6 shrink-0 px-8">
                   <Splide
                     ref={thumbsRef}
                     options={{
                       fixedWidth: 100,
                       fixedHeight: 64,
-                      isNavigation: true, // Acts as navigation for the main slider
+                      isNavigation: true, 
                       gap: 12,
                       focus: 'center',
                       pagination: false,
@@ -168,14 +162,14 @@ export default function GalleryShowcase({ albums }) {
                     }}
                   >
                     {selectedAlbum.allImages.map((img, idx) => (
-                      <SplideSlide key={idx} className="rounded-lg overflow-hidden border-2 border-transparent transition-all opacity-50 hover:opacity-100 is-active:opacity-100 is-active:border-secondary cursor-pointer">
+                      <SplideSlide key={idx} className="rounded-xl overflow-hidden border-2 border-transparent transition-all opacity-40 hover:opacity-100 is-active:opacity-100 is-active:border-secondary cursor-pointer shadow-lg">
                         <Image 
                           src={img.url} 
                           alt="Thumbnail" 
                           fill
                           sizes="100px"
                           className="object-cover" 
-                          unoptimized // 🚀 Keep thumbs fast too
+                          unoptimized 
                         />
                       </SplideSlide>
                     ))}
@@ -188,20 +182,23 @@ export default function GalleryShowcase({ albums }) {
         </Dialog>
       </Transition>
 
-      {/* Quick CSS to style the Splide arrows globally without a separate CSS file */}
       <style jsx global>{`
         .custom-splide-arrows .splide__arrow {
           background: rgba(255, 255, 255, 0.1) !important;
-          backdrop-filter: blur(8px);
-          width: 3rem !important;
-          height: 3rem !important;
+          backdrop-filter: blur(12px);
+          width: 3.5rem !important;
+          height: 3.5rem !important;
           transition: all 0.3s ease;
+          border: 1px solid rgba(255, 255, 255, 0.1);
         }
         .custom-splide-arrows .splide__arrow:hover {
-          background: #c5a059 !important; /* Your secondary color */
+          background: #c5a059 !important; 
+          transform: scale(1.1);
         }
         .custom-splide-arrows .splide__arrow svg {
           fill: white !important;
+          width: 1.5rem !important;
+          height: 1.5rem !important;
         }
       `}</style>
     </>

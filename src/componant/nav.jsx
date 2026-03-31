@@ -65,9 +65,6 @@ export default function Nav() {
         <div className="hidden md:flex items-center space-x-8">
           <ul className="flex items-center space-x-6 lg:space-x-8 font-bold text-sm text-gray-700">
             <li>
-              <Link href="/photo-gallery" className="border border-black block py-2 px-5 rounded-full hover:bg-black hover:text-white transition-all leading-none">Gallery</Link>
-            </li>
-            <li>
               <Link href="/about" className="border border-black block py-2 px-5 rounded-full hover:bg-black hover:text-white transition-all leading-none">About</Link>
             </li>
 
@@ -90,8 +87,8 @@ export default function Nav() {
                 leaveFrom="opacity-100 translate-y-0"
                 leaveTo="opacity-0 translate-y-1"
               >
-                <div className="absolute top-full left-1/2 -translate-x-1/2 z-50 mt-4 w-[850px] px-4 sm:px-0">
-                  <div className="overflow-hidden rounded-3xl shadow-2xl bg-white flex border border-gray-100 min-h-[450px]">
+                <div className="absolute top-full left-1/2 -translate-x-1/2 z-50 mt-4 w-212.5 px-4 sm:px-0">
+                  <div className="overflow-hidden rounded-3xl shadow-2xl bg-white flex border border-gray-100 min-h-112.5">
                     
                     {/* LEFT: Categories */}
                     <div className="w-[35%] bg-gray-50/80 p-8 border-r border-gray-100">
@@ -181,7 +178,6 @@ export default function Nav() {
                     <div className="p-6 space-y-2">
                       
                       {/* 🌟 ADDED onClick={() => close()} TO LINKS 🌟 */}
-                      <Link href="/photo-gallery" onClick={() => close()} className="block text-xl font-bold border-b border-gray-50 pb-3">Gallery</Link>
                       <Link href="/about" onClick={() => close()} className="block text-xl font-bold border-b border-gray-50 pb-3">About</Link>
                       
                       <div className="py-4">
