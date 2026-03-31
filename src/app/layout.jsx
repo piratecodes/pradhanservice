@@ -6,6 +6,7 @@ import "@/style/globals.css";
 
 //Header & footer Files to add in layout.jsx
 import Nav from "@/componant/nav";
+import Floating from "@/componant/FloatingContact";
 import Footer from "@/componant/footer";
 
 const montserrat = Montserrat({
@@ -82,6 +83,7 @@ export default function RootLayout({ children }) {
         <Nav />
         {children}
         <Toaster position="top-right" />
+        <Floating />
         <Footer />
       </body>
     </html>

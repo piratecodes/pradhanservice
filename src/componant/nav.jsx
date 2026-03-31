@@ -177,11 +177,11 @@ export default function Nav() {
                   leaveFrom="opacity-100 translate-y-0"
                   leaveTo="opacity-0 -translate-y-2"
                 >
-                  <DisclosurePanel className="fixed top-full left-0 w-full bg-white border-b shadow-2xl z-[110] h-[calc(100vh-72px)] overflow-y-auto pb-20">
+                  <DisclosurePanel className="fixed top-full left-0 w-full bg-white border-b shadow-2xl z-110 h-[calc(100vh-72px)] overflow-y-auto pb-20">
                     <div className="p-6 space-y-2">
                       
                       {/* 🌟 ADDED onClick={() => close()} TO LINKS 🌟 */}
-                      <Link href="/photo-gallery" onClick={() => close()} className="border border-black block py-2 px-5 rounded-full hover:bg-black hover:text-white transition-all leading-none w-max mb-4">Gallery</Link>
+                      <Link href="/photo-gallery" onClick={() => close()} className="block text-xl font-bold border-b border-gray-50 pb-3">Gallery</Link>
                       <Link href="/about" onClick={() => close()} className="block text-xl font-bold border-b border-gray-50 pb-3">About</Link>
                       
                       <div className="py-4">

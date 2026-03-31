@@ -12,7 +12,7 @@ export default function GalleryShowcase({ albums }) {
   // If no albums exist from the backend, show absolutely nothing (per your request)
   if (!albums || albums.length === 0) return null;
 
-  // When an album is clicked, we combine the featured image and the bulk images into one seamless array for the slider
+  // When an album is clicked, combine the featured image and bulk images into one seamless array
   const openGallery = (album) => {
     const allImages = [album.featuredImage, ...(album.images || [])].filter(img => img?.url);
     setSelectedAlbum({ ...album, allImages });
@@ -59,13 +59,14 @@ export default function GalleryShowcase({ albums }) {
               onClick={() => openGallery(album)}
               className="group cursor-pointer flex flex-col gap-4"
             >
-              {/* Image Frame */}
+              {/* Image Frame - Must have 'relative' for the fill prop to work */}
               <div className="relative aspect-video w-full rounded-3xl overflow-hidden border border-slate-200/50 bg-white/20 backdrop-blur-sm shadow-sm transition-all duration-500 group-hover:shadow-2xl group-hover:border-secondary/50">
                 <Image 
                   src={album.featuredImage?.url || "https://dummyimage.com/800x600/e2e8f0/475569"} 
                   alt={album.featuredImage?.alt || album.categoryName}
-                  width={0} height={0} sizes="100vw"
-                  className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  className="object-cover transition-transform duration-1000 group-hover:scale-105"
                 />
                 
                 {/* Photo Count Overlay */}
@@ -133,12 +134,13 @@ export default function GalleryShowcase({ albums }) {
 
                 {/* The Image */}
                 {selectedAlbum?.allImages?.[currentIndex]?.url && (
-                  <div className="relative w-full max-w-5xl aspect-video md:aspect-[16/9] rounded-3xl overflow-hidden shadow-2xl border border-white/10">
+                  <div className="relative w-full max-w-5xl aspect-video md:aspect-[16/9] rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-black/50">
                     <Image 
                       src={selectedAlbum.allImages[currentIndex].url}
                       alt={selectedAlbum.allImages[currentIndex].alt || "Gallery image"}
-                      width={0} height={0} sizes="100vw"
-                      className="w-full h-full object-contain bg-black/50"
+                      fill
+                      sizes="100vw"
+                      className="object-contain"
                       priority
                     />
                   </div>
@@ -164,8 +166,9 @@ export default function GalleryShowcase({ albums }) {
                         <Image 
                           src={img.url} 
                           alt="Thumbnail" 
-                          width={0} height={0} sizes="100vw"
-                          className="w-full h-full object-cover" 
+                          fill
+                          sizes="96px"
+                          className="object-cover" 
                         />
                       </button>
                     ))}
