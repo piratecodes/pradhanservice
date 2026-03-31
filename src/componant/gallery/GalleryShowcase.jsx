@@ -51,12 +51,14 @@ export default function GalleryShowcase({ albums }) {
               className="group cursor-pointer flex flex-col gap-4"
             >
               <div className="relative aspect-video w-full rounded-3xl overflow-hidden border border-slate-200/50 bg-slate-100 shadow-sm transition-all duration-500 group-hover:shadow-2xl group-hover:border-secondary/50">
+                {/* 🌟 FIX 1: Reverted to width/height 0, added w-full h-full */}
                 <Image 
                   src={album.featuredImage?.url || "https://dummyimage.com/800x600/e2e8f0/475569"} 
                   alt={album.featuredImage?.alt || album.categoryName}
-                  fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  className="object-cover transition-transform duration-1000 group-hover:scale-105"
+                  width={0}
+                  height={0}
+                  sizes="100vw"
+                  className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
                 />
                 <div className="absolute top-4 right-4 bg-black/70 backdrop-blur-md text-white px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <ImagesIcon size={14} className="text-secondary" /> 
@@ -82,10 +84,9 @@ export default function GalleryShowcase({ albums }) {
       <Transition show={!!selectedAlbum} as={Fragment}>
         <Dialog as="div" className="relative z-50" onClose={() => setSelectedAlbum(null)}>
           
-          {/* 🌟 FIX 1: The Glassmorphic Background */}
-          {/* Changed from pitch black to a heavily blurred, semi-transparent dark layer */}
+          {/* 🌟 FIX 2: Tailwind v4 Glassmorphic Gradient */}
           <TransitionChild as={Fragment} enter="ease-out duration-300" enterFrom="opacity-0" enterTo="opacity-100" leave="ease-in duration-200" leaveFrom="opacity-100" leaveTo="opacity-0">
-            <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-2xl transition-opacity" />
+            <div className="fixed inset-0 bg-gradient-to-br from-slate-950/80 to-secondary/20 backdrop-blur-2xl transition-opacity" />
           </TransitionChild>
 
           <div className="fixed inset-0 overflow-hidden">
@@ -105,8 +106,7 @@ export default function GalleryShowcase({ albums }) {
                 </button>
               </div>
 
-              {/* 🌟 FIX 2: The Glassmorphic Frame & Invisible Image Fix */}
-              {/* Removed bg-black, added bg-white/5 with backdrop-blur */}
+              {/* Glassmorphic Frame for Main Slider */}
               <div className="flex-1 min-h-0 relative w-full rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-white/5 backdrop-blur-lg">
                 <Splide
                   ref={mainRef}
@@ -122,16 +122,16 @@ export default function GalleryShowcase({ albums }) {
                   className="h-full w-full custom-splide-arrows"
                 >
                   {selectedAlbum?.allImages?.map((img, idx) => (
-                    // 🚨 THE CRITICAL FIX: Added !h-full to the Slide, and absolute inset-0 to the wrapper
-                    // This forces Next.js to respect the height of the Splide track!
                     <SplideSlide key={idx} className="!h-full w-full">
-                      <div className="absolute inset-0 p-2 md:p-8">
+                      <div className="absolute inset-0 p-2 md:p-8 flex items-center justify-center">
+                        {/* 🌟 FIX 1: Width/Height 0 combined with w-full h-full */}
                         <Image 
                           src={img.url}
                           alt={img.alt || "Gallery image"}
-                          fill
+                          width={0}
+                          height={0}
                           sizes="100vw"
-                          className="object-contain drop-shadow-2xl"
+                          className="w-full h-full object-contain drop-shadow-2xl"
                           priority={idx === 0} 
                           unoptimized 
                         />
@@ -161,14 +161,16 @@ export default function GalleryShowcase({ albums }) {
                       }
                     }}
                   >
-                    {selectedAlbum.allImages.map((img, idx) => (
-                      <SplideSlide key={idx} className="rounded-xl overflow-hidden border-2 border-transparent transition-all opacity-40 hover:opacity-100 is-active:opacity-100 is-active:border-secondary cursor-pointer shadow-lg">
+                    {selectedAlbum?.allImages.map((img, idx) => (
+                      
+                      <SplideSlide key={idx} className="rounded-xl overflow-hidden border-2 border-transparent transition-all is-active:border-secondary cursor-pointer shadow-lg">
                         <Image 
                           src={img.url} 
                           alt="Thumbnail" 
-                          fill
+                          width={0}
+                          height={0}
                           sizes="100px"
-                          className="object-cover" 
+                          className="w-full h-full object-cover" 
                           unoptimized 
                         />
                       </SplideSlide>
