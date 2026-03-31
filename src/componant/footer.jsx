@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { MapPin, Phone, Mail, Facebook, Twitter, Instagram, Linkedin, Loader2, MessageCircle } from 'lucide-react';
+import { MapPin, Phone, Mail, Facebook, Twitter, Instagram, Linkedin, Youtube, Loader2, MessageCircle } from 'lucide-react';
 
 import icon from '@/assets/icon.png';
 
@@ -83,6 +83,9 @@ export default function Footer() {
                   <Twitter size={20} />
                 </a>
               )}
+              <a href="https://www.youtube.com/@pradhanpackersandmovers" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-slate-800 flex items-center justify-center hover:bg-[#1DA1F2] hover:text-white transition-colors">
+                  <Youtube size={20} />
+              </a>
             </div>
           </div>
 

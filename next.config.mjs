@@ -50,7 +50,7 @@ const nextConfig = {
     poweredByHeader: false,
     images: {
         // domains: ['flowbite.com', 'images.unsplash.com', 'media.istockphoto.com', 'images.pexels.com', 'dummyimage.com', 'images.unsplash.com', "localhost"],
-        remotePatterns: [ { hostname: 'flowbite.com' }, { hostname: 'yiayiasbaklava.com' }, { hostname: 'admin.yiayiasbaklava.com' }, { hostname: 'api.yiayiasbaklava.com' }, { hostname: 'dummyimage.com' }, { hostname: 'images.unsplash.com' }, { hostname: "localhost" }, ]
+        remotePatterns: [ { protocol: 'https', hostname: 'res.cloudinary.com' }, { protocol: 'https', hostname: 'dummyimage.com' }, { protocol: 'https', hostname: 'images.unsplash.com' }, { protocol: 'https', hostname: "localhost" }, ]
     },
     devIndicators: {
         position: 'bottom-left',

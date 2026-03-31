@@ -2,14 +2,14 @@ import React from 'react';
 import Hero from '@/componant/ware-housing/Hero';
 
 // IMPORT THE COMPONENT WE JUST BUILT! (Check your folder path to make sure this is correct)
-import DynamicSections from '@/componant/DynamicSections'; 
+import DynamicSections from '@/componant/ware-housing/DynamicSections'; 
 import ServiceComparison from '@/componant/packers-n-movers/ServiceComparison';
 import Testimonials from '@/componant/landing/testimonials';
 
 export default async function WarehousingTemplate({ cityData, pageData }) {
   const cityName = cityData?.cityName || "City";
   return (
-    <main className="bg-white">
+    <main>
       {/* 1. Static Storage Hero Form */}
       <Hero cityData={cityData} pageData={pageData} />
       

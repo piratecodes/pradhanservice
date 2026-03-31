@@ -16,7 +16,7 @@ export default function PackersMoversTemplate({ cityData, pageData }) {
   const cityName = cityData?.cityName || "City";
 
   return (
-    <main className="min-h-screen bg-white">
+    <main>
       
       {/* 1. HERO */}
       <Hero 

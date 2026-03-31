@@ -1,13 +1,9 @@
 import React from 'react';
 import Image from 'next/image';
-import { 
-  UserCheck, 
-  Users, 
-  PackageSearch, 
-  Clock, 
-  BellRing, 
-  Globe 
-} from 'lucide-react';
+import { UserCheck, Users, PackageSearch, Clock, BellRing, Globe} from 'lucide-react';
+
+//Image Import
+import Img from '@/assets/how.png';
 
 export default function WhyChooseUsSection() {
   const leftFeatures = [
@@ -53,7 +49,7 @@ export default function WhyChooseUsSection() {
   ];
 
   return (
-    <section className="container px-4 py-20 lg:py-28 relative z-10">
+    <section className="container px-4 py-10 relative z-10">
       
       {/* Header Section */}
       <div className="flex flex-col items-center text-center space-y-4 mb-16 max-w-4xl mx-auto">
@@ -96,12 +92,12 @@ export default function WhyChooseUsSection() {
         </div>
 
         {/* Center Column - Image */}
-        <div className="w-full h-full min-h-[500px] lg:min-h-[700px] relative rounded-[2.5rem] overflow-hidden order-first lg:order-none mb-10 lg:mb-0 shadow-2xl shadow-primary/10 border-8 border-white">
+        <div className="w-full h-full min-h-125 lg:min-h-175 relative rounded-[2.5rem] overflow-hidden order-first lg:order-0 mb-10 lg:mb-0 shadow-2xl shadow-primary/10 border-8 border-white">
           <Image 
             height={0} 
             width={0} 
             sizes="100vw" 
-            src="https://dummyimage.com/600x1000/1e293b/ffffff&text=Professional+Moving" 
+            src={Img}
             alt="Safe Packaging and Moving" 
             className="w-full h-full object-cover"
           />

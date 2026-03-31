@@ -39,14 +39,14 @@ export default function WhyChooseUs() {
 
   return (
     /* CLEAN WRAPPER: Transparent/White background, strict Domestic logic */
-    <section className="relative w-full py-20 md:py-28 overflow-hidden border-b border-gray-100">
+    <section className="relative w-full py-16 overflow-hidden border-b border-gray-100">
       
       {/* 1. CONTENT CONTAINER: Following the 'no-mx-auto' and 'px-4' standard */}
       <div className="container px-4 relative z-10">
         
         {/* Authoritative Header Section */}
         <div className="flex flex-col md:flex-row md:items-center gap-6 md:gap-12 mb-20 md:mb-28">
-          <div className="flex-grow space-y-4">
+          <div className="grow space-y-4">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-secondary/10 border border-secondary/20 text-secondary rounded-full font-black text-[10px] uppercase tracking-[0.2em]">
                The Pradhan Standard
             </div>

@@ -1,15 +1,17 @@
 // This array matches the slugs used in your MasterServiceRouter
 const SERVICES = [
   'packers-and-movers',
-  'car-and-bike-transport',
-  'office-relocation',
-  'fine-art-movement',
-  'ware-housing',
-  'transport-and-logistics',
-  'factory-moving',
-  'defence-relocation-service',
-  'home-appliance-uninstall-and-install',
-  'after-shifting-services'
+  'car-transportation',
+  'bike-transportation',
+  'storage-solutions',
+  // 'office-relocation',
+  // 'fine-art-movement',
+  // 'ware-housing',
+  // 'transport-and-logistics',
+  // 'factory-moving',
+  // 'defence-relocation-service',
+  // 'home-appliance-uninstall-and-install',
+  // 'after-shifting-services'
 ];
 
 export default async function sitemap() {

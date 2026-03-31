@@ -2,9 +2,12 @@
 
 import React from 'react';
 import Image from 'next/image';
-import { 
-  MapPin, Sparkles, CheckCircle2, ArrowRight, ShieldCheck, Star, Check
-} from 'lucide-react';
+import { MapPin, Sparkles, CheckCircle2, ArrowRight, ShieldCheck, Star, Check } from 'lucide-react';
+
+// Static Assets (Fallbacks)
+import img1 from '@/assets/service/car1.png';
+import img2 from '@/assets/service/car2.png';
+import img3 from '@/assets/service/car3.png';
 
 /** * =========================================================================
  * 1. STRICT DATA-DRIVEN COMPONENTS (Zero Hardcoded Text)
@@ -80,8 +83,8 @@ export default function DynamicSections({ cityData, pageData }) {
             <div className="relative group">
               <div className="absolute -inset-4 bg-secondary/10 rounded-[2.5rem] rotate-2 group-hover:rotate-0 transition-transform duration-500"></div>
               <div className="relative aspect-4/3 rounded-4xl overflow-hidden shadow-2xl border border-white/50 bg-white/20 backdrop-blur-sm">
-                <Image 
-                  src={s0.image?.url || "https://dummyimage.com/800x600/112440/bfa83f&text=Fallback+Image"} 
+                <Image draggable={false}
+                  src={s0.image?.url || img1} 
                   alt={s0.image?.alt || `${cityName} Service`}
                   width={0} height={0} sizes="100vw"
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
@@ -152,8 +155,8 @@ export default function DynamicSections({ cityData, pageData }) {
                 )}
              </div>
              <div className="relative aspect-video rounded-[2rem] overflow-hidden shadow-2xl border border-white/50">
-                <Image 
-                  src={s2.image?.url || "https://dummyimage.com/1280x720/112440/bfa83f&text=Fallback+Image"} 
+                <Image draggable={false}
+                  src={s2.image?.url || img2} 
                   alt={s2.image?.alt || `${cityName} Details`} 
                   width={0} height={0} sizes="100vw" 
                   className="w-full h-full object-cover" 
@@ -172,9 +175,9 @@ export default function DynamicSections({ cityData, pageData }) {
               <SectionHeading heading={s3.heading} />
               <SectionDescription text={s3.description} />
             </div>
-            <div className="w-full max-w-6xl mx-auto my-16 relative aspect-[21/9] rounded-[2rem] overflow-hidden shadow-2xl border border-white/50">
-               <Image 
-                 src={s3.image?.url || "https://dummyimage.com/1200x500/112440/bfa83f&text=Fallback+Image"} 
+            <div className="w-full max-w-6xl mx-auto my-16 relative aspect-21/9 rounded-4xl overflow-hidden shadow-2xl border border-white/50">
+               <Image draggable={false}
+                 src={s3.image?.url || img3} 
                  alt={s3.image?.alt || `${cityName} Visual`} 
                  width={0} height={0} sizes="100vw" 
                  className="w-full h-full object-cover" 
@@ -222,7 +225,7 @@ export default function DynamicSections({ cityData, pageData }) {
         <section className="py-16 relative z-10 border-b border-slate-200/30">
           <div className="container px-6 relative">
             <div className="relative aspect-[16/9] lg:aspect-[21/9] rounded-[3rem] overflow-hidden shadow-2xl border border-white/50">
-               <Image 
+               <Image draggable={false}
                  src={s5.image?.url || "https://dummyimage.com/1280x720/112440/bfa83f&text=Fallback+Image"} 
                  alt={s5.image?.alt || "Highlight"} 
                  width={0} height={0} sizes="100vw" 
@@ -259,7 +262,7 @@ export default function DynamicSections({ cityData, pageData }) {
             </div>
             <div className="grid lg:grid-cols-3 gap-12 items-start">
                <div className="lg:col-span-1 relative aspect-3/4 rounded-4xl overflow-hidden shadow-xl border border-white/50">
-                  <Image 
+                  <Image draggable={false}
                     src={s6.image?.url || "https://dummyimage.com/600x800/112440/bfa83f&text=Fallback+Image"} 
                     alt={s6.image?.alt || "Detail"} 
                     width={0} height={0} sizes="100vw" 
@@ -284,7 +287,7 @@ export default function DynamicSections({ cityData, pageData }) {
         <section className="py-16 relative z-10 border-b border-slate-200/30">
           <div className="container px-6 flex flex-col lg:flex-row gap-16 items-center">
             <div className="w-full lg:w-1/2 relative aspect-square lg:aspect-4/3 rounded-[2.5rem] overflow-hidden shadow-2xl border border-white/50">
-               <Image 
+               <Image draggable={false}
                  src={s7.image?.url || "https://dummyimage.com/800x600/112440/bfa83f&text=Fallback+Image"} 
                  alt={s7.image?.alt || "Process"} 
                  width={0} height={0} sizes="100vw" 

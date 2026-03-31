@@ -49,10 +49,10 @@ export default function AboutPage() {
   ];
 
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen">
       
       {/* 1. HERO & ABOUT SECTION: Accommodating the full narrative */}
-      <section className="relative w-full pt-32 md:pt-48 pb-20 overflow-hidden bg-white border-b border-gray-50">
+      <section className="relative w-full pt-32 md:pt-48 pb-20 overflow-hidden border-b border-gray-50">
         
         {/* Responsive Graffiti Watermark */}
         <div className="absolute top-0 right-0 z-0 pointer-events-none select-none opacity-[0.05] translate-x-1/12 -translate-y-1/4">

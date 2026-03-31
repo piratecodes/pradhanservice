@@ -13,13 +13,6 @@ const SERVICES = [
   { name: 'Storage Solutions', slug: 'storage-solutions', icon: Package },
   { name: 'Car Transportation', slug: 'car-transportation', icon: Car },
   { name: 'Bike Transportation', slug: 'bike-transportation', icon: Car },
-
-  // { name: 'Office Relocation', slug: 'office-relocation', icon: Briefcase },
-  // { name: 'Fine Art Movement', slug: 'fine-art-movement', icon: Palette },
-  // { name: 'Factory Moving', slug: 'factory-moving', icon: Factory },
-  // { name: 'Defence Relocation', slug: 'defence-relocation-service', icon: Shield },
-  // { name: 'Appliance Setup', slug: 'home-appliance-uninstall-and-install', icon: Wrench },
-  // { name: 'After Shifting', slug: 'after-shifting-services', icon: CheckSquare }
 ];
 
 export default function Nav() {
@@ -71,9 +64,8 @@ export default function Nav() {
         {/* --- DESKTOP NAVIGATION --- */}
         <div className="hidden md:flex items-center space-x-8">
           <ul className="flex items-center space-x-6 lg:space-x-8 font-bold text-sm text-gray-700">
-            {/* Original Pill Shapes */}
             <li>
-              <Link href="/" className="border border-black block py-2 px-5 rounded-full hover:bg-black hover:text-white transition-all leading-none">Home</Link>
+              <Link href="/photo-gallery" className="border border-black block py-2 px-5 rounded-full hover:bg-black hover:text-white transition-all leading-none">Gallery</Link>
             </li>
             <li>
               <Link href="/about" className="border border-black block py-2 px-5 rounded-full hover:bg-black hover:text-white transition-all leading-none">About</Link>
@@ -98,11 +90,10 @@ export default function Nav() {
                 leaveFrom="opacity-100 translate-y-0"
                 leaveTo="opacity-0 translate-y-1"
               >
-                {/* 🚀 WIDE MENU SHELL (Fits 3 Columns Easily) 🚀 */}
                 <div className="absolute top-full left-1/2 -translate-x-1/2 z-50 mt-4 w-[850px] px-4 sm:px-0">
                   <div className="overflow-hidden rounded-3xl shadow-2xl bg-white flex border border-gray-100 min-h-[450px]">
                     
-                    {/* LEFT: Categories (Original Color Scheme) */}
+                    {/* LEFT: Categories */}
                     <div className="w-[35%] bg-gray-50/80 p-8 border-r border-gray-100">
                       <p className="text-[10px] uppercase tracking-widest text-gray-400 font-black mb-6 pl-2">Categories</p>
                       <div className="space-y-1">
@@ -115,11 +106,11 @@ export default function Nav() {
                               onMouseEnter={() => setHoveredService(item)}
                               className={`w-full flex items-center gap-4 px-5 py-3 rounded-2xl transition-all text-left ${
                                 isActive 
-                                ? 'bg-[#112440] text-white shadow-xl' 
-                                : 'text-gray-600 hover:bg-white hover:text-[#112440]'
+                                ? 'bg-primary text-white shadow-xl' 
+                                : 'text-gray-600 hover:bg-white hover:text-primary'
                               }`}
                             >
-                              <Icon size={18} className={isActive ? 'text-[#c5a059]' : ''} />
+                              <Icon size={18} className={isActive ? 'text-secondary' : ''} />
                               <span className="text-sm font-bold">{item.name}</span>
                             </button>
                           );
@@ -127,13 +118,12 @@ export default function Nav() {
                       </div>
                     </div>
 
-                    {/* RIGHT: Dynamic Cities (The New 3-Column Grid Fix) */}
+                    {/* RIGHT: Dynamic Cities */}
                     <div className="w-[65%] p-8 bg-white">
-                      <p className="text-[10px] uppercase tracking-widest text-[#c5a059] font-black mb-6 flex items-center gap-2">
+                      <p className="text-[10px] uppercase tracking-widest text-secondary font-black mb-6 flex items-center gap-2">
                         <MapPin size={12} /> Coverage for {hoveredService.name}
                       </p>
                       
-                      {/* 🚀 3-COLUMN GRID: Pure city names only 🚀 */}
                       <div className="grid grid-cols-3 gap-y-5 gap-x-6 overflow-y-auto max-h-[400px] pr-2 custom-scrollbar">
                         {cities.length > 0 ? (
                           cities.map((city) => (
@@ -143,8 +133,8 @@ export default function Nav() {
                               onClick={() => setIsDesktopMenuOpen(false)}
                               className="group flex items-center gap-2 transition-colors"
                             >
-                              <div className="w-1.5 h-1.5 rounded-full bg-gray-300 group-hover:bg-[#c5a059] transition-colors" />
-                              <span className="text-sm font-bold text-gray-600 group-hover:text-[#112440] truncate">
+                              <div className="w-1.5 h-1.5 rounded-full bg-gray-300 group-hover:bg-secondary transition-colors" />
+                              <span className="text-sm font-bold text-gray-600 group-hover:text-primary truncate">
                                 {city.cityName}
                               </span>
                             </Link>
@@ -163,18 +153,16 @@ export default function Nav() {
             <li>
               <a target="_blank" href="https://blog.pradhanservice.com" className="border border-black block py-2 px-5 rounded-full hover:bg-black hover:text-white transition-all leading-none">Blogs</a>
             </li>
-            <li>
-              <Link href="/contact" className="border border-black block py-2 px-5 rounded-full hover:bg-black hover:text-white transition-all leading-none">Contact</Link>
-            </li>
           </ul>
         </div>
 
         {/* --- ACTIONS & MOBILE --- */}
         <div className="flex items-center space-x-3">
-          <button className="hidden sm:block text-white bg-black rounded-lg hover:bg-zinc-800 font-medium text-sm px-5 py-2">Get started</button>
+          <Link href="/contact" className="hidden sm:block text-white bg-black rounded-lg hover:bg-zinc-800 font-medium text-sm px-5 py-2">Contact Us</Link>
           
           <Disclosure as="div" className="md:hidden">
-            {({ open }) => (
+            {/* 🌟 EXTRACTED 'close' HERE 🌟 */}
+            {({ open, close }) => (
               <>
                 <DisclosureButton className="p-2 text-gray-600 outline-none">
                   {open ? <X size={28} /> : <Menu size={28} />}
@@ -191,11 +179,13 @@ export default function Nav() {
                 >
                   <DisclosurePanel className="fixed top-full left-0 w-full bg-white border-b shadow-2xl z-[110] h-[calc(100vh-72px)] overflow-y-auto pb-20">
                     <div className="p-6 space-y-2">
-                      <Link href="/" className="block text-xl font-bold border-b border-gray-50 pb-3">Home</Link>
-                      <Link href="/about" className="block text-xl font-bold border-b border-gray-50 pb-3">About</Link>
+                      
+                      {/* 🌟 ADDED onClick={() => close()} TO LINKS 🌟 */}
+                      <Link href="/photo-gallery" onClick={() => close()} className="border border-black block py-2 px-5 rounded-full hover:bg-black hover:text-white transition-all leading-none w-max mb-4">Gallery</Link>
+                      <Link href="/about" onClick={() => close()} className="block text-xl font-bold border-b border-gray-50 pb-3">About</Link>
                       
                       <div className="py-4">
-                        <p className="text-[10px] uppercase text-[#c5a059] font-black mb-4 tracking-widest px-1">Services & Cities</p>
+                        <p className="text-[10px] uppercase text-secondary font-black mb-4 tracking-widest px-1">Services & Cities</p>
                         <div className="space-y-3">
                           {SERVICES.map(s => {
                             const MobileIcon = s.icon;
@@ -205,21 +195,21 @@ export default function Nav() {
                                   <>
                                     <DisclosureButton className="flex items-center justify-between w-full font-bold text-gray-800 text-lg py-1">
                                       <div className="flex items-center gap-3">
-                                        <MobileIcon size={20} className="text-[#c5a059]" />
+                                        <MobileIcon size={20} className="text-secondary" />
                                         <span>{s.name}</span>
                                       </div>
                                       <ChevronDown size={16} className={`transition-transform ${serviceOpen ? 'rotate-180' : ''}`} />
                                     </DisclosureButton>
                                     
                                     <DisclosurePanel className="mt-2 ml-8 space-y-2 border-l-2 border-gray-100 pl-4 py-2">
-                                      {/* Mobile grid for locations so they don't scroll forever */}
                                       <div className="grid grid-cols-2 gap-y-2 gap-x-4">
                                         {cities.length > 0 ? (
                                           cities.map(city => (
                                             <Link 
                                               key={city._id} 
                                               href={`/${s.slug}-in-${city.citySlug}`}
-                                              className="flex items-center gap-2 text-sm font-semibold text-gray-500 hover:text-[#112440]"
+                                              onClick={() => close()} // 🌟 Added close to city links
+                                              className="flex items-center gap-2 text-sm font-semibold text-gray-500 hover:text-primary"
                                             >
                                               <span className="w-1 h-1 rounded-full bg-gray-300"></span>
                                               <span className="truncate">{city.cityName}</span>
@@ -238,8 +228,8 @@ export default function Nav() {
                         </div>
                       </div>
                       
-                      <Link href="/contact" className="block text-xl font-bold pt-4">Contact</Link>
-                      <button className="w-full bg-black text-white font-bold py-4 rounded-full mt-10 text-lg">Book a Service</button>
+                      <Link href="/contact" onClick={() => close()} className="block text-xl font-bold pt-4">Contact</Link>
+                      <button onClick={() => close()} className="w-full bg-black text-white font-bold py-4 rounded-full mt-10 text-lg">Book a Service</button>
                     </div>
                   </DisclosurePanel>
                 </Transition>

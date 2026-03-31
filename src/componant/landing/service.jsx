@@ -33,7 +33,7 @@ export default function ServicesSection() {
   ];
 
   return (
-    <section className="container px-4 py-20 relative z-10">
+    <section className="container px-4 py-10 relative z-10">
       
       {/* Section Header */}
       <div className="flex flex-col items-center text-center mb-16 max-w-3xl mx-auto">

@@ -26,7 +26,7 @@ export default function TestimonialsSection() {
   }, []);
 
   return (
-    <section className="container px-4 py-20 lg:py-28 relative z-10">
+    <section className="container px-4 py-10 relative z-10">
       
       {/* Header Section */}
       <div className="flex flex-col items-center text-center space-y-4 mb-16 max-w-4xl mx-auto">
