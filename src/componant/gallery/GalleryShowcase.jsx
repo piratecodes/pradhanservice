@@ -1,71 +1,52 @@
 "use client";
 
-import React, { useState, Fragment, useEffect } from 'react';
+import React, { useState, Fragment, useEffect, useRef } from 'react';
 import Image from 'next/image';
-// 🌟 FIX 1: Added DialogTitle to the imports!
 import { Dialog, Transition, TransitionChild, DialogPanel, DialogTitle } from '@headlessui/react';
-import { X, ChevronLeft, ChevronRight, Images as ImagesIcon } from 'lucide-react';
+import { X, Images as ImagesIcon } from 'lucide-react';
+
+// 🌟 NEW: Import Splide
+import { Splide, SplideSlide } from '@splidejs/react-splide';
+import '@splidejs/react-splide/css'; // Default Splide theme
 
 export default function GalleryShowcase({ albums }) {
   const [selectedAlbum, setSelectedAlbum] = useState(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  
+  // Splide references for syncing Main Image + Thumbnails
+  const mainRef = useRef(null);
+  const thumbsRef = useRef(null);
 
-  // 🌟 FIX 2: Animated Empty State if no albums are available
+  // Sync the two sliders when the album opens
+  useEffect(() => {
+    if (mainRef.current && thumbsRef.current && thumbsRef.current.splide) {
+      mainRef.current.sync(thumbsRef.current.splide);
+    }
+  }, [selectedAlbum]);
+
   if (!albums || albums.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-32 px-6">
         <div className="relative">
-          {/* Animated glowing background */}
           <div className="absolute inset-0 bg-secondary/30 animate-ping rounded-full blur-xl"></div>
-          {/* Bouncing Icon */}
           <ImagesIcon size={80} className="text-slate-300 relative z-10 animate-bounce" />
         </div>
         <h3 className="text-3xl font-black text-primary mt-8 mb-3">No Photos Available</h3>
         <p className="text-slate-500 font-medium text-center max-w-md">
-          We are currently updating our gallery. Check back soon to see our latest successful projects and relocations!
+          We are currently updating our gallery. Check back soon to see our latest successful projects!
         </p>
       </div>
     );
   }
 
-  // When an album is clicked, combine the featured image and bulk images into one seamless array
   const openGallery = (album) => {
     const allImages = [album.featuredImage, ...(album.images || [])].filter(img => img?.url);
     setSelectedAlbum({ ...album, allImages });
-    setCurrentIndex(0);
   };
-
-  const closeGallery = () => {
-    setSelectedAlbum(null);
-    setCurrentIndex(0);
-  };
-
-  const nextImage = () => {
-    if (!selectedAlbum) return;
-    setCurrentIndex((prev) => (prev === selectedAlbum.allImages.length - 1 ? 0 : prev + 1));
-  };
-
-  const prevImage = () => {
-    if (!selectedAlbum) return;
-    setCurrentIndex((prev) => (prev === 0 ? selectedAlbum.allImages.length - 1 : prev - 1));
-  };
-
-  // Keyboard navigation for the slider
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (!selectedAlbum) return;
-      if (e.key === 'ArrowRight') nextImage();
-      if (e.key === 'ArrowLeft') prevImage();
-      if (e.key === 'Escape') closeGallery();
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [selectedAlbum]);
 
   return (
     <>
       {/* =========================================
-          1. THE MAIN ALBUM GRID (Transparent Glass)
+          1. THE MAIN ALBUM GRID
           ========================================= */}
       <section className="container px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
@@ -75,8 +56,7 @@ export default function GalleryShowcase({ albums }) {
               onClick={() => openGallery(album)}
               className="group cursor-pointer flex flex-col gap-4"
             >
-              {/* Image Frame */}
-              <div className="relative aspect-video w-full rounded-3xl overflow-hidden border border-slate-200/50 bg-white/20 backdrop-blur-sm shadow-sm transition-all duration-500 group-hover:shadow-2xl group-hover:border-secondary/50">
+              <div className="relative aspect-video w-full rounded-3xl overflow-hidden border border-slate-200/50 bg-slate-100 shadow-sm transition-all duration-500 group-hover:shadow-2xl group-hover:border-secondary/50">
                 <Image 
                   src={album.featuredImage?.url || "https://dummyimage.com/800x600/e2e8f0/475569"} 
                   alt={album.featuredImage?.alt || album.categoryName}
@@ -84,18 +64,12 @@ export default function GalleryShowcase({ albums }) {
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   className="object-cover transition-transform duration-1000 group-hover:scale-105"
                 />
-                
-                {/* Photo Count Overlay */}
-                <div className="absolute top-4 right-4 bg-primary/80 backdrop-blur-md text-white px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <div className="absolute top-4 right-4 bg-black/70 backdrop-blur-md text-white px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <ImagesIcon size={14} className="text-secondary" /> 
                   {(album.images?.length || 0) + 1} Photos
                 </div>
-
-                {/* Subtle dark gradient at bottom for contrast */}
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               </div>
-
-              {/* Text Content */}
               <div>
                 <h3 className="text-2xl font-black text-primary transition-colors group-hover:text-secondary">
                   {album.categoryName}
@@ -112,83 +86,100 @@ export default function GalleryShowcase({ albums }) {
       </section>
 
       {/* =========================================
-          2. THE CINEMATIC POPUP SLIDER
+          2. CINEMATIC SPLIDE POPUP
           ========================================= */}
       <Transition show={!!selectedAlbum} as={Fragment}>
-        <Dialog as="div" className="relative z-50" onClose={closeGallery}>
+        <Dialog as="div" className="relative z-50" onClose={() => setSelectedAlbum(null)}>
           
-          {/* Heavy Glass Backdrop */}
+          {/* Pitch Black Cinematic Backdrop */}
           <TransitionChild as={Fragment} enter="ease-out duration-300" enterFrom="opacity-0" enterTo="opacity-100" leave="ease-in duration-200" leaveFrom="opacity-100" leaveTo="opacity-0">
-            <div className="fixed inset-0 bg-primary/95 backdrop-blur-2xl transition-opacity" />
+            <div className="fixed inset-0 bg-black/95 backdrop-blur-xl transition-opacity" />
           </TransitionChild>
 
           <div className="fixed inset-0 overflow-hidden">
-            <div className="absolute inset-0 flex flex-col justify-between pt-6 pb-8">
+            <div className="absolute inset-0 flex flex-col h-full max-w-7xl mx-auto px-4 py-6">
               
-              {/* Top Header Bar */}
-              <div className="container px-6 flex justify-between items-center shrink-0">
+              {/* Header */}
+              <div className="flex justify-between items-start shrink-0 mb-6 px-2">
                 <div>
-                  <DialogTitle className="text-2xl font-black text-white">
-                    {selectedAlbum?.categoryName || 'Gallery'}
+                  <DialogTitle className="text-2xl md:text-3xl font-black text-white">
+                    {selectedAlbum?.categoryName}
                   </DialogTitle>
                   <p className="text-secondary font-bold text-sm tracking-widest uppercase mt-1">
-                    Image {currentIndex + 1} of {selectedAlbum?.allImages?.length || 0}
+                    {selectedAlbum?.allImages?.length || 0} Photos
                   </p>
                 </div>
-                <button onClick={closeGallery} className="p-3 bg-white/10 hover:bg-secondary text-white rounded-full transition-colors outline-none">
+                <button onClick={() => setSelectedAlbum(null)} className="p-3 bg-white/10 hover:bg-secondary text-white rounded-full transition-colors outline-none backdrop-blur-sm">
                   <X size={24} />
                 </button>
               </div>
 
-              {/* Main Image Stage */}
-              <div className="flex-1 relative flex items-center justify-center container px-6 mt-4 mb-8">
-                
-                {/* Left Arrow */}
-                <button onClick={(e) => { e.stopPropagation(); prevImage(); }} className="absolute left-6 z-10 p-4 bg-white/5 hover:bg-secondary text-white rounded-full backdrop-blur-md border border-white/10 transition-all outline-none hidden md:block">
-                  <ChevronLeft size={32} />
-                </button>
-
-                {/* The Image */}
-                {selectedAlbum?.allImages?.[currentIndex]?.url && (
-                  <div className="relative w-full max-w-5xl aspect-video md:aspect-[16/9] rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-black/50">
-                    <Image 
-                      src={selectedAlbum.allImages[currentIndex].url}
-                      alt={selectedAlbum.allImages[currentIndex].alt || "Gallery image"}
-                      fill
-                      sizes="100vw"
-                      className="object-contain"
-                      priority
-                    />
-                  </div>
-                )}
-
-                {/* Right Arrow */}
-                <button onClick={(e) => { e.stopPropagation(); nextImage(); }} className="absolute right-6 z-10 p-4 bg-white/5 hover:bg-secondary text-white rounded-full backdrop-blur-md border border-white/10 transition-all outline-none hidden md:block">
-                  <ChevronRight size={32} />
-                </button>
-
+              {/* 🌟 MAIN SPLIDE CAROUSEL */}
+              <div className="flex-1 min-h-0 relative w-full rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-black">
+                <Splide
+                  ref={mainRef}
+                  options={{
+                    type: 'fade', // Smooth fading transition
+                    rewind: true,
+                    pagination: false,
+                    arrows: true,
+                    drag: true, // Native swipe on mobile!
+                    height: '100%',
+                    width: '100%',
+                  }}
+                  className="h-full w-full custom-splide-arrows"
+                >
+                  {selectedAlbum?.allImages?.map((img, idx) => (
+                    <SplideSlide key={idx} className="flex items-center justify-center h-full w-full">
+                      <div className="relative w-full h-full">
+                        <Image 
+                          src={img.url}
+                          alt={img.alt || "Gallery image"}
+                          fill
+                          sizes="100vw"
+                          className="object-contain"
+                          priority={idx === 0} // Load first image instantly
+                          unoptimized // 🚀 THE SPEED FIX: Stops Next.js from double-optimizing Cloudinary images
+                        />
+                      </div>
+                    </SplideSlide>
+                  ))}
+                </Splide>
               </div>
 
-              {/* Bottom Thumbnail Strip */}
+              {/* 🌟 THUMBNAILS SPLIDE CAROUSEL */}
               {selectedAlbum?.allImages?.length > 1 && (
-                <div className="container px-6 shrink-0">
-                  <div className="flex gap-3 overflow-x-auto custom-scrollbar pb-4 snap-x">
+                <div className="h-24 mt-4 shrink-0 px-8">
+                  <Splide
+                    ref={thumbsRef}
+                    options={{
+                      fixedWidth: 100,
+                      fixedHeight: 64,
+                      isNavigation: true, // Acts as navigation for the main slider
+                      gap: 12,
+                      focus: 'center',
+                      pagination: false,
+                      cover: true,
+                      arrows: false,
+                      dragMinThreshold: { mouse: 4, touch: 10 },
+                      breakpoints: {
+                        640: { fixedWidth: 80, fixedHeight: 52, gap: 8 },
+                      }
+                    }}
+                  >
                     {selectedAlbum.allImages.map((img, idx) => (
-                      <button
-                        key={idx}
-                        onClick={() => setCurrentIndex(idx)}
-                        className={`relative w-24 h-16 shrink-0 rounded-xl overflow-hidden snap-center transition-all duration-300 border-2 outline-none ${currentIndex === idx ? 'border-secondary scale-110 opacity-100 shadow-lg' : 'border-transparent opacity-50 hover:opacity-100'}`}
-                      >
+                      <SplideSlide key={idx} className="rounded-lg overflow-hidden border-2 border-transparent transition-all opacity-50 hover:opacity-100 is-active:opacity-100 is-active:border-secondary cursor-pointer">
                         <Image 
                           src={img.url} 
                           alt="Thumbnail" 
                           fill
-                          sizes="96px"
+                          sizes="100px"
                           className="object-cover" 
+                          unoptimized // 🚀 Keep thumbs fast too
                         />
-                      </button>
+                      </SplideSlide>
                     ))}
-                  </div>
+                  </Splide>
                 </div>
               )}
 
@@ -196,6 +187,23 @@ export default function GalleryShowcase({ albums }) {
           </div>
         </Dialog>
       </Transition>
+
+      {/* Quick CSS to style the Splide arrows globally without a separate CSS file */}
+      <style jsx global>{`
+        .custom-splide-arrows .splide__arrow {
+          background: rgba(255, 255, 255, 0.1) !important;
+          backdrop-filter: blur(8px);
+          width: 3rem !important;
+          height: 3rem !important;
+          transition: all 0.3s ease;
+        }
+        .custom-splide-arrows .splide__arrow:hover {
+          background: #c5a059 !important; /* Your secondary color */
+        }
+        .custom-splide-arrows .splide__arrow svg {
+          fill: white !important;
+        }
+      `}</style>
     </>
   );
 }
