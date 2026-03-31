@@ -60,8 +60,13 @@ const locationPageSchema = new mongoose.Schema(
               default: 'primary' // Defaults to Navy
             }
           },
+          // 4C. The Image (Optional)
+          image: {
+            url: { type: String, trim: true },
+            alt: { type: String, trim: true }
+          },
           
-          // 4C. Description & Bullets
+          // 4D. Description & Bullets
           description: { type: String, trim: true }, 
           bullets: [{ type: String, trim: true }], 
         }

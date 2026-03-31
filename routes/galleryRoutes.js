@@ -1,27 +1,39 @@
 import express from 'express';
 import {
-  createGalleryItem,
-  getAllMedia,
-  updateMedia,
-  deleteMedia,
-  uploadGalleryPhoto
+  getPublicGalleries,
+  getGalleryBySlug,
+  getAllAdminGalleries,
+  createGallery,
+  updateGallery,
+  deleteGallery
 } from '../controllers/galleryController.js';
 import { protect, restrictTo } from '../controllers/authController.js';
 
 const router = express.Router();
 
-// --- PUBLIC ROUTES (For your Next.js UI componant) ---
-// Your frontend will call this to build the photo/video gallery pages
-router.get('/', getAllMedia);
+// ==========================================
+// 🌍 PUBLIC ROUTES (Accessible to everyone)
+// ==========================================
+router.get('/', getPublicGalleries);
+router.get('/slug/:slug', getGalleryBySlug);
 
-// 🛡️ SECURITY CHECKPOINT: Everything below requires Admin access
+
+// ==========================================
+// 🛡️ ADMIN PROTECTED ROUTES 
+// ==========================================
 router.use(protect);
 router.use(restrictTo('super-admin', 'admin'));
 
-// --- ADMIN ROUTES (For your Vite dashboard) ---
-// Note the upload middleware sitting exactly between the route and the controller!
-router.post('/', uploadGalleryPhoto, createGalleryItem);
-router.patch('/:id', updateMedia);
-router.delete('/:id', deleteMedia);
+// Fetch all for admin dashboard
+router.get('/admin/all', getAllAdminGalleries);
+
+// Create new album
+router.post('/', createGallery);
+
+// Update or Delete specific album by MongoDB _id
+router
+  .route('/:id')
+  .patch(updateGallery)
+  .delete(deleteGallery);
 
 export default router;

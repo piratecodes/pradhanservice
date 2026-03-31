@@ -2,50 +2,75 @@ import mongoose from 'mongoose';
 
 const gallerySchema = new mongoose.Schema(
   {
-    title: {
+    // 1. ALBUM DETAILS
+    categoryName: {
       type: String,
-      required: [true, 'Please provide a title for this media'],
+      required: [true, 'An album must have a name (e.g., Office Relocation)'],
       trim: true,
-      // e.g., "Safe Loading of Honda City"
+      unique: true, // Prevents admins from creating two albums with the exact same name
     },
-    mediaType: {
+    slug: {
       type: String,
-      enum: ['photo', 'video'],
-      required: [true, 'Media must be either a photo or a video'],
+      unique: true,
+      lowercase: true,
     },
-    mediaUrl: {
-      type: String,
-      required: [true, 'Please provide the URL of the image or video'],
-    },
-    category: {
+    description: {
       type: String,
       trim: true,
-      // e.g., "car-and-bike-transport"
+      maxLength: [500, 'Description should be short and sweet (max 500 characters)'],
     },
     
-    // --- THE MEDIA SEO ENGINE ---
-    seo: {
-      altText: {
-        type: String,
-        required: [true, 'Alt text is strictly required for SEO and accessibility'],
-        trim: true,
-        // e.g., "Pradhan Packers and Movers loading a white Honda City onto a transport truck"
+    // 2. STATUS TOGGLE
+    isPublished: {
+      type: Boolean,
+      default: true, // Set to false if you want albums to save as Drafts by default
+    },
+
+    // 3. THE COVER PHOTO
+    featuredImage: {
+      url: { 
+        type: String, 
+        required: [true, 'A featured cover image is required'] 
       },
-      caption: {
-        type: String,
+      alt: { 
+        type: String, 
         trim: true,
-        // Optional text to display directly under the image on the website
+        default: 'Gallery cover photo' 
       }
     },
 
-    isActive: {
-      type: Boolean,
-      default: true,
-    }
+    // 4. THE BULK IMAGES ARRAY
+    images: [
+      {
+        url: { 
+          type: String, 
+          required: [true, 'Image URL is required'] 
+        },
+        alt: { 
+          type: String, 
+          trim: true,
+          default: 'Gallery image' 
+        }
+      }
+    ]
   },
   { 
-    timestamps: true 
+    timestamps: true // Automatically gives you createdAt and updatedAt
   }
 );
+
+// 🌟 AUTO-SLUG GENERATOR
+// Before saving to the database, this turns "Premium Car Transport!" into "premium-car-transport"
+gallerySchema.pre('save', function (next) {
+  if (this.isModified('categoryName')) {
+    this.slug = this.categoryName
+      .toLowerCase()
+      .trim()
+      .replace(/[^\w\s-]/g, '') // Removes special characters
+      .replace(/[\s_-]+/g, '-') // Replaces spaces with hyphens
+      .replace(/^-+|-+$/g, ''); // Removes leading/trailing hyphens
+  }
+  next();
+});
 
 export default mongoose.model('Gallery', gallerySchema);

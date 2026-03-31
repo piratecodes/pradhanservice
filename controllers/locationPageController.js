@@ -1,8 +1,16 @@
+import { v2 as cloudinary } from 'cloudinary';
 import LocationPage from '../models/LocationPage.js';
 import catchAsync from '../utils/catchAsync.js';
 import AppError from '../utils/AppError.js';
 import { successResponse } from '../utils/apiResponse.js';
 import { clearCache } from '../middlewares/cacheMiddleware.js'; // 🌟 IMPORTED CACHE TOOL
+
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 // GET ALL (For Admin Dashboard List) - NO CACHE needed here
 export const getAllPages = catchAsync(async (req, res, next) => {
@@ -63,4 +71,25 @@ export const deletePage = catchAsync(async (req, res, next) => {
   clearCache(`/${page.citySlug}/${page.serviceSlug}`);
   
   successResponse(res, 200, 'SEO Page deleted permanently', null);
+});
+
+// Secure Signature Generator for Frontend Widget
+export const getCloudinarySignature = catchAsync(async (req, res, next) => {
+  const timestamp = Math.round(new Date().getTime() / 1000);
+  
+  // We specify a folder so all admin uploads go to a neat place in your Cloudinary dashboard
+  const signature = cloudinary.utils.api_sign_request(
+    { timestamp, folder: 'seo-pages' },
+    process.env.CLOUDINARY_API_SECRET
+  );
+
+  res.status(200).json({
+    success: true,
+    data: {
+      timestamp,
+      signature,
+      cloudName: process.env.CLOUDINARY_CLOUD_NAME,
+      apiKey: process.env.CLOUDINARY_API_KEY
+    }
+  });
 });

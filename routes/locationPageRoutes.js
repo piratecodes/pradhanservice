@@ -4,7 +4,8 @@ import {
   getAllPages,
   getPageBySlugs,
   updatePage,
-  deletePage
+  deletePage,
+  getCloudinarySignature
 } from '../controllers/locationPageController.js';
 import { protect, restrictTo } from '../controllers/authController.js';
 import { cacheRoute } from '../middlewares/cacheMiddleware.js';
@@ -22,6 +23,8 @@ router.get('/:citySlug/:serviceSlug', getPageBySlugs);
 // ======================================================
 router.use(protect);
 router.use(restrictTo('super-admin', 'admin'));
+
+router.get('/cloudinary-signature', getCloudinarySignature);
 
 // --- 2. CRUD OPERATIONS (For Vite Admin Panel) ---
 router

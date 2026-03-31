@@ -69,7 +69,7 @@ export const createStaff = catchAsync(async (req, res, next) => {
       <div style="background-color: #f3f4f6; padding: 15px; border-radius: 8px; margin: 20px 0;">
         <p style="margin: 0 0 10px 0; color: #112440;"><strong>Your Login Credentials:</strong></p>
         <p style="margin: 0 0 5px 0; color: #4b5563;"><strong>Username:</strong> ${newStaff.username}</p>
-        <p style="margin: 0; color: #4b5563;"><strong>Password:</strong> ${newStaff.password}</p>
+        <p style="margin: 0; color: #4b5563;"><strong>Password:</strong> ${req.body.password}</p>
       </div>
 
       <p style="color: #ef4444; font-size: 14px; font-weight: bold;">* Please log in and change your password immediately.</p>
