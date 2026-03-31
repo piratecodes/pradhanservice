@@ -1,6 +1,6 @@
 import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@headlessui/react';
 import { Fragment, useState, useEffect, useMemo } from 'react';
-import { X, Save, Loader2, LayoutTemplate, Plus, Trash2 } from 'lucide-react';
+import { X, Save, Loader2, LayoutTemplate, Plus, Trash2, Image as ImageIcon, UploadCloud } from 'lucide-react';
 import { fetchClient } from '@/api/fetchClient';
 import toast from 'react-hot-toast';
 
@@ -15,7 +15,6 @@ export default function SeoPageFormDrawer({ isOpen, setIsOpen, pageData, onSucce
   const [isLoading, setIsLoading] = useState(false);
   const [cities, setCities] = useState([]);
   
-  // 🌟 ADDED: metaKeywords to initial state
   const [formData, setFormData] = useState({
     citySlug: '', serviceSlug: 'packers-and-movers',
     metaTitle: '', metaDescription: '', metaKeywords: '', canonicalUrl: '', isNoIndex: false, jsonLdSchema: '',
@@ -43,13 +42,17 @@ export default function SeoPageFormDrawer({ isOpen, setIsOpen, pageData, onSucce
         citySlug: pageData.citySlug || '', serviceSlug: pageData.serviceSlug || 'packers-and-movers',
         metaTitle: pageData.seo?.metaTitle || '', 
         metaDescription: pageData.seo?.metaDescription || '', 
-        metaKeywords: pageData.seo?.metaKeywords || '', // 🌟 ADDED: Load existing keywords
+        metaKeywords: pageData.seo?.metaKeywords || '', 
         canonicalUrl: pageData.seo?.canonicalUrl || '', 
         isNoIndex: pageData.seo?.isNoIndex || false, 
         jsonLdSchema: pageData.seo?.jsonLdSchema || '',
         headerTitle: pageData.header?.title || '', 
         introText: pageData.header?.introText || '',
-        sections: pageData.sections || []
+        // Ensure legacy sections get the new image object
+        sections: (pageData.sections || []).map(s => ({
+          ...s,
+          image: { url: s.image?.url || '', alt: s.image?.alt || '' }
+        }))
       });
     } else {
       setFormData({
@@ -60,18 +63,14 @@ export default function SeoPageFormDrawer({ isOpen, setIsOpen, pageData, onSucce
     }
   }, [pageData, isOpen]);
 
-  // 🌟 Filter available cities based on selected service
   const availableCities = useMemo(() => {
     if (pageData) return cities;
-
     const usedCitySlugs = existingPages
       .filter(page => page.serviceSlug === formData.serviceSlug)
       .map(page => page.citySlug);
-
     return cities.filter(city => !usedCitySlugs.includes(city.citySlug));
   }, [cities, existingPages, formData.serviceSlug, pageData]);
 
-  // 🌟 Auto-reset city if user switches service and the currently selected city is taken
   useEffect(() => {
     if (!pageData && formData.citySlug) {
       const isCityStillAvailable = availableCities.some(c => c.citySlug === formData.citySlug);
@@ -90,7 +89,8 @@ export default function SeoPageFormDrawer({ isOpen, setIsOpen, pageData, onSucce
         badge: { text: '', color: 'secondary' }, 
         heading: { text: '', color: 'primary' }, 
         description: '', 
-        bullets: [] 
+        bullets: [],
+        image: { url: '', alt: '' } // 🌟 ADDED IMAGE OBJECT
       }]
     }));
   };
@@ -123,10 +123,7 @@ export default function SeoPageFormDrawer({ isOpen, setIsOpen, pageData, onSucce
   const addBullet = (sIndex) => {
     setFormData(prev => {
       const updatedSections = [...prev.sections];
-      updatedSections[sIndex] = { 
-        ...updatedSections[sIndex], 
-        bullets: [...updatedSections[sIndex].bullets, ''] 
-      };
+      updatedSections[sIndex] = { ...updatedSections[sIndex], bullets: [...updatedSections[sIndex].bullets, ''] };
       return { ...prev, sections: updatedSections };
     });
   };
@@ -146,6 +143,42 @@ export default function SeoPageFormDrawer({ isOpen, setIsOpen, pageData, onSucce
     });
   };
 
+  // 🌟 CLOUDINARY UPLOAD WIDGET TRIGGER 🌟
+  const openCloudinaryWidget = async (sectionIndex) => {
+    if (!window.cloudinary) {
+      return toast.error("Cloudinary script not loaded. Check index.html.");
+    }
+
+    try {
+      // 1. Fetch Secure Signature from Backend
+      const res = await fetchClient('/location-pages/cloudinary-signature');
+      const { timestamp, signature, cloudName, apiKey } = res.data;
+
+      // 2. Open Widget
+      window.cloudinary.openUploadWidget(
+        {
+          cloudName: cloudName,
+          apiKey: apiKey,
+          uploadSignatureTimestamp: timestamp,
+          uploadSignature: signature,
+          cropping: true, // Gives admin ability to crop & zoom
+          multiple: false,
+          folder: 'seo-pages', // Keeps your cloudinary dashboard clean
+        },
+        (error, result) => {
+          if (!error && result && result.event === "success") {
+            const imageUrl = result.info.secure_url;
+            updateSection(sectionIndex, 'image', 'url', imageUrl);
+            toast.success("Image uploaded & optimized successfully!");
+          }
+        }
+      );
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to authenticate image uploader.");
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.citySlug) return toast.error("Please select a city");
@@ -157,7 +190,7 @@ export default function SeoPageFormDrawer({ isOpen, setIsOpen, pageData, onSucce
       seo: {
         metaTitle: formData.metaTitle,
         metaDescription: formData.metaDescription,
-        metaKeywords: formData.metaKeywords, // 🌟 ADDED: Send to database
+        metaKeywords: formData.metaKeywords,
         canonicalUrl: formData.canonicalUrl,
         isNoIndex: formData.isNoIndex,
         jsonLdSchema: formData.jsonLdSchema
@@ -222,37 +255,25 @@ export default function SeoPageFormDrawer({ isOpen, setIsOpen, pageData, onSucce
                       <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm space-y-4">
                         <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider">1. URL Matrix</h3>
                         <div className="grid grid-cols-2 gap-4">
-                          
-                          {/* TARGET SERVICE */}
                           <div>
                             <label className="block text-sm font-bold text-gray-700 mb-1">Target Service <span className="text-red-500">*</span></label>
                             <select required disabled={!!pageData} className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary outline-none font-bold disabled:opacity-50" value={formData.serviceSlug} onChange={(e) => setFormData({...formData, serviceSlug: e.target.value})}>
                               {SERVICE_TYPES.map(s => <option key={s.id} value={s.id}>{s.label}</option>)}
                             </select>
                           </div>
-
-                          {/* TARGET CITY */}
                           <div>
                             <label className="block text-sm font-bold text-gray-700 mb-1">Target City <span className="text-red-500">*</span></label>
-                            <select 
-                              required 
-                              disabled={!!pageData || (availableCities.length === 0 && !pageData)} 
-                              className={`w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary outline-none font-bold disabled:opacity-50 ${availableCities.length === 0 && !pageData ? 'text-red-500' : ''}`} 
-                              value={formData.citySlug} 
-                              onChange={(e) => setFormData({...formData, citySlug: e.target.value})}
-                            >
+                            <select required disabled={!!pageData || (availableCities.length === 0 && !pageData)} className={`w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary outline-none font-bold disabled:opacity-50 ${availableCities.length === 0 && !pageData ? 'text-red-500' : ''}`} value={formData.citySlug} onChange={(e) => setFormData({...formData, citySlug: e.target.value})}>
                               {!pageData && availableCities.length === 0 ? (
                                 <option value="">-- All Cities Created for this Service --</option>
                               ) : (
                                 <option value="">-- Select City --</option>
                               )}
-                              
                               {(pageData ? cities : availableCities).map(c => (
                                 <option key={c._id} value={c.citySlug}>{c.cityName}</option>
                               ))}
                             </select>
                           </div>
-
                         </div>
                         {pageData && <p className="text-xs text-red-500 font-bold mt-2">URLs cannot be changed after creation. Delete and recreate if needed.</p>}
                       </div>
@@ -274,19 +295,10 @@ export default function SeoPageFormDrawer({ isOpen, setIsOpen, pageData, onSucce
                           <label className="block text-sm font-bold text-gray-700 mb-1">Meta Description</label>
                           <textarea rows="2" className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary outline-none" value={formData.metaDescription} onChange={(e) => setFormData({...formData, metaDescription: e.target.value})} />
                         </div>
-                        
-                        {/* 🌟 ADDED: META KEYWORDS BOX */}
                         <div>
                           <label className="block text-sm font-bold text-gray-700 mb-1">Meta Keywords</label>
-                          <input 
-                            type="text" 
-                            className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary outline-none" 
-                            value={formData.metaKeywords} 
-                            onChange={(e) => setFormData({...formData, metaKeywords: e.target.value})} 
-                            placeholder="e.g. packers and movers, relocation (separate by comma)" 
-                          />
+                          <input type="text" className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary outline-none" value={formData.metaKeywords} onChange={(e) => setFormData({...formData, metaKeywords: e.target.value})} placeholder="e.g. packers and movers, relocation (separate by comma)" />
                         </div>
-
                         <div>
                            <label className="block text-sm font-bold text-gray-700 mb-1">JSON-LD Schema (Advanced)</label>
                            <textarea rows="2" className="w-full p-3 bg-gray-900 text-green-400 font-mono text-xs border border-gray-200 rounded-xl outline-none" value={formData.jsonLdSchema} onChange={(e) => setFormData({...formData, jsonLdSchema: e.target.value})} placeholder='<script type="application/ld+json"> { ... } </script>' />
@@ -319,17 +331,17 @@ export default function SeoPageFormDrawer({ isOpen, setIsOpen, pageData, onSucce
                            </button>
                         </div>
 
-                        <div className="space-y-6">
+                        <div className="space-y-8">
                           {formData.sections.map((section, sIndex) => (
                             <div key={sIndex} className="bg-white p-6 rounded-2xl border-2 border-gray-100 relative">
                                <button type="button" onClick={() => removeSection(sIndex)} className="absolute top-4 right-4 text-red-400 hover:text-red-600 bg-red-50 p-2 rounded-lg transition-colors"><Trash2 size={16}/></button>
                                
-                               <div className="mb-4">
+                               <div className="mb-6 border-b border-gray-100 pb-4">
                                   <span className="bg-primary text-white px-3 py-1 rounded-full text-xs font-bold">Section {sIndex + 1}</span>
                                </div>
 
-                               <div className="grid grid-cols-2 gap-6 mb-4">
-                                  {/* Badge Setup */}
+                               {/* Badge & Heading */}
+                               <div className="grid grid-cols-2 gap-6 mb-6">
                                   <div className="bg-gray-50 p-4 rounded-xl border border-gray-100">
                                     <label className="block text-xs font-bold text-gray-500 mb-2 uppercase">Top Badge / Tablet</label>
                                     <div className="flex gap-2">
@@ -339,8 +351,6 @@ export default function SeoPageFormDrawer({ isOpen, setIsOpen, pageData, onSucce
                                       </select>
                                     </div>
                                   </div>
-                                  
-                                  {/* Heading Setup */}
                                   <div className="bg-gray-50 p-4 rounded-xl border border-gray-100">
                                     <label className="block text-xs font-bold text-gray-500 mb-2 uppercase">Heading (H2)</label>
                                     <div className="flex gap-2">
@@ -352,14 +362,57 @@ export default function SeoPageFormDrawer({ isOpen, setIsOpen, pageData, onSucce
                                   </div>
                                </div>
 
+                               {/* 🌟 NEW: IMAGE & ALT TEXT BLOCK 🌟 */}
+                                <div className="bg-gray-50 p-4 rounded-xl border border-gray-100 mb-6">
+                                  <label className="text-xs font-bold text-gray-500 mb-3 uppercase flex items-center gap-2">
+                                    <ImageIcon size={14} /> Section Image (Optional)
+                                  </label>
+                                  <div className="flex flex-col sm:flex-row gap-4 items-start">
+                                    
+                                    {/* Image Preview & Upload Button */}
+                                    <div className="shrink-0 flex flex-col gap-2 w-full sm:w-1/3">
+                                      {section.image?.url ? (
+                                        <div className="relative w-full aspect-video rounded-lg overflow-hidden border border-gray-200">
+                                          <img src={section.image.url} alt="Preview" className="w-full h-full object-cover" />
+                                        </div>
+                                      ) : (
+                                        <div className="w-full aspect-video rounded-lg border-2 border-dashed border-gray-200 flex flex-col items-center justify-center text-gray-400 bg-white">
+                                          <ImageIcon size={24} className="mb-2 opacity-50" />
+                                          <span className="text-[10px] font-bold uppercase">No Image</span>
+                                        </div>
+                                      )}
+                                      <button 
+                                        type="button" 
+                                        onClick={() => openCloudinaryWidget(sIndex)}
+                                        className="w-full py-2 bg-white border border-gray-200 text-primary text-xs font-bold rounded-lg hover:bg-gray-50 transition-colors flex justify-center items-center gap-1 shadow-sm"
+                                      >
+                                        <UploadCloud size={14} /> {section.image?.url ? 'Change Image' : 'Upload Image'}
+                                      </button>
+                                    </div>
+
+                                    {/* Alt Text Input */}
+                                    <div className="flex-1 w-full">
+                                      <label className="block text-xs font-bold text-gray-500 mb-1">Image Alt Text (SEO)</label>
+                                      <input 
+                                        type="text" 
+                                        className="w-full p-2.5 bg-white border border-gray-200 rounded-lg outline-none text-sm focus:border-secondary focus:ring-1 focus:ring-secondary transition-all" 
+                                        value={section.image?.alt || ''} 
+                                        onChange={(e) => updateSection(sIndex, 'image', 'alt', e.target.value)} 
+                                        placeholder="e.g. Packers loading truck in local neighborhood" 
+                                      />
+                                      <p className="text-[10px] text-gray-400 mt-1">Briefly describe the image for screen readers and Google Images.</p>
+                                    </div>
+                                  </div>
+                                </div>
+
                                {/* Description */}
-                               <div className="mb-4">
-                                  <label className="block text-xs font-bold text-gray-500 mb-2 uppercase">Description Paragraph</label>
-                                  <textarea rows="3" className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl outline-none text-sm" value={section.description} onChange={(e) => updateSection(sIndex, 'description', null, e.target.value)} />
+                               <div>
+                                  <label className="block text-xs font-bold text-gray-500 mb-1.5 uppercase">Description Paragraph</label>
+                                  <textarea rows="4" className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl outline-none text-sm" value={section.description} onChange={(e) => updateSection(sIndex, 'description', null, e.target.value)} />
                                </div>
 
                                {/* Bullets Engine */}
-                               <div className="bg-blue-50/50 p-4 rounded-xl border border-blue-100/50">
+                               <div className="mt-3.5 bg-blue-50/50 p-4 rounded-xl border border-blue-100/50 mb-6">
                                   <div className="flex items-center justify-between mb-3">
                                     <label className="block text-xs font-bold text-blue-800 uppercase">Bullet Points ({section.bullets.length})</label>
                                     <button type="button" onClick={() => addBullet(sIndex)} className="text-blue-600 hover:text-blue-800 text-xs font-bold flex items-center gap-1"><Plus size={14}/> Add Bullet</button>
@@ -383,7 +436,7 @@ export default function SeoPageFormDrawer({ isOpen, setIsOpen, pageData, onSucce
                     </div>
 
                     {/* Footer Actions */}
-                    <div className="border-t border-gray-200 px-6 py-4 bg-white shrink-0">
+                    <div className="border-t border-gray-200 px-6 py-4 bg-white shrink-0 shadow-[0_-10px_30px_rgba(0,0,0,0.05)]">
                       <button 
                         type="submit" 
                         disabled={isLoading || (!pageData && availableCities.length === 0)} 
