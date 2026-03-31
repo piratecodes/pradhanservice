@@ -45,7 +45,15 @@ export default function GalleryShowcase({ albums }) {
   }
 
   const openGallery = (album) => {
-    const allImages = [album.featuredImage, ...(album.images || [])].filter(img => img?.url);
+    // 🌟 FIX: Now we ONLY load the images from the bulk array, completely ignoring the cover photo
+    const allImages = (album.images || []).filter(img => img?.url);
+    
+    // Optional Safety Net: If the album has no inner photos, don't open the empty slider
+    if (allImages.length === 0) {
+       alert("This album has no inner photos yet!");
+       return;
+    }
+
     setSelectedAlbum({ ...album, allImages });
   };
 
