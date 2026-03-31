@@ -1,23 +1,31 @@
 import React from 'react';
-import GalleryShowcase from '@/componant/gallery/GalleryShowcase';
+import GalleryShowcase from '@/componant/gallery/GalleryShowcase'; // 🚨 Note: Check your folder spelling here!
 
-// 🌟 SEO METADATA
 export const metadata = {
   title: 'Photo Gallery | Pradhan Services',
   description: 'Explore our latest relocation, packing, and transportation projects.',
-  keywords: ['gallery', 'relocation photos', 'packers and movers images', 'portfolio'],
 };
 
-// 🌟 SERVER-SIDE FETCHING
 async function getGalleries() {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/gallery`, { 
-      next: { revalidate: 3600 } // Caches for 1 hour for extreme speed
+    // Fallback URL just in case your .env is missing or misspelled
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api/v1';
+    console.log("🚀 [SERVER FETCH] Requesting from:", `${apiUrl}/gallery`);
+
+    const res = await fetch(`${apiUrl}/gallery`, { 
+      cache: 'no-store' // 🌟 KILL THE CACHE TEMPORARILY FOR TESTING
     });
-    if (!res.ok) return [];
-    const data = await res.json();
-    return data?.data?.galleries || [];
+    
+    if (!res.ok) {
+      console.error("❌ [SERVER FETCH ERROR] Backend returned status:", res.status);
+      return [];
+    }
+    
+    const json = await res.json();
+    console.log("✅ [SERVER FETCH SUCCESS] Albums found:", json?.data?.galleries?.length);
+    return json?.data?.galleries || [];
   } catch (error) {
+    console.error("💥 [SERVER FETCH CRASH]:", error.message);
     return [];
   }
 }

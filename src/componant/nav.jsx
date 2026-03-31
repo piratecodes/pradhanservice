@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef, Fragment } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Transition, Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react';
-import { ChevronDown, MapPin, Package, Car, Briefcase, Palette, Factory, Shield, Wrench, CheckSquare, Menu, X } from 'lucide-react';
+import { ChevronDown, MapPin, Package, Car, Briefcase, Palette, Factory, Shield, Wrench, CheckSquare, Menu, X, Motorbike } from 'lucide-react';
 
 import icon from '@/assets/icon.png';
 
@@ -12,7 +12,7 @@ const SERVICES = [
   { name: 'Packers & Movers', slug: 'packers-and-movers', icon: Package },
   { name: 'Storage Solutions', slug: 'storage-solutions', icon: Package },
   { name: 'Car Transportation', slug: 'car-transportation', icon: Car },
-  { name: 'Bike Transportation', slug: 'bike-transportation', icon: Car },
+  { name: 'Bike Transportation', slug: 'bike-transportation', icon: Motorbike },
 ];
 
 export default function Nav() {

@@ -76,7 +76,7 @@ export default function GalleryShowcase({ albums }) {
                 </div>
 
                 {/* Subtle dark gradient at bottom for contrast */}
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="absolute inset-0 bg-linear-to-t from-primary/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               </div>
 
               {/* Text Content */}
