@@ -51,20 +51,19 @@ export default function GalleryShowcase({ albums }) {
               className="group cursor-pointer flex flex-col gap-4"
             >
               <div className="relative aspect-video w-full rounded-3xl overflow-hidden border border-slate-200/50 bg-slate-100 shadow-sm transition-all duration-500 group-hover:shadow-2xl group-hover:border-secondary/50">
-                {/* 🌟 FIX 1: Reverted to width/height 0, added w-full h-full */}
                 <Image 
                   src={album.featuredImage?.url || "https://dummyimage.com/800x600/e2e8f0/475569"} 
                   alt={album.featuredImage?.alt || album.categoryName}
-                  width={0}
-                  height={0}
-                  sizes="100vw"
+                  width={800}
+                  height={600}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
                 />
                 <div className="absolute top-4 right-4 bg-black/70 backdrop-blur-md text-white px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <ImagesIcon size={14} className="text-secondary" /> 
                   {(album.images?.length || 0) + 1} Photos
                 </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               </div>
               <div>
                 <h3 className="text-2xl font-black text-primary transition-colors group-hover:text-secondary">
@@ -84,15 +83,16 @@ export default function GalleryShowcase({ albums }) {
       <Transition show={!!selectedAlbum} as={Fragment}>
         <Dialog as="div" className="relative z-50" onClose={() => setSelectedAlbum(null)}>
           
-          {/* 🌟 FIX 2: Tailwind v4 Glassmorphic Gradient */}
+          {/* Glassmorphic Gradient Overlay */}
           <TransitionChild as={Fragment} enter="ease-out duration-300" enterFrom="opacity-0" enterTo="opacity-100" leave="ease-in duration-200" leaveFrom="opacity-100" leaveTo="opacity-0">
-            <div className="fixed inset-0 bg-gradient-to-br from-slate-950/80 to-secondary/20 backdrop-blur-2xl transition-opacity" />
+            <div className="fixed inset-0 bg-linear-to-br from-slate-950/90 to-secondary/30 backdrop-blur-xl transition-opacity" />
           </TransitionChild>
 
           <div className="fixed inset-0 overflow-hidden">
             <div className="absolute inset-0 flex flex-col h-full max-w-7xl mx-auto px-4 py-6">
               
-              <div className="flex justify-between items-start shrink-0 mb-6 px-2">
+              {/* Header */}
+              <div className="flex justify-between items-start shrink-0 mb-6 px-2 z-10">
                 <div>
                   <DialogTitle className="text-2xl md:text-3xl font-black text-white drop-shadow-md">
                     {selectedAlbum?.categoryName}
@@ -106,8 +106,8 @@ export default function GalleryShowcase({ albums }) {
                 </button>
               </div>
 
-              {/* Glassmorphic Frame for Main Slider */}
-              <div className="flex-1 min-h-0 relative w-full rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-white/5 backdrop-blur-lg">
+              {/* MAIN CAROUSEL */}
+              <div className="flex-1 min-h-0 relative w-full rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-black/40 backdrop-blur-md z-10">
                 <Splide
                   ref={mainRef}
                   options={{
@@ -122,28 +122,25 @@ export default function GalleryShowcase({ albums }) {
                   className="h-full w-full custom-splide-arrows"
                 >
                   {selectedAlbum?.allImages?.map((img, idx) => (
-                    <SplideSlide key={idx} className="!h-full w-full">
-                      <div className="absolute inset-0 p-2 md:p-8 flex items-center justify-center">
-                        {/* 🌟 FIX 1: Width/Height 0 combined with w-full h-full */}
-                        <Image 
-                          src={img.url}
-                          alt={img.alt || "Gallery image"}
-                          width={0}
-                          height={0}
-                          sizes="100vw"
-                          className="w-full h-full object-contain drop-shadow-2xl"
-                          priority={idx === 0} 
-                          unoptimized 
-                        />
-                      </div>
+                    <SplideSlide key={idx} className="w-full h-full flex items-center justify-center p-2 md:p-8">
+                      {/* 🌟 FIX: Provided intrinsic ratio so it NEVER collapses to 0px! */}
+                      <Image 
+                        src={img.url}
+                        alt={img.alt || "Gallery image"}
+                        width={1920}
+                        height={1080}
+                        className="w-full h-full object-contain drop-shadow-2xl"
+                        priority={idx === 0} 
+                        unoptimized 
+                      />
                     </SplideSlide>
                   ))}
                 </Splide>
               </div>
 
-              {/* THUMBNAILS SPLIDE CAROUSEL */}
+              {/* THUMBNAILS CAROUSEL */}
               {selectedAlbum?.allImages?.length > 1 && (
-                <div className="h-24 mt-6 shrink-0 px-8">
+                <div className="h-24 mt-6 shrink-0 px-8 z-10">
                   <Splide
                     ref={thumbsRef}
                     options={{
@@ -161,15 +158,13 @@ export default function GalleryShowcase({ albums }) {
                       }
                     }}
                   >
-                    {selectedAlbum?.allImages.map((img, idx) => (
-                      
-                      <SplideSlide key={idx} className="rounded-xl overflow-hidden border-2 border-transparent transition-all is-active:border-secondary cursor-pointer shadow-lg">
+                    {selectedAlbum.allImages.map((img, idx) => (
+                      <SplideSlide key={idx} className="rounded-xl overflow-hidden border-[3px] border-transparent transition-colors is-active:border-secondary cursor-pointer shadow-lg opacity-100">
                         <Image 
                           src={img.url} 
                           alt="Thumbnail" 
-                          width={0}
-                          height={0}
-                          sizes="100px"
+                          width={200}
+                          height={200}
                           className="w-full h-full object-cover" 
                           unoptimized 
                         />
@@ -187,15 +182,14 @@ export default function GalleryShowcase({ albums }) {
       <style jsx global>{`
         .custom-splide-arrows .splide__arrow {
           background: rgba(255, 255, 255, 0.1) !important;
-          backdrop-filter: blur(12px);
-          width: 3.5rem !important;
-          height: 3.5rem !important;
-          transition: all 0.3s ease;
-          border: 1px solid rgba(255, 255, 255, 0.1);
+          backdrop-filter: blur(8px);
+          width: 3rem !important;
+          height: 3rem !important;
+          transition: background-color 0.2s ease;
+          border: 1px solid rgba(255, 255, 255, 0.2);
         }
         .custom-splide-arrows .splide__arrow:hover {
           background: #c5a059 !important; 
-          transform: scale(1.1);
         }
         .custom-splide-arrows .splide__arrow svg {
           fill: white !important;
