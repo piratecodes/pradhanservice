@@ -2,15 +2,31 @@
 
 import React, { useState, Fragment, useEffect } from 'react';
 import Image from 'next/image';
-import { Dialog, Transition, TransitionChild, DialogPanel } from '@headlessui/react';
+// 🌟 FIX 1: Added DialogTitle to the imports!
+import { Dialog, Transition, TransitionChild, DialogPanel, DialogTitle } from '@headlessui/react';
 import { X, ChevronLeft, ChevronRight, Images as ImagesIcon } from 'lucide-react';
 
 export default function GalleryShowcase({ albums }) {
   const [selectedAlbum, setSelectedAlbum] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // If no albums exist from the backend, show absolutely nothing (per your request)
-  if (!albums || albums.length === 0) return null;
+  // 🌟 FIX 2: Animated Empty State if no albums are available
+  if (!albums || albums.length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center py-32 px-6">
+        <div className="relative">
+          {/* Animated glowing background */}
+          <div className="absolute inset-0 bg-secondary/30 animate-ping rounded-full blur-xl"></div>
+          {/* Bouncing Icon */}
+          <ImagesIcon size={80} className="text-slate-300 relative z-10 animate-bounce" />
+        </div>
+        <h3 className="text-3xl font-black text-primary mt-8 mb-3">No Photos Available</h3>
+        <p className="text-slate-500 font-medium text-center max-w-md">
+          We are currently updating our gallery. Check back soon to see our latest successful projects and relocations!
+        </p>
+      </div>
+    );
+  }
 
   // When an album is clicked, combine the featured image and bulk images into one seamless array
   const openGallery = (album) => {
@@ -59,7 +75,7 @@ export default function GalleryShowcase({ albums }) {
               onClick={() => openGallery(album)}
               className="group cursor-pointer flex flex-col gap-4"
             >
-              {/* Image Frame - Must have 'relative' for the fill prop to work */}
+              {/* Image Frame */}
               <div className="relative aspect-video w-full rounded-3xl overflow-hidden border border-slate-200/50 bg-white/20 backdrop-blur-sm shadow-sm transition-all duration-500 group-hover:shadow-2xl group-hover:border-secondary/50">
                 <Image 
                   src={album.featuredImage?.url || "https://dummyimage.com/800x600/e2e8f0/475569"} 
@@ -76,7 +92,7 @@ export default function GalleryShowcase({ albums }) {
                 </div>
 
                 {/* Subtle dark gradient at bottom for contrast */}
-                <div className="absolute inset-0 bg-linear-to-t from-primary/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               </div>
 
               {/* Text Content */}
@@ -113,10 +129,10 @@ export default function GalleryShowcase({ albums }) {
               <div className="container px-6 flex justify-between items-center shrink-0">
                 <div>
                   <DialogTitle className="text-2xl font-black text-white">
-                    {selectedAlbum?.categoryName}
+                    {selectedAlbum?.categoryName || 'Gallery'}
                   </DialogTitle>
                   <p className="text-secondary font-bold text-sm tracking-widest uppercase mt-1">
-                    Image {currentIndex + 1} of {selectedAlbum?.allImages?.length}
+                    Image {currentIndex + 1} of {selectedAlbum?.allImages?.length || 0}
                   </p>
                 </div>
                 <button onClick={closeGallery} className="p-3 bg-white/10 hover:bg-secondary text-white rounded-full transition-colors outline-none">
