@@ -14,10 +14,19 @@ export default function GalleryShowcase({ albums }) {
   const mainRef = useRef(null);
   const thumbsRef = useRef(null);
 
+  // 🌟 FIX 1: The Syncing Bug
+  // Added a tiny timeout so the Headless UI Modal has time to paint 
+  // the DOM before we force the two Splide instances to sync up.
   useEffect(() => {
-    if (mainRef.current && thumbsRef.current && thumbsRef.current.splide) {
-      mainRef.current.sync(thumbsRef.current.splide);
+    let timer;
+    if (selectedAlbum) {
+      timer = setTimeout(() => {
+        if (mainRef.current && thumbsRef.current && thumbsRef.current.splide) {
+          mainRef.current.sync(thumbsRef.current.splide);
+        }
+      }, 50);
     }
+    return () => clearTimeout(timer);
   }, [selectedAlbum]);
 
   if (!albums || albums.length === 0) {
@@ -63,6 +72,7 @@ export default function GalleryShowcase({ albums }) {
                   <ImagesIcon size={14} className="text-secondary" /> 
                   {(album.images?.length || 0) + 1} Photos
                 </div>
+                {/* Tailwind v4 optimized linear gradient */}
                 <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               </div>
               <div>
@@ -83,7 +93,7 @@ export default function GalleryShowcase({ albums }) {
       <Transition show={!!selectedAlbum} as={Fragment}>
         <Dialog as="div" className="relative z-50" onClose={() => setSelectedAlbum(null)}>
           
-          {/* Glassmorphic Gradient Overlay */}
+          {/* Glassmorphic Background - Tailwind v4 syntax */}
           <TransitionChild as={Fragment} enter="ease-out duration-300" enterFrom="opacity-0" enterTo="opacity-100" leave="ease-in duration-200" leaveFrom="opacity-100" leaveTo="opacity-0">
             <div className="fixed inset-0 bg-linear-to-br from-slate-950/90 to-secondary/30 backdrop-blur-xl transition-opacity" />
           </TransitionChild>
@@ -123,7 +133,6 @@ export default function GalleryShowcase({ albums }) {
                 >
                   {selectedAlbum?.allImages?.map((img, idx) => (
                     <SplideSlide key={idx} className="w-full h-full flex items-center justify-center p-2 md:p-8">
-                      {/* 🌟 FIX: Provided intrinsic ratio so it NEVER collapses to 0px! */}
                       <Image 
                         src={img.url}
                         alt={img.alt || "Gallery image"}
@@ -146,7 +155,7 @@ export default function GalleryShowcase({ albums }) {
                     options={{
                       fixedWidth: 100,
                       fixedHeight: 64,
-                      isNavigation: true, 
+                      isNavigation: true, // This allows thumbnails to control the main slider!
                       gap: 12,
                       focus: 'center',
                       pagination: false,
@@ -159,7 +168,7 @@ export default function GalleryShowcase({ albums }) {
                     }}
                   >
                     {selectedAlbum.allImages.map((img, idx) => (
-                      <SplideSlide key={idx} className="rounded-xl overflow-hidden border-[3px] border-transparent transition-colors is-active:border-secondary cursor-pointer shadow-lg opacity-100">
+                      <SplideSlide key={idx} className="rounded-xl overflow-hidden border-[3px] border-transparent transition-colors [&.is-active]:border-secondary cursor-pointer shadow-lg opacity-100">
                         <Image 
                           src={img.url} 
                           alt="Thumbnail" 
@@ -180,6 +189,7 @@ export default function GalleryShowcase({ albums }) {
       </Transition>
 
       <style jsx global>{`
+        /* Perfectly centered, simple arrows that don't translate/jump on hover */
         .custom-splide-arrows .splide__arrow {
           background: rgba(255, 255, 255, 0.1) !important;
           backdrop-filter: blur(8px);
@@ -189,7 +199,7 @@ export default function GalleryShowcase({ albums }) {
           border: 1px solid rgba(255, 255, 255, 0.2);
         }
         .custom-splide-arrows .splide__arrow:hover {
-          background: #c5a059 !important; 
+          background: #c5a059 !important; /* Secondary color hover */
         }
         .custom-splide-arrows .splide__arrow svg {
           fill: white !important;
