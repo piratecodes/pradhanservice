@@ -54,7 +54,7 @@ export default function FloatingContact() {
       {/* --- MAIN TRIGGER BUTTON --- */}
       <button 
         onClick={() => setIsOpen(!isOpen)}
-        className="bg-secondary text-primary p-4 rounded-full shadow-2xl hover:scale-105 hover:shadow-[#c5a059]/40 transition-all duration-300 flex items-center justify-center relative outline-none"
+        className="bg-secondary text-white p-4 rounded-full shadow-2xl hover:scale-105 hover:shadow-[#c5a059]/40 transition-all duration-300 flex items-center justify-center relative outline-none"
       >
         {/* Chat Icon (Fades out when open) */}
         <div className={`transition-all duration-300 ${isOpen ? 'rotate-180 scale-0 opacity-0 absolute' : 'rotate-0 scale-100 opacity-100'}`}>
