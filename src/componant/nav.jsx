@@ -183,7 +183,6 @@ export default function Nav() {
                       {/* 🌟 ADDED onClick={() => close()} TO LINKS 🌟 */}
                       <Link href="/photo-gallery" onClick={() => close()} className="block text-xl font-bold border-b border-gray-50 pb-3">Gallery</Link>
                       <Link href="/about" onClick={() => close()} className="block text-xl font-bold border-b border-gray-50 pb-3">About</Link>
-                      <a target="_blank" href="https://blog.pradhanservice.com" onClick={() => close()} className="block text-xl font-bold border-b border-gray-50 pb-3">Blogs</a>
                       
                       <div className="py-4">
                         <p className="text-[10px] uppercase text-secondary font-black mb-4 tracking-widest px-1">Services & Cities</p>
@@ -229,6 +228,7 @@ export default function Nav() {
                         </div>
                       </div>
                       
+                      <a target="_blank" href="https://blog.pradhanservice.com" onClick={() => close()} className="block text-xl font-bold pt-4">Contact</a>
                       <Link href="/contact" onClick={() => close()} className="w-full bg-black text-white font-bold py-4 rounded-full mt-10 text-lg">Contact</Link>
                     </div>
                   </DisclosurePanel>
