@@ -3,7 +3,8 @@ import GalleryShowcase from '@/componant/gallery/GalleryShowcase'; // 🚨 Note:
 
 export const metadata = {
   title: 'Photo Gallery | Pradhan Services',
-  description: 'Explore our latest relocation, packing, and transportation projects.',
+  description: 'Explore Pradhan Packers and Movers gallery to see our packing, moving, car shifting, and storage solution services in action across multiple cities.',
+  keywords: ["packers and movers kolkata", "Pradhan Packers and movers"],
 };
 
 async function getGalleries() {

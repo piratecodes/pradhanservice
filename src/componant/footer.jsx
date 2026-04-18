@@ -146,7 +146,7 @@ export default function Footer() {
           <p>© {new Date().getFullYear()} Pradhan Packers. All rights reserved.</p>
           <div className="flex items-center gap-4">
             <Link href="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link>
-            <Link href="/terms-and-condition" className="hover:text-white transition-colors">Terms & Conditions</Link>
+            <Link href="/terms-and-conditions" className="hover:text-white transition-colors">Terms & Conditions</Link>
             <Link href="/sitemap.xml" className="hover:text-white transition-colors">Sitemap</Link>
           </div>
         </div>

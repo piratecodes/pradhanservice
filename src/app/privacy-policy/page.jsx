@@ -3,13 +3,13 @@ import Link from 'next/link';
 
 export const metadata = {
   title: 'Privacy Policy | Pradhan Packers & Movers',
-  description: 'Read the Privacy Policy for Pradhan Packers & Movers. Learn how we collect, protect, and use your personal information when you submit moving inquiries on our platform.',
+  description: 'Learn how Pradhan Packers and Movers collects, uses, and protects your personal information while using our packers and movers services.',
 };
 
 export default function PrivacyPolicyPage() {
   return (
     <main className="min-h-screen pt-32 pb-24">
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container px-4 relative z-10">
         
         {/* Page Header */}
         <div className="text-center mb-16">

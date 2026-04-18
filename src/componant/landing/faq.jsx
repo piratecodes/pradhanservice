@@ -8,43 +8,48 @@ export default function FaqSection() {
   const faqs = [
     {
       id: 1,
-      question: "How much do packers and movers cost in Kolkata?",
-      answer: "The cost of packers and movers in Kolkata depends on the size of the move, distance, packing materials, and services required. Local house shifting usually starts from affordable rates based on household items."
+      question: "What is the average home shifting cost?",
+      answer: "There is no fixed cost for home shifting. It depends on factors like distance, size of goods, packing materials, transport type, and manpower required. We provide customized quotes based on your specific needs."
     },
     {
       id: 2,
-      question: "How long does house shifting take in Kolkata?",
-      answer: "Most local shifting services in Kolkata are completed within the same day. Long-distance interstate relocations may take 3–7 days depending on the destination."
+      question: "Is night shifting possible?",
+      answer: "Yes, night shifting is possible. However, clients should ensure prior permission and clear communication with society management or neighbors to avoid any issues during the shifting process."
     },
     {
       id: 3,
-      question: "Do you provide car transportation services from Kolkata? ",
-      answer: "Yes, Pradhan Packers and Movers Pvt Ltd offers safe car transport services from Kolkata using secure vehicle carriers with proper handling and delivery. "
+      question: "Which carton quality is used during shifting?",
+      answer: "Carton quality depends on the type and distance of shifting, as well as the items being moved. For long-distance or interstate shifting, we use strong, durable, high-quality cartons for maximum protection. For local shifting, we use good-quality cartons since the risk of damage is lower."
     },
     {
       id: 4,
-      question: "Do you offer packing materials for relocation? ",
-      answer: "Yes, we use high-quality packing materials including bubble wrap, carton boxes, stretch film, and protective covers to ensure safe relocation."
+      question: "Can antique furniture be shifted safely?",
+      answer: "Yes, absolutely. We have a dedicated and experienced team specialized in handling antique items with utmost care and safety."
     },
     {
       id: 5,
-      question: "Are your packing and moving services insured?",
-      answer: "Yes, we provide transit insurance assistance to protect your goods during transportation and relocation. "
+      question: "What if a delay happens?",
+      answer: "Delays can occur due to reasons like traffic restrictions, weather conditions, or rare vehicle issues. However, we ensure clear communication and are committed to completing your shifting within a maximum of 12 business days."
     },
     {
       id: 6,
-      question: "Do you provide warehouse or storage services in Kolkata?",
-      answer: "Yes, we offer secure warehouse and storage services in Kolkata with monitored facilities for short-term and long-term storage."
+      question: "How are complaints handled?",
+      answer: "With our years of experience, complaints are extremely rare. However, if any issue arises, we handle it professionally and ensure a quick resolution with 100% customer satisfaction."
     },
     {
       id: 7,
-      question: "How early should I book packers and movers in Kolkata?",
-      answer: "It is recommended to book packers and movers at least 5–7 days in advance to ensure availability and proper moving arrangements. "
+      question: "Do you provide packing and unpacking services?",
+      answer: "Yes, we offer complete packing and unpacking services using quality materials to ensure the safety of your belongings."
     },
     {
       id: 8,
-      question: "Do you provide interstate relocation services from Kolkata?",
-      answer: "Yes, we provide interstate packing and moving services from Kolkata to major cities across India with safe and timely delivery."
+      question: "Is insurance available for goods during shifting?",
+      answer: "Yes, we provide insurance options for added protection, especially for long-distance and valuable items."
+    },
+    {
+      id: 9,
+      question: "How early should I book my shifting service?",
+      answer: "We recommend booking at least 2–5 days in advance to ensure availability and smooth planning of your move."
     }
   ];
 

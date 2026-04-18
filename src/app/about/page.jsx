@@ -7,6 +7,13 @@ import {
   Medal, Award, Network
 } from 'lucide-react';
 
+
+export const metadata = {
+  title: 'About Pradhan Packers and Movers | Pradhan Services',
+  description: 'Learn about Pradhan Packers and Movers, a reliable moving company offering house shifting, car shifting, and storage solution services across India.',
+  keywords: ["movers and packers services", "Pradhan Packers and movers"],
+};
+
 export default function AboutPage() {
   
   // 1. Core Values (Exact Text)

@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 export const metadata = {
   title: 'Terms & Conditions | Pradhan Packers & Movers',
-  description: 'Review the terms and conditions of Pradhan Packers & Movers. Understand our inquiry process, service agreements, liability limitations, and operational guidelines for relocations across India.',
+  description: 'Read the Terms and Conditions of Pradhan Packers and Movers covering service scope, pricing, liability, and client responsibilities for safe and transparent moving services.',
 };
 
 export default function TermsConditionsPage() {

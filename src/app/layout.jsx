@@ -20,15 +20,16 @@ export const metadata = {
     template: "%s | Pradhan Service",
     default: "Pradhan Service",
   },
-  description: "Pradhan Services - Your trusted partner for all your needs.",
+  description: "Looking for reliable packers and movers in Kolkata Pradhan Packers and Movers offers safe, affordable house shifting, office relocation & packing services.",
   canonical: "https://www.pradhanservice.com/",
   sitename: "Pradhan Services",
+  keywords: ["packers and movers kolkata", "Pradhan Packers and movers"],
   openGraph: {
     url: 'https://www.pradhanservice.com',
     title: "Pradhan Services",
     type: 'website',
     siteName: "Pradhan Services",
-    description: "Pradhan Services - Your trusted partner for all your needs.",
+    description: "Looking for reliable packers and movers in Kolkata Pradhan Packers and Movers offers safe, affordable house shifting, office relocation & packing services.",
     images: [
       {url: "https://www.pradhanservice.com/icon.png", alt: "pradhanservice | Logo", type: 'image/png', sizes:"192x192", fetchPriority: "auto"},
     ],
@@ -37,7 +38,7 @@ export const metadata = {
     card: "Pradhan Services",
     title: "Home - Pradhan Services",
     creator: "Pradhan Services",
-    description: "Pradhan Services - Your trusted partner for all your needs.",
+    description: "Looking for reliable packers and movers in Kolkata Pradhan Packers and Movers offers safe, affordable house shifting, office relocation & packing services.",
     images: [
       {url: "https://www.pradhanservice.com/icon.png", alt: "pradhanservice | Logo", type: 'image/png', sizes:"192x192", fetchPriority: "auto"},
     ],
