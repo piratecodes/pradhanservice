@@ -1,5 +1,3 @@
-"use client";
-
 import React from 'react';
 import { 
   Globe, Users, Heart, Zap, ShieldCheck, Share2, History, ArrowRight, 
@@ -8,12 +6,10 @@ import {
 } from 'lucide-react';
 
 
-export async function generateMetadata({ params }) {
-  return {
-    title: 'About Us | Pradhan Packers and Movers',
-    description: 'Learn about Pradhan Packers and Movers Pvt Ltd, our history, mission, vision, core values, and why we are the trusted choice for relocation services in Kolkata and across India.',
-    keywords: ["packers and movers kolkata", "Pradhan Packers and movers"],
-  };
+export const metadata = {
+  title: 'About Pradhan Packers and Movers | Pradhan Services',
+  description: 'Learn about Pradhan Packers and Movers, a reliable moving company offering house shifting, car shifting, and storage solution services across India.',
+  keywords: ["movers and packers services", "Pradhan Packers and movers"],
 };
 
 export default function AboutPage() {
