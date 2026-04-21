@@ -27,10 +27,10 @@ export default function AboutSection() {
           {/* Paragraphs with fixed apostrophes and corrected branding */}
           <div className="flex flex-col gap-5 text-gray-500 text-lg font-medium leading-relaxed">
             <p>
-              Whether you are moving across the street or across the country, the demand for reliable, secure logistics is at an all-time high. It houses the world&apos;s biggest challenges, but we make it simple.
+              A 45+ year legacy doesn’t just mean time in business. It reflects how processes evolve, mistakes reduce, and systems improve.
             </p>
             <p>
-              From lavish city apartments to massive corporate offices, Pradhan Packers & Movers offers bespoke, premium relocation services tailored entirely to your timeline and inventory.
+              PRADHAN PACKERS and MOVERS focuses on making that decision easier by offering structured, reliable, and experience-driven relocation support across Kolkata and beyond.
             </p>
           </div>
 
@@ -51,7 +51,7 @@ export default function AboutSection() {
               <Map className="w-6 h-6 text-secondary" />
               <div>
                 <span className="block text-gray-400 text-xs font-bold uppercase tracking-wider mb-0.5">Total Moves</span>
-                <span className="block text-primary font-black text-lg">5000+ </span>
+                <span className="block text-primary font-black text-lg">15,000+ </span>
               </div>
             </div>
 
@@ -60,7 +60,7 @@ export default function AboutSection() {
               <Award className="w-6 h-6 text-secondary" />
               <div>
                 <span className="block text-gray-400 text-xs font-bold uppercase tracking-wider mb-0.5">Happy Clients</span>
-                <span className="block text-primary font-black text-lg">2500+</span>
+                <span className="block text-primary font-black text-lg">10,000+</span>
               </div>
             </div>
 

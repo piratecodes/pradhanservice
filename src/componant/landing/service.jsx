@@ -7,6 +7,8 @@ import LocalShiftingImage from "@/assets/LocalShifting.png";
 import SecureStorageImage from "@/assets/SecureStorage.png";
 import CarTransportImage from "@/assets/CarTransport.png";
 import BikeTransportImage from "@/assets/BikeTransport.png";
+import Transportation from "@/assets/Transportation.png";
+import Installation from "@/assets/Installation.png";
 
 export default function ServicesSection() {
   const servicesData = [
@@ -29,6 +31,16 @@ export default function ServicesSection() {
       title: "Bike Transportation",
       description: "Trusted bike transportation by best packers and movers, offering door to door, safe and affordable bike shifting services.",
       image: BikeTransportImage
+    },
+    {
+      title: "Transportation",
+      description: "Trusted bike transportation by best packers and movers, offering door to door, safe and affordable bike shifting services.",
+      image: Transportation
+    },
+    {
+      title: "Home Appliances Setup",
+      description: "Trusted bike transportation by best packers and movers, offering door to door, safe and affordable bike shifting services.",
+      image: Installation
     }
   ];
 
@@ -46,11 +58,11 @@ export default function ServicesSection() {
       </div>
 
       {/* Services Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div className="flex flex-wrap justify-center gap-8">
         {servicesData.map((service, index) => (
           <div 
             key={index} 
-            className="group flex flex-col bg-white rounded-[2rem] overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-secondary/10 border border-gray-100"
+            className="group flex flex-col bg-white rounded-[2rem] overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-secondary/10 border border-gray-100 w-full sm:w-[calc(50%-2rem)] lg:w-[calc(25%-2rem)]"
           >
             {/* Image Container with Hover Zoom */}
             <div className="w-full h-48 sm:h-56 relative overflow-hidden bg-primary">

@@ -17,28 +17,28 @@ const montserrat = Montserrat({
 
 export const metadata = {
   title: {
-    template: "%s | Pradhan Service",
-    default: "Pradhan Service",
+    template: " %s | Pradhan Packers and Movers Pvt. Ltd.",
+    default: "Packers and Movers Company in Kolkata | Pradhan Packers and Movers Pvt. Ltd.",
   },
-  description: "Looking for reliable packers and movers in Kolkata Pradhan Packers and Movers offers safe, affordable house shifting, office relocation & packing services.",
+  description: "Trusted packers and movers company in Kolkata offering shifting, storage solutions, and car transport services with safe, reliable handling.",
   canonical: "https://www.pradhanservice.com/",
-  sitename: "Pradhan Services",
+  sitename: "Pradhan Packers and Movers Pvt. Ltd.",
   keywords: ["packers and movers kolkata", "Pradhan Packers and movers"],
   openGraph: {
     url: 'https://www.pradhanservice.com',
-    title: "Pradhan Services",
+    title: "Pradhan Packers and Movers",
     type: 'website',
-    siteName: "Pradhan Services",
-    description: "Looking for reliable packers and movers in Kolkata Pradhan Packers and Movers offers safe, affordable house shifting, office relocation & packing services.",
+    siteName: "Pradhan Packers and Movers Pvt. Ltd.",
+    description: "Trusted packers and movers company in Kolkata offering shifting, storage solutions, and car transport services with safe, reliable handling.",
     images: [
       {url: "https://www.pradhanservice.com/icon.png", alt: "pradhanservice | Logo", type: 'image/png', sizes:"192x192", fetchPriority: "auto"},
     ],
   },
   twitter:{
-    card: "Pradhan Services",
-    title: "Home - Pradhan Services",
-    creator: "Pradhan Services",
-    description: "Looking for reliable packers and movers in Kolkata Pradhan Packers and Movers offers safe, affordable house shifting, office relocation & packing services.",
+    card: "Pradhan Packers and Movers Pvt. Ltd.",
+    title: "Home - Pradhan Packers and Movers Pvt. Ltd.",
+    creator: "Pradhan Packers and Movers Pvt. Ltd.",
+    description: "Trusted packers and movers company in Kolkata offering shifting, storage solutions, and car transport services with safe, reliable handling.",
     images: [
       {url: "https://www.pradhanservice.com/icon.png", alt: "pradhanservice | Logo", type: 'image/png', sizes:"192x192", fetchPriority: "auto"},
     ],
@@ -71,7 +71,7 @@ export default function RootLayout({ children }) {
         {/* Browser Update */}
         <Script id="browser-update" dangerouslySetInnerHTML={{ __html: `var $buoop = {required:{e:-4,f:-3,o:-3,s:-1,c:-3},insecure:true,api:2025.06 }; function $buo_f(){ var e = document.createElement("script"); e.src = "https://browser-update.org/update.min.js"; document.body.appendChild(e); }; try {document.addEventListener("DOMContentLoaded", $buo_f,false)} catch(e){window.attachEvent("onload", $buo_f)}` }} />
       </head>
-      <body className={`${montserrat.variable} antialiased overflow-x-hidden scrollbar-thin scrollbar-thumb-rounded-full scrollbar-thumb-yellow-700 scrollbar-corner-yellow-800 scrollbar-track-blue-900`}>
+      <body className={`${montserrat.variable} antialiased overflow-x-hidden scrollbar-thin scrollbar-thumb-rounded-full scrollbar-thumb-secondary scrollbar-corner-indigo-700 scrollbar-track-primary/75`}>
         {/* Google Tag Manager (noscript) */}
         <noscript><iframe loading="lazy" src={`https://www.googletagmanager.com/ns.html?id=${process.env.NEXT_PUBLIC_GTMId}`} className='hidden invisible' height="0" width="0"></iframe></noscript>
 

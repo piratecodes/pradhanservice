@@ -7,7 +7,7 @@ import {
 
 
 export const metadata = {
-  title: 'About Pradhan Packers and Movers | Pradhan Services',
+  title: 'About Pradhan Packers and Movers',
   description: 'Learn about Pradhan Packers and Movers, a reliable moving company offering house shifting, car shifting, and storage solution services across India.',
   keywords: ["movers and packers services", "Pradhan Packers and movers"],
 };

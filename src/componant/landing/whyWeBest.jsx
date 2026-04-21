@@ -38,7 +38,7 @@ export default function WhyChooseUsSection() {
       id: 5,
       title: "Verified Teams",
       icon: BellRing,
-      description: "Use of trained and repeat workforce with supervision, avoiding random daily labor and ensuring accountability throughout the relocation process."
+      description: "Our trained, in-house specialists provide strict supervision and full accountability, replacing unverified contractors with a permanent, seasoned relocation crew."
     },
     {
       id: 6,

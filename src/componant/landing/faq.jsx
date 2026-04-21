@@ -19,7 +19,7 @@ export default function FaqSection() {
     {
       id: 3,
       question: "Which carton quality is used during shifting?",
-      answer: "Carton quality depends on the type and distance of shifting, as well as the items being moved. For long-distance or interstate shifting, we use strong, durable, high-quality cartons for maximum protection. For local shifting, we use good-quality cartons since the risk of damage is lower."
+      answer: "We use custom-sized 2' x 1.5' high-durability cartons tailored to your move. Long-distance relocations feature reinforced wall protection, while intracity shifts utilize high-grade standard boxes for agile yet secure handling."
     },
     {
       id: 4,
@@ -49,7 +49,7 @@ export default function FaqSection() {
     {
       id: 9,
       question: "How early should I book my shifting service?",
-      answer: "We recommend booking at least 2–5 days in advance to ensure availability and smooth planning of your move."
+      answer: "We recommend booking at least 7 days in advance to ensure availability and smooth planning of your move."
     }
   ];
 

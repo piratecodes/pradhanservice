@@ -149,11 +149,11 @@ export default function HeroSection() {
         </div>
 
         <h1 className="text-center text-5xl md:text-6xl lg:text-7xl font-black text-secondary leading-[1.1] tracking-tight">
-          Trusted Packers and Movers in Kolkata
+          Reliable Packers and Movers in Kolkata
         </h1>
         
         <p className="text-lg md:text-xl text-gray-600 font-medium text-center leading-relaxed">
-          We specialise in household shifting, office relocation, vehicle transportation, packing services, and storage solutions across Kolkata and major cities in India. <br /> With experienced staff, professional packing materials, and organised transportation, we ensure safe handling and timely delivery of your belongings. Many customers searching for the Best Packers and Movers in Kolkata trust our team for secure and hassle-free moving services.
+          We specialise in Packers and Movers, Storage Solutions, Vehicle Shifting, Transportation, And Home Appliances Setup across Kolkata and major cities in India. <br /> With experienced staff, professional packing materials, and organised transportation, we ensure safe handling and timely delivery of your belongings. Many customers searching for the Best Packers and Movers in Kolkata trust our team for secure and hassle-free moving services.
         </p>
       </div>
 

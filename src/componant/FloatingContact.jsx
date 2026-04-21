@@ -45,7 +45,7 @@ export default function FloatingContact() {
           <span className="bg-white/90 backdrop-blur-sm border border-slate-200 text-slate-700 text-xs font-bold px-3 py-1.5 rounded-lg shadow-sm opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-4 group-hover:translate-x-0">
             Call Us
           </span>
-          <div className="bg-primary text-secondary p-3.5 rounded-full shadow-lg hover:shadow-xl hover:scale-110 transition-all">
+          <div className="bg-secondary text-white p-3.5 rounded-full shadow-lg hover:shadow-xl hover:scale-110 transition-all">
             <Phone size={24} fill="currentColor" />
           </div>
         </a>
