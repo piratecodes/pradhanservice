@@ -54,7 +54,7 @@ export default function FaqSection() {
   ];
 
   return (
-    <section className="container px-4 py-20 relative z-10">
+    <section className="container px-4 pt-8 pb-16 md:py-20 relative z-10">
       <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-start">
         
         {/* Left Column: Header & Contact Info */}

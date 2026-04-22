@@ -149,7 +149,7 @@ export default function HeroSection() {
         </div>
 
         <h1 className="text-center text-5xl md:text-6xl lg:text-7xl font-black text-secondary leading-[1.1] tracking-tight">
-          Reliable Packers and Movers in Kolkata
+          Trusted Packers and Movers in Kolkata
         </h1>
         
         <p className="text-lg md:text-xl text-gray-600 font-medium text-center leading-relaxed">

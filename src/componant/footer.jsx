@@ -90,15 +90,16 @@ export default function Footer() {
           </div>
 
           {/* RIGHT SIDE: The 3 Columns */}
-          <div className="w-full lg:w-2/5 grid grid-cols-2 md:gap-8 lg:pl-12 xl:pl-24">
+          <div className="w-full lg:w-2/5 grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-8 lg:pl-12 xl:pl-24">
             
             {/* Column 1: Quick Links */}
             <div className="flex flex-col gap-4">
               <h4 className="text-white font-semibold mb-2">Quick Links</h4>
               <ul className="flex flex-col gap-3 text-sm">
                 <li><Link href="/" className="hover:text-secondary transition-colors">Home</Link></li>
-                <li><Link href="/about" className="hover:text-secondary transition-colors">About Us</Link></li>
+                <li><a target='_blank' href="https://blog.pradhanservice.com" className="hover:text-secondary transition-colors">Blogs</a></li>
                 <li><Link href="/photo-gallery" className="hover:text-secondary transition-colors">Gallery</Link></li>
+                <li><Link href="/about" className="hover:text-secondary transition-colors">About Us</Link></li>
                 <li><Link href="/contact" className="hover:text-secondary transition-colors">Contact Us</Link></li>
               </ul>
             </div>

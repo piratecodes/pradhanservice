@@ -34,12 +34,12 @@ export default function ServicesSection() {
     },
     {
       title: "Transportation",
-      description: "Trusted bike transportation by best packers and movers, offering door to door, safe and affordable bike shifting services.",
+      description: "Safe, timely transportation ensuring secure delivery of goods with professional handling and real-time tracking.",
       image: Transportation
     },
     {
       title: "Home Appliances Setup",
-      description: "Trusted bike transportation by best packers and movers, offering door to door, safe and affordable bike shifting services.",
+      description: "Expert installation and setup of home appliances ensuring safety, efficiency, and proper functioning after relocation.",
       image: Installation
     }
   ];
@@ -53,7 +53,7 @@ export default function ServicesSection() {
           Our <span className="text-secondary italic">Services</span>
         </h2>
         <h2 className="text-gray-500 text-lg md:text-xl font-medium leading-relaxed">
-          From local apartment moves to massive industrial relocations across India, Pradhan Packers & Movers delivers uncompromising quality and safety.
+          From regional apartment moves to massive industrial relocations across India, Pradhan Packers & Movers delivers uncompromising quality and safety.
         </h2>
       </div>
 
