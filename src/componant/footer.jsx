@@ -146,7 +146,7 @@ export default function Footer() {
           
           {/* Added the Straxcel Link grouped with the copyright so it doesn't break the flex layout */}
           <div className="flex flex-col items-center md:items-start gap-1">
-            <p>© {new Date().getFullYear()} Pradhan Packers. All rights reserved.</p>
+            <p>© {new Date().getFullYear()} Pradhan Services. All rights reserved.</p>
             <p className='font-extrabold text-slate-500'>
               Developed by:{' '}
               <Link 
