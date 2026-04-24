@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { MapPin, Phone, Mail, Facebook, Twitter, Instagram, Linkedin, Youtube, Loader2, MessageCircle } from 'lucide-react';
 
-import icon from '@/assets/icon.png';
+import icon from '@/assets/footerIcon.png';
 
 export default function Footer() {
   // 1. Create state with fallbacks that perfectly match your API keys
