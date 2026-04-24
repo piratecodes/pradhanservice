@@ -143,7 +143,23 @@ export default function Footer() {
 
         {/* Bottom Copyright Bar */}
         <div className="border-t border-slate-800 mt-12 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-500">
-          <p>© {new Date().getFullYear()} Pradhan Packers. All rights reserved.</p>
+          
+          {/* Added the Straxcel Link grouped with the copyright so it doesn't break the flex layout */}
+          <div className="flex flex-col items-center md:items-start gap-1">
+            <p>© {new Date().getFullYear()} Pradhan Packers. All rights reserved.</p>
+            <p className='font-extrabold text-slate-500'>
+              Developed by:{' '}
+              <Link 
+                href="https://straxcel.com" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="font-semibold text-slate-400 hover:text-secondary transition-colors"
+              >
+                Straxcel Business Solutions
+              </Link>
+            </p>
+          </div>
+
           <div className="flex items-center gap-4">
             <Link href="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link>
             <Link href="/terms-and-conditions" className="hover:text-white transition-colors">Terms & Conditions</Link>
