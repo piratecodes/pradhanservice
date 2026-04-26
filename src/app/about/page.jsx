@@ -23,7 +23,7 @@ export default function AboutPage() {
 
   // 2. Experience & Strength (Updated with Client's New Data)
   const strengths = [
-    { icon: <History size={20} />, text: "40+ Years of Ground-Level Transport Experience" },
+    { icon: <History size={20} />, text: "45+ Years of Ground-Level Transport Experience" },
     { icon: <Truck size={20} />, text: "Fleet of 20+ Company-Owned Goods Vehicles" },
     { icon: <Medal size={20} />, text: "65,000+ Successful Shifting Projects Completed" },
     { icon: <Award size={20} />, text: "In-House, Professionally Trained Handling Team" },
@@ -60,8 +60,8 @@ export default function AboutPage() {
         
         {/* Responsive Graffiti Watermark */}
         <div className="absolute top-0 right-0 z-0 pointer-events-none select-none opacity-[0.05] translate-x-1/12 -translate-y-1/4">
-          <h2 className="text-[40vw] lg:text-[50rem] font-black leading-none tracking-tighter" style={{ WebkitTextStroke: '2px #c5a059', color: 'transparent' }}>
-            40
+          <h2 className="text-[40vw] lg:text-[50rem] font-black leading-none tracking-tighter" style={{ WebkitTextStroke: '3.5px #c5a059', color: 'transparent' }}>
+            45+
           </h2>
         </div>
 
