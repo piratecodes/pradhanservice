@@ -2,9 +2,8 @@ import React from 'react';
 import { 
   Globe, Users, Heart, Zap, ShieldCheck, Share2, History, ArrowRight, 
   Target, Eye, CheckCircle2, PackageOpen, Clock, IndianRupee, FileCheck2,
-  Medal, Award, Network
+  Medal, Award, Network, Truck, Route
 } from 'lucide-react';
-
 
 export const metadata = {
   title: 'About Pradhan Packers and Movers',
@@ -14,7 +13,7 @@ export const metadata = {
 
 export default function AboutPage() {
   
-  // 1. Core Values (Exact Text)
+  // 1. Core Values
   const coreValues = [
     { icon: <Heart size={24} />, title: "Customer First", description: "Every relocation is handled with care and responsibility" },
     { icon: <ShieldCheck size={24} />, title: "Safety & Reliability", description: "We ensure safe packing, handling, and transportation of goods" },
@@ -22,28 +21,28 @@ export default function AboutPage() {
     { icon: <Share2 size={24} />, title: "Trust & Transparency", description: "We maintain clear communication and honest pricing" },
   ];
 
-  // 2. Experience & Strength (Exact Text)
+  // 2. Experience & Strength (Updated with Client's New Data)
   const strengths = [
-    { icon: <History size={20} />, text: "40+ Years of Experience in packing and moving services" },
-    { icon: <Medal size={20} />, text: "15,000+ Successful Shifting Projects completed" },
-    { icon: <Users size={20} />, text: "10,000+ Happy Customers served across India" },
-    { icon: <Award size={20} />, text: "Professional Packing & Handling Team" },
-    { icon: <Network size={20} />, text: "Strong network for interstate relocation services" }
+    { icon: <History size={20} />, text: "40+ Years of Ground-Level Transport Experience" },
+    { icon: <Truck size={20} />, text: "Fleet of 20+ Company-Owned Goods Vehicles" },
+    { icon: <Medal size={20} />, text: "15,000+ Successful Shifting Projects Completed" },
+    { icon: <Award size={20} />, text: "In-House, Professionally Trained Handling Team" },
+    { icon: <Network size={20} />, text: "Pan-India Network for Seamless Interstate Relocation" }
   ];
 
-  // 3. Services List (Exact Text)
+  // 3. Services List 
   const servicesList = [
     "Local Shifting Services in Kolkata for quick and safe household relocation",
     "Interstate Relocation Services for secure long-distance shifting across India",
     "Industrial Relocation for factories, machinery, and heavy equipment transportation",
-    "Car Transport Services using safe and specialized vehicle carriers",
+    "Car & Bike Transport Services using safe and specialized vehicle carriers",
     "Secure Warehouse & Storage Solutions with monitored storage facilities",
     "Goods Vehicle Rental Services for transportation and logistics support",
     "Home and Flat Shifting Services with complete packing and moving assistance",
     "Home Appliance Installation Services for AC, TV, and electronic fittings after relocation"
   ];
 
-  // 4. Why Choose Us Grid (Exact Text)
+  // 4. Why Choose Us Grid 
   const whyChooseUs = [
     { title: "Safe Packing", description: "High-quality packing materials ensure safe shifting services in Kolkata with maximum protection for your belongings.", icon: <PackageOpen size={24} /> },
     { title: "On-Time Delivery", description: "Reliable packers and movers in Kolkata ensure timely pickup, fast transit, and secure delivery.", icon: <Clock size={24} /> },
@@ -56,8 +55,8 @@ export default function AboutPage() {
   return (
     <main className="min-h-screen">
       
-      {/* 1. HERO & ABOUT SECTION: Accommodating the full narrative */}
-      <section className="relative w-full pt-32 md:pt-48 pb-20 overflow-hidden border-b border-gray-50">
+      {/* 1. HERO & ABOUT SECTION: (Exact Layout Maintained, Text Polished) */}
+      <section className="relative w-full pt-32 overflow-hidden border-b border-gray-50">
         
         {/* Responsive Graffiti Watermark */}
         <div className="absolute top-0 right-0 z-0 pointer-events-none select-none opacity-[0.05] translate-x-1/12 -translate-y-1/4">
@@ -67,11 +66,10 @@ export default function AboutPage() {
         </div>
 
         <div className="container px-4 relative z-10">
-          
           <div className="mb-16 md:mb-24">
             <div className="inline-flex items-center gap-3 px-4 py-2 bg-slate-50 border border-gray-100 rounded-full shadow-sm mb-8">
               <span className="flex h-2 w-2 rounded-full bg-secondary animate-pulse"></span>
-              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">Est. 1980 / Kolkata Heritage</span>
+              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">Est. 1980 / A Legacy of Trust</span>
             </div>
 
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-primary leading-[0.9] tracking-tighter mb-16">
@@ -84,20 +82,20 @@ export default function AboutPage() {
               
               <div className="lg:col-span-7 space-y-6 text-gray-500 text-lg md:text-xl font-medium leading-relaxed">
                 <p>
-                  Pradhan Packers and Movers Pvt Ltd is a trusted relocation company providing professional packing and moving services in Kolkata since 1980. With more than four decades of experience, we have successfully helped thousands of families, professionals, and businesses relocate safely across Kolkata and all over India.
+                  Pradhan Packers and Movers Pvt. Ltd. was built on a simple yet profound belief: moving people’s lives requires more than just transportation—it demands trust, care, and unwavering responsibility. 
                 </p>
                 <p>
-                  Our team specializes in home shifting, office relocation, car transportation, industrial relocation, and warehouse storage services. Every move is handled with proper planning, high-quality packing materials, and trained professionals to ensure the safety of your belongings.
+                  What began in 1980 with a single three-wheeler tempo has evolved into a nationwide logistics network, driven by three generations of grit and integrity. We didn't just enter the relocation market; we evolved into it through decades of handling real-world transportation challenges.
                 </p>
                 <p>
-                  At Pradhan Packers and Movers Pvt Ltd, we focus on reliability, transparent pricing, and customer satisfaction. Whether you are moving locally within Kolkata or shifting to another city, our goal is to make the relocation process simple, safe, and stress-free.
+                  Today, operating with a fleet of 20+ owned vehicles and a professionally managed corporate structure, we provide end-to-end relocation solutions. From household shifting to industrial moves, we blend deep-rooted transport expertise with modern, customer-first service.
                 </p>
               </div>
 
               {/* Our Experience & Strength (Sidebar Panel) */}
               <div className="lg:col-span-5 bg-slate-50 border border-gray-100 p-8 md:p-10 rounded-[2.5rem] shadow-xl shadow-primary/5">
                 <h3 className="text-2xl font-black text-primary mb-8 border-b-2 border-secondary/30 pb-4 inline-block">
-                  Our Experience & Strength
+                  Our Strength & Scale
                 </h3>
                 <ul className="space-y-6">
                   {strengths.map((item, index) => (
@@ -118,14 +116,64 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* 2. OUR SERVICES */}
-      <section className="container px-4 py-20 lg:py-28 border-b border-gray-50">
+      {/* 🌟 1.5 NEW SECTION: THE BRAND STORY (Designed to look premium) */}
+      <section className="container px-4 py-10 border-b border-gray-50">
+        <div className="max-w-4xl mb-16">
+          <div className="inline-flex items-center gap-2 text-secondary font-black text-xs uppercase tracking-[0.2em] mb-4">
+            <Route size={16} /> Our Heritage
+          </div>
+          <h2 className="text-4xl md:text-5xl font-black text-primary tracking-tight mb-6">
+            A Legacy Built on <br/> <span className="text-secondary italic">Trust, Grit, and Responsibility</span>
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
+          
+          {/* Left Column: The Foundation */}
+          <div className="space-y-6 text-gray-500 font-medium leading-relaxed">
+            <h3 className="text-2xl font-black text-primary">The Foundation <span className="text-secondary text-lg">(1969 - 1990)</span></h3>
+            <p>
+              Our journey traces back to a humble beginning when Late Mr. Debendranath Pradhan moved to Purba Medinipur in search of a better life. In those days, survival itself was a challenge, and every step forward required immense courage.
+            </p>
+            <p>
+              In 1969, at just 12 years of age, Mr. Himangshu Pradhan arrived in Kolkata with nothing but determination. Starting his career in a small sweet shop in Bhowanipur, he learned the invaluable traits of discipline and hard work. Driven by ambition, he mastered driving heavy goods vehicles—a skill that changed the course of his life.
+            </p>
+            <p>
+              By 1980, he purchased his first three-wheeler tempo, followed by his first four-wheeler truck in 1990. Operating from the same location in Bhowanipur for decades, Mr. Himangshu Pradhan built a robust transport backbone, earning deep industry respect as an honest, highly disciplined businessman.
+            </p>
+          </div>
+
+          {/* Right Column: The Modern Evolution */}
+          <div className="space-y-6 text-gray-500 font-medium leading-relaxed">
+            <h3 className="text-2xl font-black text-primary">The Modern Evolution <span className="text-secondary text-lg">(2015 - Present)</span></h3>
+            <p>
+              Building on this respected foundation, Sanjay Kumar Pradhan stepped in to carry the legacy forward. Recognizing the strength of the platform, he spent over five years gaining crucial, ground-level experience. 
+            </p>
+            <p>
+              From driving goods vehicles and understanding complex transit routes to managing client operations, insurance, and legal compliances, Sanjay learned the logistics business from the driver’s seat to the management desk. 
+            </p>
+            <p>
+              Identifying a growing need for organized, professional relocation, he expanded the vision. The traditional transport expertise was transformed into a structured, end-to-end relocation service. In 2024, this journey reached a new milestone with the incorporation of Pradhan Packers and Movers Pvt. Ltd., cementing our transition into a modern, service-driven corporate organization.
+            </p>
+          </div>
+        </div>
+
+        {/* Premium Blockquote */}
+        <div className="mt-16 p-8 md:p-12 bg-slate-50 rounded-[2.5rem] border-l-4 border-secondary shadow-lg shadow-primary/5">
+          <h3 className="text-2xl md:text-3xl font-black text-primary leading-snug">
+            "From a 12-year-old boy searching for work, to a trusted corporate name in relocation across India. This journey is not just about growth—it’s about resilience, values, and trust earned over time."
+          </h3>
+        </div>
+      </section>
+
+      {/* 2. OUR SERVICES (Existing Layout) */}
+      <section className="container px-4 py-20 border-b border-gray-50">
         <div className="max-w-4xl mb-12">
           <h2 className="text-4xl md:text-5xl font-black text-primary tracking-tight mb-6">
-            Our <span className="text-secondary italic">Services</span>
+            End-to-End <span className="text-secondary italic">Solutions</span>
           </h2>
           <p className="text-gray-500 text-lg font-medium leading-relaxed">
-            Pradhan Packers and Movers Pvt Ltd offers a complete range of relocation solutions :
+            Pradhan Packers and Movers Pvt. Ltd. offers a complete range of professional relocation services:
           </p>
         </div>
 
@@ -140,13 +188,13 @@ export default function AboutPage() {
 
         <div className="p-6 md:p-8 bg-slate-50 rounded-2xl border-l-4 border-secondary max-w-5xl">
           <p className="text-gray-600 font-medium text-lg leading-relaxed">
-            Our experienced team ensures proper packing, careful loading, secure transportation, and safe delivery at your destination.
+            Every move is handled by trained professionals using modern packing techniques and high-quality materials to ensure maximum safety.
           </p>
         </div>
       </section>
 
-      {/* 3. MISSION & VISION */}
-      <section className="container px-4 py-20 lg:py-28">
+      {/* 3. MISSION & VISION (Existing Layout) */}
+      <section className="container px-4 py-20 ">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
           
           <div className="bg-primary p-10 md:p-14 rounded-[3rem] text-white shadow-2xl relative overflow-hidden group">
@@ -178,8 +226,8 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* 4. OUR CORE VALUES */}
-      <section className="container px-4 pb-20 lg:pb-28">
+      {/* 4. OUR CORE VALUES (Existing Layout) */}
+      <section className="container px-4 py-20">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-4xl md:text-5xl font-black text-primary tracking-tight">
             Our <span className="text-secondary italic">Core Values</span>
@@ -198,8 +246,8 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* 5. WHY CHOOSE US */}
-      <section className="container px-4 py-24 lg:py-32 border-t border-gray-50">
+      {/* 5. WHY CHOOSE US (Existing Layout) */}
+      <section className="container px-4 py-20 border-t border-gray-50">
         <div className="max-w-4xl mb-16 md:mb-24">
           <h2 className="text-4xl md:text-5xl font-black text-primary leading-tight tracking-tighter mb-6">
             Why Choose <br className="hidden md:block" />
@@ -226,7 +274,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* 6. CTA */}
+      {/* 6. CTA (Existing Layout) */}
       <section className="container px-4 pb-32">
         <div className="relative bg-primary rounded-[4rem] p-12 md:p-24 text-center overflow-hidden group">
           <div className="absolute top-0 right-0 w-full h-full bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-secondary/20 via-transparent to-transparent opacity-50"></div>
