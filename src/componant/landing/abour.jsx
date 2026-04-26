@@ -51,7 +51,7 @@ export default function AboutSection() {
               <Map className="w-6 h-6 text-secondary" />
               <div>
                 <span className="block text-gray-400 text-xs font-bold uppercase tracking-wider mb-0.5">Total Moves</span>
-                <span className="block text-primary font-black text-lg">15,000+ </span>
+                <span className="block text-primary font-black text-lg">65,000+ </span>
               </div>
             </div>
 
@@ -60,7 +60,7 @@ export default function AboutSection() {
               <Award className="w-6 h-6 text-secondary" />
               <div>
                 <span className="block text-gray-400 text-xs font-bold uppercase tracking-wider mb-0.5">Happy Clients</span>
-                <span className="block text-primary font-black text-lg">10,000+</span>
+                <span className="block text-primary font-black text-lg">97%</span>
               </div>
             </div>
 

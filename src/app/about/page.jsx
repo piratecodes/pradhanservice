@@ -25,7 +25,7 @@ export default function AboutPage() {
   const strengths = [
     { icon: <History size={20} />, text: "40+ Years of Ground-Level Transport Experience" },
     { icon: <Truck size={20} />, text: "Fleet of 20+ Company-Owned Goods Vehicles" },
-    { icon: <Medal size={20} />, text: "15,000+ Successful Shifting Projects Completed" },
+    { icon: <Medal size={20} />, text: "65,000+ Successful Shifting Projects Completed" },
     { icon: <Award size={20} />, text: "In-House, Professionally Trained Handling Team" },
     { icon: <Network size={20} />, text: "Pan-India Network for Seamless Interstate Relocation" }
   ];
