@@ -5,15 +5,17 @@
   "type": "module",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "yarn run partytown && next build",
     "start": "next start",
     "serve": "NODE_ENV=production node server.js",
+    "partytown": "partytown copylib public/~partytown",
     "lint": "eslint"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@headlessui/react": "^2.2.9",
     "@next/env": "^16.1.6",
+    "@qwik.dev/partytown": "^0.13.2",
     "@reduxjs/toolkit": "^2.11.2",
     "@splidejs/react-splide": "^0.7.12",
     "@splidejs/splide-extension-auto-scroll": "^0.5.3",
