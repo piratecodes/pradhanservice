@@ -8,7 +8,7 @@ export const metadata = {
 
 export default function TermsConditionsPage() {
   return (
-    <main className="min-h-screen pt-32 pb-24 bg-gray-50/50">
+    <main className="min-h-screen pt-32 pb-24 bg-gray-50/50" role="main" aria-label="Terms and Conditions of Pradhan Packers and Movers">
       <div className="container px-4 relative z-10 mx-auto max-w-7xl">
         
         {/* Page Header */}

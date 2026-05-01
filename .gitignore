@@ -19,6 +19,7 @@
 
 # production
 /build
+/public/~partytown/
 
 # misc
 .DS_Store

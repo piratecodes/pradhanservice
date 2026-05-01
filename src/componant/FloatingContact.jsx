@@ -52,7 +52,7 @@ export default function FloatingContact() {
       </div>
 
       {/* --- MAIN TRIGGER BUTTON --- */}
-      <button 
+      <button aria-label="Quick Connect"
         onClick={() => setIsOpen(!isOpen)}
         className="bg-secondary text-white p-4 rounded-full shadow-2xl hover:scale-105 hover:shadow-[#c5a059]/40 transition-all duration-300 flex items-center justify-center relative outline-none"
       >

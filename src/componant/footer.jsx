@@ -38,7 +38,7 @@ export default function Footer() {
   }, []);
 
   return (
-    <footer className="bg-slate-900 text-slate-300 py-12 md:py-16">
+    <footer className="bg-slate-900 text-slate-300 py-12 md:py-16 rounded-t-[5rem]" role="Footer">
       <div className="container px-4 mx-auto">
         
         {/* 🌟 THE MAIN SPLIT: Left (Profile) vs Right (The 3 Data Blocks) */}
@@ -63,26 +63,26 @@ export default function Footer() {
             {/* Social Media Icons */}
             <div className="flex items-center gap-3 mt-2">
               {contactData.facebookUrl && (
-                <a href={contactData.facebookUrl} target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center hover:bg-[#1877F2] hover:text-white transition-colors">
+                <a href={contactData.facebookUrl} target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center hover:bg-[#1877F2] hover:text-white transition-colors">
                   <Facebook size={16} />
                 </a>
               )}
               {contactData.instagramUrl && (
-                <a href={contactData.instagramUrl} target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center hover:bg-[#E4405F] hover:text-white transition-colors">
+                <a href={contactData.instagramUrl} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center hover:bg-[#E4405F] hover:text-white transition-colors">
                   <Instagram size={16} />
                 </a>
               )}
               {contactData.linkedinUrl && (
-                <a href={contactData.linkedinUrl} target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center hover:bg-[#0A66C2] hover:text-white transition-colors">
+                <a href={contactData.linkedinUrl} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center hover:bg-[#0A66C2] hover:text-white transition-colors">
                   <Linkedin size={16} />
                 </a>
               )}
               {contactData.twitterUrl && (
-                <a href={contactData.twitterUrl} target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center hover:bg-[#1DA1F2] hover:text-white transition-colors">
+                <a href={contactData.twitterUrl} target="_blank" rel="noopener noreferrer" aria-label="Twitter" className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center hover:bg-[#1DA1F2] hover:text-white transition-colors">
                   <Twitter size={16} />
                 </a>
               )}
-              <a href="https://www.youtube.com/@pradhanpackersandmovers" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center hover:bg-[#FF0000] hover:text-white transition-colors">
+              <a href="https://www.youtube.com/@pradhanpackersandmovers" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center hover:bg-[#FF0000] hover:text-white transition-colors">
                   <Youtube size={16} />
               </a>
             </div>

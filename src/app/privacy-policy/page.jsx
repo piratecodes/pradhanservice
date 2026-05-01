@@ -8,7 +8,7 @@ export const metadata = {
 
 export default function PrivacyPolicyPage() {
   return (
-    <main className="min-h-screen pt-32 pb-24">
+    <main className="min-h-screen pt-32 pb-24" role="main" aria-label="Privacy Policy of Pradhan Packers and Movers">
       <div className="container px-4 relative z-10">
         
         {/* Page Header */}

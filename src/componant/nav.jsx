@@ -46,7 +46,7 @@ export default function Nav() {
   }, []);
 
   return (
-    <nav className="sticky top-0 left-0 w-full z-50 border-b bg-blue-50/50 backdrop-blur-md">
+    <nav className="sticky top-0 left-0 w-full z-50 border-b bg-blue-50/50 backdrop-blur-md" role="navigation" aria-label="Primary Navigation">
       <div className="max-w-7xl mx-auto flex items-center justify-between p-4 relative">
         
         {/* LOGO */}
@@ -69,7 +69,7 @@ export default function Nav() {
             </li>
 
             {/* SERVICES MEGA MENU (DESKTOP) */}
-            <div className="relative" ref={servicesMenuRef}>
+            <li className="relative" ref={servicesMenuRef}>
               <button 
                 onClick={() => setIsDesktopMenuOpen(!isDesktopMenuOpen)}
                 className="border border-black flex items-center gap-2 py-2 px-5 rounded-full hover:bg-black hover:text-white transition-all outline-none leading-none"
@@ -145,7 +145,7 @@ export default function Nav() {
                   </div>
                 </div>
               </Transition>
-            </div>
+            </li>
 
             <li>
               <a target="_blank" href="https://blog.pradhanservice.com" className="border border-black block py-2 px-5 rounded-full hover:bg-black hover:text-white transition-all leading-none">Blogs</a>

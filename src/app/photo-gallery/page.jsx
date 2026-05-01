@@ -35,7 +35,7 @@ export default async function PhotoGalleryPage() {
   const albums = await getGalleries();
 
   return (
-    <main className="min-h-screen w-full pt-24 pb-32">
+    <main className="min-h-screen w-full pt-24 pb-32" role="main" aria-label="Photo Gallery of Pradhan Packers and Movers">
       <div className="container px-6 mb-16">
         <h1 className="text-5xl md:text-6xl lg:text-7xl font-black text-center text-primary tracking-tight mb-4">
           Our <span className="text-secondary italic font-serif">Gallery</span>

@@ -56,7 +56,7 @@ export const viewport = {
   width: 'device-width',
   initialScale: 1,
   minimumScale: 1,
-  userScalable: false,
+  userScalable: true,
   // Also supported but less commonly used
   // 
 }

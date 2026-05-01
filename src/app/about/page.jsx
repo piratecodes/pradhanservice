@@ -121,7 +121,7 @@ export default function AboutPage() {
   ];
 
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen" role="main" aria-label="About Pradhan Packers and Movers">
       
       {/* Add JSON-LD to your page */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(JsonLd) }} />
