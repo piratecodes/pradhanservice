@@ -8,7 +8,7 @@
     "build": "yarn run partytown && next build",
     "start": "next start",
     "serve": "NODE_ENV=production node server.js",
-    "partytown": "partytown copylib public/~partytown",
+    "partytown": "partytown copylib public/~pradhanpackersandmovers",
     "lint": "eslint"
   },
   "dependencies": {

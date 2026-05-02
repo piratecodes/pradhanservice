@@ -17,11 +17,13 @@ const montserrat = Montserrat({
 
 
 export const metadata = {
+  charSet: 'UTF-8',
   title: {
     template: " %s | Pradhan Packers and Movers Pvt. Ltd.",
     default: "Packers and Movers Company in Kolkata | Pradhan Packers and Movers Pvt. Ltd.",
   },
   description: "Trusted packers and movers company in Kolkata offering shifting, storage solutions, and car transport services with safe, reliable handling.",
+  manifest: '/manifest.webmanifest',
   canonical: "https://www.pradhanservice.com/",
   sitename: "Pradhan Packers and Movers Pvt. Ltd.",
   keywords: ["packers and movers kolkata", "Pradhan Packers and movers"],
@@ -105,7 +107,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>  
-        <Partytown debug={true} forward={["dataLayer.push"]} lib="/~partytown/" /> 
+        <Partytown debug={false} forward={["dataLayer.push"]} lib="/~pradhanpackersandmovers/" /> 
         {/* <!-- Google Tag Manager (noscript) --> */}
         <Script id="tag_manager_index" async src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_MeasurementId_ga}`} type="text/partytown" />
         <Script id="tag_manager" strategy="afterInteractive" type="text/partytown" dangerouslySetInnerHTML={{ __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','${process.env.NEXT_PUBLIC_GTMId}');`}} />

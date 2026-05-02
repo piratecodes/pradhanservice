@@ -1,0 +1,28 @@
+{
+  "theme_color": "#372fa0",
+  "background_color": "#112240",
+  "icons": [
+    {
+      "purpose": "maskable",
+      "sizes": "512x512",
+      "src": "/icon512_maskable.png",
+      "type": "image/png"
+    },
+    {
+      "purpose": "any",
+      "sizes": "512x512",
+      "src": "/icon512_rounded.png",
+      "type": "image/png"
+    }
+  ],
+  "orientation": "any",
+  "display": "minimal-ui",
+  "dir": "auto",
+  "lang": "en-IN",
+  "name": "Pradhan Packers and Movers Pvt. Ltd.",
+  "short_name": "PPML",
+  "start_url": "/",
+  "scope": "/",
+  "description": "Trusted packers and movers company in Kolkata offering shifting, storage solutions, and car transport services with safe, reliable handling.",
+  "id": "/"
+}

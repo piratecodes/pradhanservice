@@ -36,7 +36,7 @@ export default function TrustBadges() {
                 <div className="w-12 h-12 rounded-xl bg-slate-50 flex items-center justify-center mb-3 group-hover:bg-secondary/10 group-hover:scale-110 transition-all duration-300">
                   <Icon className="w-6 h-6 text-secondary" strokeWidth={2} />
                 </div>
-                <h4 className="font-black text-primary text-sm md:text-base">{badge.title}</h4>
+                <label className="font-black text-primary text-sm md:text-base">{badge.title}</label>
                 <p className="text-xs text-gray-500 font-medium mt-1">{badge.desc}</p>
               </div>
             );

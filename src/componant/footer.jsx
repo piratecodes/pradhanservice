@@ -38,7 +38,7 @@ export default function Footer() {
   }, []);
 
   return (
-    <footer className="bg-slate-900 text-slate-300 py-12 md:py-16 rounded-t-[5rem]" role="Footer">
+    <footer className="bg-slate-900 text-slate-300 py-12 md:py-16" role="Footer">
       <div className="container px-4 mx-auto">
         
         {/* 🌟 THE MAIN SPLIT: Left (Profile) vs Right (The 3 Data Blocks) */}
