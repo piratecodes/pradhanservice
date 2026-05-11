@@ -15,6 +15,15 @@
       "type": "image/png"
     }
   ],
+  "screenshots": [
+    {
+      "src": "desktop-screenshot.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Homescreen"
+    }
+  ],
   "orientation": "any",
   "display": "minimal-ui",
   "dir": "auto",

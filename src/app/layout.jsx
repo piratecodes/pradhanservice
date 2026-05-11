@@ -1,4 +1,4 @@
-import { Geist, Geist_Mono, Montserrat, Montserrat_Alternates } from "next/font/google";
+import { Montserrat } from "next/font/google";
 import Script from 'next/script';
 import NextTopLoader from 'nextjs-toploader';
 import { Toaster } from 'react-hot-toast';

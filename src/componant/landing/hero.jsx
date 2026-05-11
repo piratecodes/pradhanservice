@@ -137,7 +137,7 @@ export default function HeroSection() {
   };
 
   return (
-    <header className="container px-4 lg:px-8 xl:px-12 py-12 lg:py-20 min-h-[85vh] flex flex-col justify-center" role="hero" aria-label="Hero section with quote form and company highlights">
+    <header role="header" className="container px-4 lg:px-8 xl:px-12 py-12 lg:py-20 min-h-[85vh] flex flex-col justify-center" role="hero" aria-label="Hero section with quote form and company highlights">
       
       {/* 1. TOP TYPOGRAPHY SECTION */}
       <div className="flex flex-col gap-6  mb-12">

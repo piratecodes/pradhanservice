@@ -13,13 +13,15 @@ export default function Home() {
   return (
     <React.Fragment>
       <HeroSection />
-      <TrustBadges />
-      <AboutSection />
-      <ServicesSection />
-      {/* <HowItWorksSection /> */}
-      <WhyChooseUsSection />
-      <TestimonialsSection />
-      <FaqSection />
+      <main role="main" className="relative">
+        <TrustBadges />
+        <AboutSection />
+        <ServicesSection />
+        {/* <HowItWorksSection /> */}
+        <WhyChooseUsSection />
+        <TestimonialsSection />
+        <FaqSection />
+      </main>
     </React.Fragment>
   );
 }
