@@ -34,12 +34,12 @@ export default function ServicesSection() {
     },
     {
       title: "Transportation",
-      description: "Safe, timely transportation ensuring secure delivery of goods with professional handling and real-time tracking.",
+      description: "Safe transportation services featuring professional handling and real-time tracking for secure household goods transit.",
       image: Transportation
     },
     {
       title: "Home Appliances Setup",
-      description: "Expert installation and setup of home appliances ensuring safety, efficiency, and proper functioning after relocation.",
+      description: "Professional appliance installation services ensuring safe, efficient electronics setup for a seamless home relocation.",
       image: Installation
     }
   ];
@@ -62,7 +62,7 @@ export default function ServicesSection() {
         {servicesData.map((service, index) => (
           <div 
             key={index} 
-            className="group flex flex-col bg-white rounded-[2rem] overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-secondary/10 border border-gray-100 w-full sm:w-[calc(50%-2rem)] lg:w-[calc(25%-2rem)]"
+            className="group flex flex-col bg-white rounded-4xl overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-secondary/10 border border-gray-100 w-full sm:w-[calc(50%-2rem)] lg:w-[calc(25%-2rem)]"
           >
             {/* Image Container with Hover Zoom */}
             <div className="w-full h-48 sm:h-56 relative overflow-hidden bg-primary">

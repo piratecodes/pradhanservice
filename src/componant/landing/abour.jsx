@@ -42,7 +42,7 @@ export default function AboutSection() {
               <ShieldCheck className="w-6 h-6 text-secondary" />
               <div>
                 <span className="block text-gray-400 text-xs font-bold uppercase tracking-wider mb-0.5">One Platform</span>
-                <span className="block text-primary font-black text-lg">5+ Services</span>
+                <span className="block text-primary font-black text-lg">6 Services</span>
               </div>
             </div>
 

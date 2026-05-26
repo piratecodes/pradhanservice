@@ -1,57 +1,93 @@
 "use client";
 
 import React from 'react';
-import { Disclosure, Transition } from '@headlessui/react';
+import { Disclosure, Transition, DisclosureButton, DisclosurePanel } from '@headlessui/react';
 import { ChevronDown, Phone } from 'lucide-react';
 
 export default function FaqSection() {
   const faqs = [
-    {
-      id: 1,
-      question: "What is the average home shifting cost?",
-      answer: "There is no fixed cost for home shifting. It depends on factors like distance, size of goods, packing materials, transport type, and manpower required. We provide customized quotes based on your specific needs."
-    },
-    {
-      id: 2,
-      question: "Is night shifting possible?",
-      answer: "Yes, night shifting is possible. However, clients should ensure prior permission and clear communication with society management or neighbors to avoid any issues during the shifting process."
-    },
-    {
-      id: 3,
-      question: "Which carton quality is used during shifting?",
-      answer: "We use custom-sized 2' x 1.5' high-durability cartons tailored to your move. Long-distance relocations feature reinforced wall protection, while intracity shifts utilize high-grade standard boxes for agile yet secure handling."
-    },
-    {
-      id: 4,
-      question: "Can antique furniture be shifted safely?",
-      answer: "Yes, absolutely. We have a dedicated and experienced team specialized in handling antique items with utmost care and safety."
-    },
-    {
-      id: 5,
-      question: "What if a delay happens?",
-      answer: "Delays can occur due to reasons like traffic restrictions, weather conditions, or rare vehicle issues. However, we ensure clear communication and are committed to completing your shifting within a maximum of 12 business days."
-    },
-    {
-      id: 6,
-      question: "How are complaints handled?",
-      answer: "With our years of experience, complaints are extremely rare. However, if any issue arises, we handle it professionally and ensure a quick resolution with 100% customer satisfaction."
-    },
-    {
-      id: 7,
-      question: "Do you provide packing and unpacking services?",
-      answer: "Yes, we offer complete packing and unpacking services using quality materials to ensure the safety of your belongings."
-    },
-    {
-      id: 8,
-      question: "Is insurance available for goods during shifting?",
-      answer: "Yes, we provide insurance options for added protection, especially for long-distance and valuable items."
-    },
-    {
-      id: 9,
-      question: "How early should I book my shifting service?",
-      answer: "We recommend booking at least 7 days in advance to ensure availability and smooth planning of your move."
-    }
-  ];
+  {
+    id: 1,
+    question: "What is the average home shifting cost?",
+    answer: (
+      <span>
+        There is no fixed cost for home shifting. It depends on factors like distance, size of goods, packing materials, transport type, and manpower required. As a top-tier{" "}
+        <Link href="https://pradhanservice.com/packers-and-movers-in-kolkata" className="text-secondary hover:underline font-bold">
+          packers and movers
+        </Link>
+        {" "}service, we provide customized quotes based on your specific needs.
+      </span>
+    )
+  },
+  {
+    id: 2,
+    question: "Is night shifting possible?",
+    answer: (
+      <span>
+        Yes, night shifting is possible. However, clients should ensure prior permission and clear communication with society management or neighbors to avoid any issues during the shifting process. For regular updates on shifting rules, feel free to read our latest posts on our{" "}
+        <Link href="https://blog.pradhanservice.com/" target="_blank" rel="noopener noreferrer" className="text-secondary hover:underline font-bold">
+          blogs
+        </Link>
+        .
+      </span>
+    )
+  },
+  {
+    id: 3,
+    question: "Which carton quality is used during shifting?",
+    answer: "We use custom-sized 2' x 1.5' high-durability cartons tailored to your move. Long-distance relocations feature reinforced wall protection, while intracity shifts utilize high-grade standard boxes for agile yet secure handling."
+  },
+  {
+    id: 4,
+    question: "Can antique furniture be shifted safely?",
+    answer: "Yes, absolutely. We have a dedicated and experienced team specialized in handling antique items with utmost care and safety."
+  },
+  {
+    id: 5,
+    question: "What if a delay happens?",
+    answer: "Delays can occur due to reasons like traffic restrictions, weather conditions, or rare vehicle issues. However, we ensure clear communication and are committed to completing your shifting within a maximum of 12 business days."
+  },
+  {
+    id: 6,
+    question: "How are complaints handled?",
+    answer: "With our years of experience, complaints are extremely rare. However, if any issue arises, we handle it professionally and ensure a quick resolution with 100% customer satisfaction."
+  },
+  {
+    id: 7,
+    question: "Do you provide packing and unpacking services?",
+    answer: (
+      <span>
+        Yes, we offer complete packing and unpacking services using quality materials to ensure the safety of your belongings. If you have extra items requiring short-term space, we also facilitate premium{" "}
+        <Link href="https://pradhanservice.com/storage-solutions-in-kolkata" className="text-secondary hover:underline font-bold">
+          storage solutions
+        </Link>
+        .
+      </span>
+    )
+  },
+  {
+    id: 8,
+    question: "Is insurance available for goods during shifting?",
+    answer: (
+      <span>
+        Yes, we provide insurance options for added protection, especially for long-distance and valuable items. This includes specialized vehicle shipments like our secure{" "}
+        <Link href="https://pradhanservice.com/bike-transportation-in-kolkata" className="text-secondary hover:underline font-bold">
+          bike transports
+        </Link>
+        {" "}and dedicated transit lines for{" "}
+        <Link href="https://pradhanservice.com/car-transportation-in-kolkata" className="text-secondary hover:underline font-bold">
+          car transports
+        </Link>
+        .
+      </span>
+    )
+  },
+  {
+    id: 9,
+    question: "How early should I book my shifting service?",
+    answer: "We recommend booking at least 7 days in advance to ensure availability and smooth planning of your move."
+  }
+];
 
   return (
     <section className="container px-4 pt-8 pb-16 md:py-20 relative z-10">
@@ -71,7 +107,7 @@ export default function FaqSection() {
             </p>
           </div>
 
-          <div className="p-8 bg-slate-50 border border-gray-100 rounded-[2rem] space-y-6">
+          <div className="p-8 bg-slate-50 border border-gray-100 rounded-4xl space-y-6">
             <p className="text-primary font-bold text-sm uppercase tracking-wider">Meet our support lead</p>
             <div className="flex -space-x-3 overflow-hidden">
               {[1, 2, 3, 4].map((num) => (
@@ -105,25 +141,25 @@ export default function FaqSection() {
             <Disclosure key={faq.id} defaultOpen={index === 0}>
               {({ open }) => (
                 <div 
-                  className={`group border rounded-[2rem] overflow-hidden transition-all duration-300 ${
+                  className={`group border rounded-4xl overflow-hidden transition-all duration-300 ${
                     open 
                       ? 'border-secondary/30 bg-white shadow-xl shadow-secondary/5' 
                       : 'border-gray-100 bg-slate-50/50 hover:bg-white hover:border-gray-200'
                   }`}
                 >
-                  <Disclosure.Button className="flex w-full justify-between items-center px-8 py-7 text-left focus:outline-none">
+                  <DisclosureButton className="flex w-full justify-between items-center px-8 py-7 text-left focus:outline-none">
                     <span className={`text-lg font-bold transition-colors duration-300 ${open ? 'text-primary' : 'text-gray-600'}`}>
                       {faq.question}
                     </span>
                     
                     <div 
-                      className={`flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-xl transition-all duration-500 ${
+                      className={`shrink-0 flex items-center justify-center w-10 h-10 rounded-xl transition-all duration-500 ${
                         open ? 'bg-secondary text-white rotate-180 shadow-lg shadow-secondary/30' : 'bg-white text-gray-400 border border-gray-100'
                       }`}
                     >
                       <ChevronDown size={20} strokeWidth={2.5} />
                     </div>
-                  </Disclosure.Button>
+                  </DisclosureButton>
                   
                   <Transition
                     enter="transition duration-300 ease-out"
@@ -133,11 +169,11 @@ export default function FaqSection() {
                     leaveFrom="transform scale-100 opacity-100"
                     leaveTo="transform scale-95 opacity-0"
                   >
-                    <Disclosure.Panel className="px-8 pb-8 text-gray-500 font-medium leading-relaxed">
+                    <DisclosurePanel className="px-8 pb-8 text-gray-500 font-medium leading-relaxed">
                       <div className="pt-4 border-t border-gray-50">
                         {faq.answer}
                       </div>
-                    </Disclosure.Panel>
+                    </DisclosurePanel>
                   </Transition>
                 </div>
               )}
