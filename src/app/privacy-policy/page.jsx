@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'Privacy Policy | Pradhan Packers & Movers',
+  title: 'Privacy Policy | Pradhan Packers and Movers',
   description: 'Learn how Pradhan Packers and Movers collects, uses, and protects your personal information while using our packers and movers services.',
 };
 

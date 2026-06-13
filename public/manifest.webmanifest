@@ -24,6 +24,13 @@
       "label": "Homescreen"
     }
   ],
+  "categories": [ "business", "services","moving" ],
+  "protocol_handlers": [
+    {
+      "protocol": "web+pradhan",
+      "url": "/redirect?target=%s"
+    }
+  ],
   "orientation": "any",
   "display": "minimal-ui",
   "dir": "auto",
@@ -33,5 +40,12 @@
   "start_url": "/",
   "scope": "/",
   "description": "Trusted packers and movers company in Kolkata offering shifting, storage solutions, and car transport services with safe, reliable handling.",
-  "id": "/"
+  "id": "/",
+  "display_override": ["window-controls-overlay"],
+  "share_target": null,
+  "launch_handler": {
+    "client_mode": "focus-existing"
+  },
+  "shortcuts": [],
+  "iarc_rating_id": ""
 }

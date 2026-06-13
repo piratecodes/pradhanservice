@@ -1,10 +1,11 @@
 import React from 'react';
 import GalleryShowcase from '@/componant/gallery/GalleryShowcase'; // 🚨 Note: Check your folder spelling here!
 
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
-  title: 'Photo Gallery | Pradhan Services',
+  title: 'Photo Gallery Pradhan Packers and Movers',
   description: 'Explore Pradhan Packers and Movers gallery to see our packing, moving, car shifting, and storage solution services in action across multiple cities.',
-  keywords: ["packers and movers kolkata", "Pradhan Packers and movers"],
 };
 
 async function getGalleries() {

@@ -8,7 +8,6 @@ import {
 export const metadata = {
   title: 'About Pradhan Packers and Movers',
   description: 'Learn about Pradhan Packers and Movers, a reliable moving company offering house shifting, car shifting, and storage solution services across India.',
-  keywords: ["movers and packers services", "Pradhan Packers and movers"],
 };
 
 const JsonLd = {
@@ -18,7 +17,7 @@ const JsonLd = {
   "url": "https://pradhanservice.com/",
   "telephone": "+91 9830070983",
   "description": "Pradhan Packers and Movers Private Limited is a trusted relocation service provider company in Kolkata with over 45 years of experience in packing and moving services.",
-  "priceRange": "$$",
+  "priceRange": "₹₹",
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "P-61, Bijan Kanan,",
@@ -72,7 +71,7 @@ const JsonLd = {
     }
   ],
   "sameAs": [
-    "https://www.facebook.com/pradhanpackersandmovers",
+    "https://www.facebook.com/pradhanpackersandmoverspvtltd.kolkata",
     "https://www.instagram.com/pradhan_packers_and_movers",
     "https://in.linkedin.com/company/pradhanpackersandmovers-kolkata",
     "https://www.youtube.com/@pradhanpackersandmovers"

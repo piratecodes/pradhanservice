@@ -63,46 +63,6 @@ export const viewport = {
   // 
 }
 
-const organizationJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "Pradhan Packers and Movers Private Limited",
-  "url": "https://pradhanservice.com/",
-  "logo": {
-    "@type": "ImageObject",
-    "url": "https://pradhanservice.com/logo.png"
-  },
-  "description": "Pradhan Packers and Movers Private Limited is a trusted relocation service provider company in Kolkata with over 45 years of experience in packing and moving services.",
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "P-61, Bijan Kanan",
-    "addressLocality": "Brahmapur, Kolkata",
-    "addressRegion": "West Bengal",
-    "postalCode": "700096"
-  },
-  "contactPoint": [
-    {
-      "@type": "ContactPoint",
-      "telephone": "+91 9830070983",
-      "contactType": "customer service",
-      "email": "support@pradhanservice.com",
-      "areaServed": "IN",
-      "availableLanguage": "English, Hindi"
-    }
-  ],
-  "sameAs": [
-    "https://www.facebook.com/pradhanpackersandmovers",
-    "https://www.instagram.com/pradhan_packers_and_movers",
-    "https://in.linkedin.com/company/pradhanpackersandmovers-kolkata",
-    "https://www.youtube.com/@pradhanpackersandmovers"
-  ],
-  "foundingDate": "1977-02-25",
-  "founder": {
-    "@type": "Person",
-    "name": "Mr. Himangshu Pradhan"
-  }
-}
-
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
@@ -124,8 +84,6 @@ export default function RootLayout({ children }) {
 
         <NextTopLoader   color="#c5a059"   initialPosition={0.08}   crawlSpeed={200}   height={3}   crawl={true}   showSpinner={false}   easing="ease"   speed={200}   shadow="0 0 10px #f1a4c7,0 0 5px #f1a4c7" />
         <Nav />
-        {/* Add JSON-LD to your page */}
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }} />
         {children}
         <Toaster position="top-right" />
         <Floating />

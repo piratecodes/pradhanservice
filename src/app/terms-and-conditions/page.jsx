@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'Terms & Conditions | Pradhan Packers & Movers',
+  title: 'Terms and Conditions Pradhan Packers and Movers',
   description: 'Read the Terms and Conditions of Pradhan Packers and Movers covering service scope, pricing, liability, safety policies, and client responsibilities.',
 };
 
