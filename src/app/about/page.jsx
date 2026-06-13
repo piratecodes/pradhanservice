@@ -15,7 +15,7 @@ const JsonLd = {
   "@type": "MovingCompany",
   "name": "Pradhan Packers and Movers Private Limited",
   "url": "https://pradhanservice.com/",
-  "image": 'https://pradhanservice.com/logo.png',
+  "image": "https://pradhanservice.com/logo.png",
   "telephone": "+91 9830070983",
   "description": "Pradhan Packers and Movers Private Limited is a trusted relocation service provider company in Kolkata with over 45 years of experience in packing and moving services.",
   "priceRange": "₹₹",
