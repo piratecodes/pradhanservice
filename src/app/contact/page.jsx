@@ -4,8 +4,9 @@ import ContactPage from "@/componant/contact/contactPage";
 export const metadata = { 
   "title": 'Contact Pradhan Packers and Movers',
   "description": 'Get in touch with Pradhan Packers and Movers, a trusted moving company in Kolkata offering house shifting, car shifting, and storage solution services across India.',
-  other: {
-    'script:ld+json': JSON.stringify({
+}
+
+const JsonLd = {
     "@context": "https://schema.org",
     "@type": "ContactPage",
     "@id": "https://pradhanservice.com",
@@ -27,11 +28,17 @@ export const metadata = {
         "postalCode": "700096",
         "addressCountry": "IN"
       }
-    } 
-    }),
-  },
-}
+    }
+  }
+
 
 export default function Contact() { 
-  return <ContactPage />
+
+  return( 
+    <>
+      <ContactPage />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(JsonLd) }} />
+    </>
+  );
+
 }
