@@ -8,75 +8,76 @@ import {
 export const metadata = {
   title: 'About Pradhan Packers and Movers',
   description: 'Learn about Pradhan Packers and Movers, a reliable moving company offering house shifting, car shifting, and storage solution services across India.',
+  other: {
+      'script:ld+json': JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "MovingCompany",
+      "name": "Pradhan Packers and Movers Private Limited",
+      "url": "https://pradhanservice.com/",
+      "telephone": "+91 9830070983",
+      "description": "Pradhan Packers and Movers Private Limited is a trusted relocation service provider company in Kolkata with over 45 years of experience in packing and moving services.",
+      "priceRange": "₹₹",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "P-61, Bijan Kanan,",
+        "addressLocality": "Brahmapur, Kolkata, ",
+        "addressRegion": "West Bengal",
+        "postalCode": "700096",
+        "addressCountry": "IN"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 22.4590352,
+        "longitude": 88
+      },
+      "hasMap": "https://maps.app.goo.gl/JsVBKLpqg57yiBGs5",
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": "Monday",
+          "opens": "08:00",
+          "closes": "20:30"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": "Tuesday",
+          "opens": "08:00",
+          "closes": "20:30"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": "Wednesday",
+          "opens": "08:00",
+          "closes": "20:30"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": "Thursday",
+          "opens": "08:00",
+          "closes": "20:30"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": "Saturday",
+          "opens": "08:00",
+          "closes": "20:30"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": "Sunday",
+          "opens": "08:00",
+          "closes": "20:30"
+        }
+      ],
+      "sameAs": [
+        "https://www.facebook.com/pradhanpackersandmoverspvtltd.kolkata",
+        "https://www.instagram.com/pradhan_packers_and_movers",
+        "https://in.linkedin.com/company/pradhanpackersandmovers-kolkata",
+        "https://www.youtube.com/@pradhanpackersandmovers"
+      ]
+    }),
+  }
 };
-
-const JsonLd = {
-  "@context": "https://schema.org",
-  "@type": "MovingCompany",
-  "name": "Pradhan Packers and Movers Private Limited",
-  "url": "https://pradhanservice.com/",
-  "telephone": "+91 9830070983",
-  "description": "Pradhan Packers and Movers Private Limited is a trusted relocation service provider company in Kolkata with over 45 years of experience in packing and moving services.",
-  "priceRange": "₹₹",
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "P-61, Bijan Kanan,",
-    "addressLocality": "Brahmapur, Kolkata, ",
-    "addressRegion": "West Bengal",
-    "postalCode": "700096",
-    "addressCountry": "IN"
-  },
-  "geo": {
-    "@type": "GeoCoordinates",
-    "latitude": 22.4590352,
-    "longitude": 88
-  },
-  "hasMap": "https://maps.app.goo.gl/JsVBKLpqg57yiBGs5",
-  "openingHoursSpecification": [
-    {
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": "Monday",
-      "opens": "08:00",
-      "closes": "20:30"
-    },
-    {
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": "Tuesday",
-      "opens": "08:00",
-      "closes": "20:30"
-    },
-    {
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": "Wednesday",
-      "opens": "08:00",
-      "closes": "20:30"
-    },
-    {
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": "Thursday",
-      "opens": "08:00",
-      "closes": "20:30"
-    },
-    {
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": "Saturday",
-      "opens": "08:00",
-      "closes": "20:30"
-    },
-    {
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": "Sunday",
-      "opens": "08:00",
-      "closes": "20:30"
-    }
-  ],
-  "sameAs": [
-    "https://www.facebook.com/pradhanpackersandmoverspvtltd.kolkata",
-    "https://www.instagram.com/pradhan_packers_and_movers",
-    "https://in.linkedin.com/company/pradhanpackersandmovers-kolkata",
-    "https://www.youtube.com/@pradhanpackersandmovers"
-  ]
-}
 
 export default function AboutPage() {
   
@@ -121,9 +122,6 @@ export default function AboutPage() {
 
   return (
     <main className="min-h-screen" role="main" aria-label="About Pradhan Packers and Movers">
-      
-      {/* Add JSON-LD to your page */}
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(JsonLd) }} />
 
       {/* 1. HERO & ABOUT SECTION: (Exact Layout Maintained, Text Polished) */}
       <section className="relative w-full pt-32 overflow-hidden border-b border-gray-50">
