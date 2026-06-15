@@ -288,7 +288,7 @@ export default function HeroSection() {
             </div>
             <div>
               <p className="text-sm font-black text-primary">Insurance Included</p>
-              <p className="text-xs font-medium text-gray-500">Up to ₹10,000 Cover</p>
+              <p className="text-xs font-medium text-gray-500">100% Claim Settlement If Any</p>
             </div>
           </SplideSlide>
 
