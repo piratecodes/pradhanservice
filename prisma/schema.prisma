@@ -1,0 +1,166 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  SUPER_ADMIN
+  ADMIN
+  SALES_AGENT
+}
+
+model Admin {
+  id                   Int       @id @default(autoincrement())
+  name                 String
+  username             String    @unique
+  email                String    @unique
+  phone                String
+  dob                  DateTime?
+  profilePic           String    @default("default-avatar.png")
+  bio                  String?   @db.VarChar(500)
+  designation          String?
+  role                 Role      @default(SALES_AGENT)
+  password             String
+  passwordChangedAt    DateTime?
+  passwordResetToken   String?
+  passwordResetExpires DateTime?
+  isActive             Boolean   @default(true)
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+  blogs                Blog[]
+}
+
+model City {
+  id             Int      @id @default(autoincrement())
+  cityName       String   @unique
+  citySlug       String   @unique
+  activeServices String[]
+  subTowns       String[]
+  isActive       Boolean  @default(true)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model LocationPage {
+  id          Int    @id @default(autoincrement())
+  citySlug    String
+  serviceSlug String
+
+  // SEO
+  seoMetaTitle       String?
+  seoMetaDescription String?
+  seoMetaKeywords    String?
+  seoCanonicalUrl    String?
+  seoIsNoIndex       Boolean @default(false)
+  seoJsonLdSchema    String?
+
+  // Header
+  headerTitle     String?
+  headerIntroText String?
+
+  // Sections mapped to JSON
+  sections Json?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([citySlug, serviceSlug])
+}
+
+model Contact {
+  id                Int      @id @default(autoincrement())
+  primaryPhone      String
+  whatsappNumber    String?
+  alternatePhone    String?
+  supportEmail      String
+  salesEmail        String?
+  headOfficeAddress String
+  googleMapsLink    String?
+  facebookUrl       String?
+  instagramUrl      String?
+  twitterUrl        String?
+  linkedinUrl       String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model Gallery {
+  id            Int      @id @default(autoincrement())
+  categoryName  String   @unique
+  slug          String   @unique
+  description   String?  @db.VarChar(500)
+  isPublished   Boolean  @default(true)
+  featuredImage Json?
+  images        Json?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+enum LeadStatus {
+  NEW
+  CONTACTED
+  QUOTED
+  CONVERTED
+  LOST
+}
+
+model Lead {
+  id               Int        @id @default(autoincrement())
+  serviceRequested String
+  customerName     String
+  customerEmail    String
+  customerPhone    String
+  originCity       String
+  destinationCity  String?
+  shiftingDate     DateTime?
+  customerComment  String?
+  customFields     Json?
+  status           LeadStatus @default(NEW)
+  adminNotes       String?
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+}
+
+model ServiceOption {
+  id                Int      @id @default(autoincrement())
+  categoryName      String
+  serviceType       String
+  isActive          Boolean  @default(true)
+  priceStartingFrom Float?
+  description       String?
+  order             Int?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model Blog {
+  id          Int      @id @default(autoincrement())
+  title       String
+  slug        String   @unique
+  excerpt     String?  @db.Text
+  content     String   @db.Text
+  faqs        Json?    
+  coverImage  String?
+  coverImageAlt String?  
+  category    String?  
+  
+  customAuthor String?
+    authorId    Int?
+  author      Admin?   @relation(fields: [authorId], references: [id])
+  
+  isPublished Boolean  @default(false)
+
+  seoMetaTitle       String?
+  seoMetaDescription String?  @db.Text
+  seoMetaKeywords    String?
+  seoCanonicalUrl    String?
+  seoIsNoIndex       Boolean @default(false)
+  seoJsonLdSchema    String?  @db.Text
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
