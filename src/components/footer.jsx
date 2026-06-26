@@ -99,6 +99,7 @@ export default function Footer() {
               <h4 className="text-white font-semibold mb-1">Quick Links</h4>
               <ul className="flex flex-col gap-2.5 text-sm">
                 <li><Link href="/" className="hover:text-secondary transition-colors">Home</Link></li>
+                <li><a target="_blank" href="https://blog.pradhanservice.com" className="hover:text-secondary transition-colors">Blogs</a></li>
                 <li><Link href="/photo-gallery" className="hover:text-secondary transition-colors">Gallery</Link></li>
                 <li><Link href="/about" className="hover:text-secondary transition-colors">About Us</Link></li>
                 <li><Link href="/contact" className="hover:text-secondary transition-colors">Contact Us</Link></li>
@@ -181,7 +182,6 @@ export default function Footer() {
           </div>
 
           <div className="flex items-center gap-4">
-            <a target="_blank" href="https://blog.pradhanservice.com" className="hover:text-white transition-colors">Blogs</a>
             <Link href="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link>
             <Link href="/terms-and-conditions" className="hover:text-white transition-colors">Terms & Conditions</Link>
             <Link href="/sitemap.xml" className="hover:text-white transition-colors">Sitemap</Link>
