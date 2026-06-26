@@ -87,7 +87,7 @@ export default function RootLayout({ children }) {
         {/* Google Analitics */}
         <Script strategy='afterInteractive' type="text/partytown" src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_MeasurementId_ga}`} />
 
-        <NextTopLoader color="#c5a059" initialPosition={0.08} crawlSpeed={200} height={3} crawl={true} showSpinner={false} easing="ease" speed={200} shadow="0 0 10px #f1a4c7,0 0 5px #f1a4c7" />
+        <NextTopLoader color="#675fdf" initialPosition={0.08} crawlSpeed={200} height={3} crawl={true} showSpinner={false} easing="ease" speed={200} shadow="0 0 10px #f1a4c7,0 0 5px #f1a4c7" />
         <div className="w-full h-screen absolute inset-0 z-0">
           <Threads amplitude={1.5} distance={0} enableMouseInteraction />
         </div>
