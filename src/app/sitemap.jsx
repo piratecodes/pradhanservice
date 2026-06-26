@@ -24,7 +24,8 @@ export default async function sitemap() {
     '/about',
     '/contact',
     '/privacy-policy',
-    '/terms-and-conditions'
+    '/terms-and-conditions',
+    '/blogs'
   ].map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date().toISOString(),
@@ -63,6 +64,33 @@ export default async function sitemap() {
     });
   });
 
-  // 4. Combine Static and Dynamic links and feed them to Google
+  // 4. Fetch all Blogs dynamically
+  let blogs = [];
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/blogs`, { 
+      next: { revalidate: 3600 } 
+    });
+    
+    if (res.ok) {
+      const data = await res.json();
+      if (data.success && data.data.blogs) {
+        // Only get published blogs
+        blogs = data.data.blogs.filter(b => b.isPublished);
+      }
+    }
+  } catch (error) {
+    console.error("Sitemap Blog Fetch Error:", error);
+  }
+
+  blogs.forEach((blog) => {
+    dynamicRoutes.push({
+      url: `${baseUrl}/blogs/${blog.slug}`,
+      lastModified: new Date(blog.updatedAt || blog.createdAt || new Date()).toISOString(),
+      changeFrequency: 'weekly',
+      priority: 0.8, 
+    });
+  });
+
+  // 5. Combine Static and Dynamic links and feed them to Google
   return [...staticRoutes, ...dynamicRoutes];
 }
