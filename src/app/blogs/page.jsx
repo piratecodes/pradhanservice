@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import BlogClientGrid from '@/components/blogs/BlogClientGrid';
 
 export const metadata = {
@@ -32,7 +32,9 @@ export default async function BlogsPage() {
         </div>
       </div>
 
-      <BlogClientGrid initialBlogs={blogs} categories={categories} />
+      <Suspense fallback={<div className="min-h-[400px] flex items-center justify-center"><div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div></div>}>
+        <BlogClientGrid initialBlogs={blogs} categories={categories} />
+      </Suspense>
     </main>
   );
 }
