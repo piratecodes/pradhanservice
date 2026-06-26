@@ -13,6 +13,9 @@ async function bootstrap() {
     logger: winstonLogger,
   });
 
+  // Enable trust proxy for Nginx/VPS reverse proxies (needed for rate-limit)
+  app.set('trust proxy', 1);
+
   // Serve static files from the "public/uploads" directory at "/uploads"
   app.useStaticAssets(join(process.cwd(), 'public', 'uploads'), {
     prefix: '/uploads/',
