@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException, ForbiddenException } from '@nestjs/common';
-import { PrismaService } from '@/prisma/prisma.service'
+import { PrismaService } from '@/prisma/prisma.service';
+import { MailService } from '@/mail/mail.service';
 import { CreateStaffDto, UpdateStaffDto } from './dto/admin.dto';
 import * as bcrypt from 'bcryptjs';
 import * as fs from 'fs';
@@ -8,7 +9,10 @@ import { Role } from '@prisma/client';
 
 @Injectable()
 export class AdminService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private mailService: MailService,
+  ) {}
 
   async getDashboardStats() {
     const totalLeads = await this.prisma.lead.count({ where: { status: { not: 'LOST' } } });
@@ -30,6 +34,11 @@ export class AdminService {
     });
 
     const { password, ...staffData } = newStaff;
+
+    // Send the welcome email in the background
+    this.mailService.sendWelcomeEmail(dto.email, dto.name, dto.username, newStaff.role)
+      .catch(err => console.error("Failed to send welcome email:", err));
+
     return staffData;
   }
 
