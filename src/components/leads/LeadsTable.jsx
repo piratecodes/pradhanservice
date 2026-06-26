@@ -2,6 +2,18 @@ import { Menu, MenuButton, MenuItems, MenuItem, Transition } from '@headlessui/r
 import { Fragment } from 'react';
 import { ChevronDown, MapPinned, Eye, Trash2, Search } from 'lucide-react';
 
+const SERVICE_LABELS = {
+  'packers-and-movers': 'Packers & Movers',
+  'storage-solutions': 'Storage Solutions',
+  'car-transportation': 'Car Transportation',
+  'bike-transportation': 'Bike Transportation',
+  'office-relocation': 'Office Relocation',
+  'fine-art-movement': 'Fine Art Movement',
+  'factory-moving': 'Factory Moving',
+  'home-appliance-uninstall-and-install': 'Appliance Services',
+  'after-shifting-services': 'After Shifting Services',
+};
+
 export default function LeadsTable({ leads, onOpenSlideOver, onStatusChange, onDeleteLead }) {
   
   const statusColors = {
@@ -49,7 +61,6 @@ export default function LeadsTable({ leads, onOpenSlideOver, onStatusChange, onD
             ) : (
               leads.map((lead) => (
                 <tr key={lead.id} className="hover:bg-gray-50/50 transition-colors">
-                  {console.log(lead.id)}
                   {/* Customer Info */}
                   <td className="px-6 py-4">
                     <div className="font-extrabold text-gray-900">{lead.customerName}</div>
@@ -59,7 +70,7 @@ export default function LeadsTable({ leads, onOpenSlideOver, onStatusChange, onD
                   {/* Service */}
                   <td className="px-6 py-4">
                     <span className="inline-flex items-center rounded-md bg-gray-100 px-2.5 py-1 text-sm font-medium text-gray-700">
-                      {lead.serviceRequested.replace(/-/g, ' ')}
+                      {SERVICE_LABELS[lead.serviceRequested] || lead.serviceRequested.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
                     </span>
                   </td>
                   

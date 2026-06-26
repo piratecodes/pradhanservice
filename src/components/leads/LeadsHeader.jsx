@@ -8,6 +8,13 @@ const SERVICES = [
   { id: 'storage-solutions', label: 'Storage Solutions' },
   { id: 'car-transportation', label: 'Car Transportation' },
   { id: 'bike-transportation', label: 'Bike Transportation' },
+  
+  // -- Future Upselling Services (Keep commented out until ready to launch) --
+  // { id: 'office-relocation', label: 'Office Relocation' },
+  // { id: 'fine-art-movement', label: 'Fine Art Movement' },
+  // { id: 'factory-moving', label: 'Factory Moving' },
+  // { id: 'home-appliance-uninstall-and-install', label: 'Appliance Services' },
+  // { id: 'after-shifting-services', label: 'After Shifting Services' },
 ];
 
 const STATUSES = [
