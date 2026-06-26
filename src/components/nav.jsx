@@ -148,7 +148,7 @@ export default function Nav() {
             </li>
 
             <li>
-              <a target="_blank" href="https://blog.pradhanservice.com" className="border border-black block py-2 px-5 rounded-full hover:bg-black hover:text-white transition-all leading-none">Blogs</a>
+              <Link href="/blogs" className="border border-black block py-2 px-5 rounded-full hover:bg-black hover:text-white transition-all leading-none">Blogs</Link>
             </li>
           </ul>
         </div>

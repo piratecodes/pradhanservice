@@ -181,6 +181,7 @@ export default function Footer() {
           </div>
 
           <div className="flex items-center gap-4">
+            <a target="_blank" href="https://blog.pradhanservice.com" className="hover:text-white transition-colors">Blogs</a>
             <Link href="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link>
             <Link href="/terms-and-conditions" className="hover:text-white transition-colors">Terms & Conditions</Link>
             <Link href="/sitemap.xml" className="hover:text-white transition-colors">Sitemap</Link>
