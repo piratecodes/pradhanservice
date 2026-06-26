@@ -5,6 +5,7 @@ import * as bcrypt from 'bcryptjs';
 import * as crypto from 'crypto';
 import { SetupAdminDto, LoginDto, ForgotPasswordDto, ResetPasswordDto } from './dto/auth.dto';
 import { ConfigService } from '@nestjs/config';
+import { MailService } from '@/mail/mail.service';
 
 @Injectable()
 export class AuthService {
@@ -12,6 +13,7 @@ export class AuthService {
     private prisma: PrismaService,
     private jwtService: JwtService,
     private configService: ConfigService,
+    private mailService: MailService,
   ) {}
 
   private signToken(id: number): string {
@@ -87,7 +89,10 @@ export class AuthService {
     const adminUrl = process.env.ADMIN_PANEL_URL || 'http://localhost:5173';
     const resetURL = `${adminUrl}/reset-password/${resetToken}`;
     
-    return { message: 'Token sent to email! (Mocked)', resetURL };
+    // Call the mail service to actually send the email
+    await this.mailService.sendPasswordResetEmail(admin.email, admin.username || 'Admin', resetToken);
+
+    return { message: 'Password reset link has been sent to your email address.' };
   }
 
   async resetPassword(token: string, dto: ResetPasswordDto) {
