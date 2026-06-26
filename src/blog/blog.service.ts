@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
 import { PrismaService } from '@/prisma/prisma.service';
 import { CreateBlogDto, UpdateBlogDto } from './dto/blog.dto';
+import * as sanitizeHtml from 'sanitize-html';
 
 @Injectable()
 export class BlogService {
@@ -46,9 +47,16 @@ export class BlogService {
       finalSchema = this.generateAutomatedSchema(createBlogDto, admin?.name || 'Admin');
     }
 
+    const cleanContent = createBlogDto.content ? sanitizeHtml(createBlogDto.content, {
+      allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img', 'iframe', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'span']),
+      allowedAttributes: false, // Allow all attributes (like style, class, etc. for rich text editors)
+      allowedSchemes: ['http', 'https', 'ftp', 'mailto', 'data'], // Allow data URIs for images if any
+    }) : undefined;
+
     return this.prisma.blog.create({
       data: {
         ...createBlogDto,
+        content: cleanContent || createBlogDto.content,
         faqs: createBlogDto.faqs as any,
         authorId: createBlogDto.authorId ? Number(createBlogDto.authorId) : adminId,
         seoJsonLdSchema: finalSchema,
@@ -91,10 +99,17 @@ export class BlogService {
       finalSchema = this.generateAutomatedSchema(mergedForSchema, existing.author?.name || 'Admin');
     }
 
+    const cleanContent = updateBlogDto.content ? sanitizeHtml(updateBlogDto.content, {
+      allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img', 'iframe', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'span']),
+      allowedAttributes: false,
+      allowedSchemes: ['http', 'https', 'ftp', 'mailto', 'data'],
+    }) : undefined;
+
     return this.prisma.blog.update({
       where: { id },
       data: {
         ...updateBlogDto,
+        content: cleanContent || updateBlogDto.content,
         faqs: updateBlogDto.faqs ? (updateBlogDto.faqs as any) : undefined,
         seoJsonLdSchema: finalSchema,
       },
