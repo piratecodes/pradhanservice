@@ -47,11 +47,12 @@ export default function OfficeHero({ cityName }) {
     e.preventDefault();
     setIsLoading(true);
 
+    const { itemCategory, ...restFormData } = formData;
     const payload = {
-      ...formData,
-      serviceRequested: 'Office Relocation',
+      ...restFormData,
+      serviceRequested: 'office-relocation',
       customFields: { 
-        OfficeSize: formData.itemCategory 
+        OfficeSize: itemCategory 
       }
     };
 

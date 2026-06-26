@@ -49,10 +49,11 @@ export default function WarehousingHero({ cityData, pageData }) {
     e.preventDefault();
     setIsLoading(true);
 
+    const { itemCategory, ...restFormData } = formData;
     const payload = {
-      ...formData,
-      serviceRequested: 'Warehousing & Storage',
-      customFields: { StorageType: formData.itemCategory }
+      ...restFormData,
+      serviceRequested: 'storage-solutions',
+      customFields: { StorageType: itemCategory }
     };
 
     try {

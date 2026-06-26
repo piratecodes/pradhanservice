@@ -48,11 +48,12 @@ export default function AfterShiftingHero({ cityName }) {
     e.preventDefault();
     setIsLoading(true);
 
+    const { itemCategory, ...restFormData } = formData;
     const payload = {
-      ...formData,
-      serviceRequested: 'After Shifting Services',
+      ...restFormData,
+      serviceRequested: 'after-shifting-services',
       customFields: { 
-        ConciergeService: formData.itemCategory 
+        ConciergeService: itemCategory 
       }
     };
 

@@ -46,11 +46,12 @@ export default function FactoryMovingHero({ cityName }) {
     e.preventDefault();
     setIsLoading(true);
 
+    const { itemCategory, ...restFormData } = formData;
     const payload = {
-      ...formData,
-      serviceRequested: 'Factory Moving',
+      ...restFormData,
+      serviceRequested: 'factory-moving',
       customFields: { 
-        PrimaryEquipment: formData.itemCategory 
+        PrimaryEquipment: itemCategory 
       }
     };
 

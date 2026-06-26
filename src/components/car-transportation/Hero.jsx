@@ -50,10 +50,11 @@ export default function CarHero({ cityData, pageData }) {
     e.preventDefault();
     setIsLoading(true);
 
+    const { itemCategory, ...restFormData } = formData;
     const payload = {
-      ...formData,
-      serviceRequested: 'Car Transport',
-      customFields: { VehicleType: formData.itemCategory }
+      ...restFormData,
+      serviceRequested: 'car-transportation',
+      customFields: { VehicleType: itemCategory }
     };
 
     try {

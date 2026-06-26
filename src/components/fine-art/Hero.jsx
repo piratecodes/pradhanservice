@@ -47,11 +47,12 @@ export default function FineArtHero({ cityName }) {
     e.preventDefault();
     setIsLoading(true);
 
+    const { itemCategory, ...restFormData } = formData;
     const payload = {
-      ...formData,
-      serviceRequested: 'Fine Art Movement',
+      ...restFormData,
+      serviceRequested: 'fine-art-movement',
       customFields: { 
-        ItemCategory: formData.itemCategory 
+        ItemCategory: itemCategory 
       }
     };
 

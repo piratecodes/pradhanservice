@@ -47,11 +47,12 @@ export default function ApplianceServicesHero({ cityName }) {
     e.preventDefault();
     setIsLoading(true);
 
+    const { itemCategory, ...restFormData } = formData;
     const payload = {
-      ...formData,
-      serviceRequested: 'Appliance Uninstall & Install',
+      ...restFormData,
+      serviceRequested: 'home-appliance-uninstall-and-install',
       customFields: { 
-        ApplianceType: formData.itemCategory 
+        ApplianceType: itemCategory 
       }
     };
 

@@ -34,7 +34,7 @@ export default function Hero({ cityName, dynamicTitle, dynamicIntro }) {
     // Build the payload mapping exactly to Lead.js
     const payload = {
       ...formData,
-      serviceRequested: 'Packers and Movers', // Hardcoded for this specific Hero
+      serviceRequested: 'packers-and-movers', // Standardized slug
       customFields: { moveType: activeTab }   // Save which tab they were looking at!
     };
 

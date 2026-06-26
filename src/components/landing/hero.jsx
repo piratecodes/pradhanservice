@@ -69,7 +69,7 @@ export default function HeroSection() {
       originCity: formData.originCity.cityName, // Extract name from the city object
       destinationCity: formData.destinationCity.cityName,
       shiftingDate: formData.shiftingDate,
-      serviceRequested: 'Packers & Movers', // Hardcoded as requested
+      serviceRequested: 'packers-and-movers', // Standardized slug
       // No customFields required here
     };
 

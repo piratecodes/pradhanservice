@@ -49,10 +49,11 @@ export default function BikeHero({ cityData, pageData }) {
     e.preventDefault();
     setIsLoading(true);
 
+    const { itemCategory, ...restFormData } = formData;
     const payload = {
-      ...formData,
-      serviceRequested: 'Bike Transport',
-      customFields: { VehicleType: formData.itemCategory }
+      ...restFormData,
+      serviceRequested: 'bike-transportation',
+      customFields: { VehicleType: itemCategory }
     };
 
     try {
