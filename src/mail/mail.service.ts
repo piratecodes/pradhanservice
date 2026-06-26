@@ -38,8 +38,11 @@ export class MailService {
   }
 
   async sendEmail(options: SendEmailOptions): Promise<void> {
+    const fromName = process.env.EMAIL_FROM_NAME || 'Pradhan Services';
+    const fromEmail = process.env.EMAIL_FROM || process.env.EMAIL_USER || 'no-reply@pradhanservice.com';
+
     const mailOptions = {
-      from: `Pradhan Services <${process.env.EMAIL_FROM || process.env.EMAIL_USER || 'no-reply@pradhanservice.com'}>`,
+      from: `${fromName} <${fromEmail}>`,
       to: options.email,
       subject: options.subject,
       text: options.message,

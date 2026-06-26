@@ -84,7 +84,8 @@ export class AuthService {
 
     // We can add the email logic later or send it to an Email service here
     // For now returning the URL so you can test it
-    const resetURL = `http://localhost:5173/reset-password/${resetToken}`;
+    const adminUrl = process.env.ADMIN_PANEL_URL || 'http://localhost:5173';
+    const resetURL = `${adminUrl}/reset-password/${resetToken}`;
     
     return { message: 'Token sent to email! (Mocked)', resetURL };
   }
