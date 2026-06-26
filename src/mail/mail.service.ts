@@ -21,14 +21,14 @@ export class MailService {
       port: Number(process.env.EMAIL_PORT),
       secure: Number(process.env.EMAIL_PORT) === 465, // true for 465 (SSL), false for 25/587 (TLS)
       
-      // PRO FIX: Only pass the 'auth' object if an EMAIL_USER actually exists in .env
-      // This prevents crashes when using local Postfix without passwords
-      ...(process.env.EMAIL_USER && {
+      // PRO FIX: Only pass the 'auth' object if BOTH EMAIL_USER and EMAIL_PASS exist
+      // This is absolutely critical for VPS environments using localhost Postfix/Sendmail on port 25 without auth
+      ...(process.env.EMAIL_USER && process.env.EMAIL_PASS ? {
         auth: {
           user: process.env.EMAIL_USER,
           pass: process.env.EMAIL_PASS,
         }
-      }),
+      } : {}),
       
       tls: {
         // Prevents blocking due to self-signed certificates
