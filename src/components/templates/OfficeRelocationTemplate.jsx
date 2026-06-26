@@ -1,5 +1,5 @@
 import React from 'react';
-import OfficeHero from '@/componant/office-relocation/Hero';
+import OfficeHero from '@/components/office-relocation/Hero';
 // You can build specific B2B components later like <CorporateClients />, <OfficeMovingProcess />, etc.
 
 export default function OfficeRelocationTemplate({ cityName }) {

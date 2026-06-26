@@ -1,13 +1,13 @@
 import React from "react";
 
-import HeroSection from "@/componant/landing/hero";
-import TrustBadges from "@/componant/landing/TrustBadges";
-import AboutSection from "@/componant/landing/abour";
-import ServicesSection from "@/componant/landing/service";
+import HeroSection from "@/components/landing/hero";
+import TrustBadges from "@/components/landing/TrustBadges";
+import AboutSection from "@/components/landing/abour";
+import ServicesSection from "@/components/landing/service";
 // import HowItWorksSection from "@/componant/landing/howto";
-import WhyChooseUsSection from "@/componant/landing/whyWeBest";
-import TestimonialsSection from "@/componant/landing/testimonials";
-import FaqSection from "@/componant/landing/faq";
+import WhyChooseUsSection from "@/components/landing/whyWeBest";
+import TestimonialsSection from "@/components/landing/testimonials";
+import FaqSection from "@/components/landing/faq";
 
 export const metadata = {
   title: 'Packers and Movers Company in Kolkata | Pradhan Packers and Movers Pvt. Ltd.',

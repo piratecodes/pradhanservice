@@ -1,10 +1,10 @@
 import React from 'react';
 
 // IMPORTS
-import Hero from '@/componant/packers-n-movers/Hero';
-import DynamicSection from '@/componant/packers-n-movers/DynamicSections'; // <-- Import the new clean component
-import ServiceComparison from '@/componant/packers-n-movers/ServiceComparison';
-import Testimonials from '@/componant/landing/testimonials';
+import Hero from '@/components/packers-n-movers/Hero';
+import DynamicSection from '@/components/packers-n-movers/DynamicSections'; // <-- Import the new clean component
+import ServiceComparison from '@/components/packers-n-movers/ServiceComparison';
+import Testimonials from '@/components/landing/testimonials';
 
 // COMMENTED IMPORTS
 // import CityAbout from '@/componant/packers-n-movers/About';
@@ -17,10 +17,10 @@ export default function PackersMoversTemplate({ cityData, pageData }) {
 
   return (
     <main>
-      
+
       {/* 1. HERO */}
-      <Hero 
-        cityName={cityName} 
+      <Hero
+        cityName={cityName}
         dynamicTitle={pageData?.header?.title}
         dynamicIntro={pageData?.header?.introText}
       />

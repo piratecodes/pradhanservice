@@ -125,7 +125,7 @@ export default function Nav() {
                         {cities.length > 0 ? (
                           cities.map((city) => (
                             <Link
-                              key={city._id}
+                              key={city.id}
                               href={`/${hoveredService.slug}-in-${city.citySlug}`}
                               onClick={() => setIsDesktopMenuOpen(false)}
                               className="group flex items-center gap-2 transition-colors"

@@ -47,7 +47,7 @@ export default function TestimonialsSection() {
         {/* LEFT SIDE: YouTube Video */}
         <div className="w-full lg:w-1/2 relative min-h-[200px] lg:min-h-full bg-primary">
           {/* <iframe className="absolute inset-0 w-full h-full border-0" src="https://youtu.be/68S9B_VHIRQ?si=TTgtbCQc34hkAjfG" title="Customer Experience Video" allowFullScreen></iframe> */}
-          <iframe className="absolute inset-0 w-full h-full border-0" src="https://www.youtube.com/embed/68S9B_VHIRQ" title="Kolkata to Punjab Shifting | Professional Packing, Loading &amp; Safe Moving | PRADHAN Packers &amp; Movers" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" loading="lazy" allowFullScreen></iframe>
+          <iframe className="absolute inset-0 w-full h-auto border-0" src="https://www.youtube.com/embed/68S9B_VHIRQ" title="Kolkata to Punjab Shifting | Professional Packing, Loading &amp; Safe Moving | PRADHAN Packers &amp; Movers" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" loading="lazy" allowFullScreen></iframe>
         </div>
 
         {/* RIGHT SIDE: Shapo Widget with "Healed" Container */}

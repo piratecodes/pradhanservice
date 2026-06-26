@@ -3,7 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { MapPin, Phone, Mail, Facebook, Twitter, Instagram, Linkedin, Youtube } from 'lucide-react';
+// import { MapPin, Phone, Mail, Facebook, Twitter, Instagram, Linkedin, Youtube } from 'lucide-react';
+import { FaFacebookSquare, FaInstagram, FaTwitter, FaYoutube, FaLinkedin  } from 'react-icons/fa'
 
 import icon from '@/assets/footerIcon.png';
 
@@ -64,26 +65,26 @@ export default function Footer() {
             <div className="flex items-center gap-3 mt-2">
               {contactData.facebookUrl && (
                 <a href={contactData.facebookUrl} target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center hover:bg-[#1877F2] hover:text-white transition-colors">
-                  <Facebook size={16} />
+                  <FaFacebookSquare size={16} />
                 </a>
               )}
               {contactData.instagramUrl && (
                 <a href={contactData.instagramUrl} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center hover:bg-[#E4405F] hover:text-white transition-colors">
-                  <Instagram size={16} />
+                  <FaInstagram size={16} />
                 </a>
               )}
               {contactData.linkedinUrl && (
                 <a href={contactData.linkedinUrl} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center hover:bg-[#0A66C2] hover:text-white transition-colors">
-                  <Linkedin size={16} />
+                  <FaLinkedin size={16} />
                 </a>
               )}
               {contactData.twitterUrl && (
                 <a href={contactData.twitterUrl} target="_blank" rel="noopener noreferrer" aria-label="Twitter" className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center hover:bg-[#1DA1F2] hover:text-white transition-colors">
-                  <Twitter size={16} />
+                  <FaTwitter size={16} />
                 </a>
               )}
               <a href="https://www.youtube.com/@pradhanpackersandmovers" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center hover:bg-[#FF0000] hover:text-white transition-colors">
-                  <Youtube size={16} />
+                  <FaYoutube size={16} />
               </a>
             </div>
           </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import Hero from '@/componant/factory-moving/Hero';
+import Hero from '@/components/appliance-services/Hero';
 
 export default async function CarAndBikePage({ cityName }) {
 

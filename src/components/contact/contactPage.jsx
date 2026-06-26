@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { MapPin, Phone, Mail, Facebook, Twitter, Instagram, Linkedin, Loader2, MessageCircle } from 'lucide-react';
+import { MapPin, Phone, Mail, Loader2, MessageCircle } from 'lucide-react';
+import { FaFacebookSquare, FaInstagram, FaTwitter, FaLinkedin  } from 'react-icons/fa'
 
 export default function ContactPage() {
   const [contactData, setContactData] = useState(null);
@@ -149,25 +150,25 @@ export default function ContactPage() {
                   
                   {contactData?.facebookUrl && (
                     <a href={contactData.facebookUrl} target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-[#1877F2] hover:text-white hover:border-[#1877F2] transition-all shadow-sm">
-                      <Facebook size={20} />
+                      <FaFacebookSquare size={20} />
                     </a>
                   )}
                   
                   {contactData?.instagramUrl && (
                     <a href={contactData.instagramUrl} target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-[#E4405F] hover:text-white hover:border-[#E4405F] transition-all shadow-sm">
-                      <Instagram size={20} />
+                      <FaInstagram size={20} />
                     </a>
                   )}
                   
                   {contactData?.twitterUrl && (
                     <a href={contactData.twitterUrl} target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-[#1DA1F2] hover:text-white hover:border-[#1DA1F2] transition-all shadow-sm">
-                      <Twitter size={20} />
+                      <FaTwitter size={20} />
                     </a>
                   )}
 
                   {contactData?.linkedinUrl && (
                     <a href={contactData.linkedinUrl} target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-[#0A66C2] hover:text-white hover:border-[#0A66C2] transition-all shadow-sm">
-                      <Linkedin size={20} />
+                      <FaLinkedin size={20} />
                     </a>
                   )}
 
