@@ -49,7 +49,7 @@ export default function CitiesPage() {
 
   const handleToggleStatus = async (cityId) => {
     const originalCities = [...cities];
-    setCities(cities.map(c => c._id === cityId ? { ...c, isActive: !c.isActive } : c));
+    setCities(cities.map(c => c.id === cityId ? { ...c, isActive: !c.isActive } : c));
     try {
       await fetchClient(`/cities/${cityId}/toggle`, { method: 'PATCH' });
       toast.success('City operational status updated');

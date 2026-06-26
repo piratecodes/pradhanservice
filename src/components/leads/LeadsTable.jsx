@@ -1,18 +1,24 @@
 import { Menu, MenuButton, MenuItems, MenuItem, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
-import { ChevronDown, MapPinned, Eye, Trash2 } from 'lucide-react';
+import { ChevronDown, MapPinned, Eye, Trash2, Search } from 'lucide-react';
 
 export default function LeadsTable({ leads, onOpenSlideOver, onStatusChange, onDeleteLead }) {
   
   const statusColors = {
-    'New': 'bg-blue-50 text-blue-700 ring-blue-600/20',
-    'Contacted': 'bg-yellow-50 text-yellow-800 ring-yellow-600/20',
-    'Quoted': 'bg-purple-50 text-purple-700 ring-purple-600/20',
-    'Converted': 'bg-emerald-50 text-emerald-700 ring-emerald-600/20',
-    'Lost': 'bg-red-50 text-red-700 ring-red-600/10',
+    'NEW': 'bg-blue-50 text-blue-700 ring-blue-600/20',
+    'CONTACTED': 'bg-yellow-50 text-yellow-800 ring-yellow-600/20',
+    'QUOTED': 'bg-purple-50 text-purple-700 ring-purple-600/20',
+    'CONVERTED': 'bg-emerald-50 text-emerald-700 ring-emerald-600/20',
+    'LOST': 'bg-red-50 text-red-700 ring-red-600/10',
   };
 
-  const statusOptions = ['New', 'Contacted', 'Quoted', 'Converted', 'Lost'];
+  const statusOptions = [
+    { label: 'New', value: 'NEW' },
+    { label: 'Contacted', value: 'CONTACTED' },
+    { label: 'Quoted', value: 'QUOTED' },
+    { label: 'Converted', value: 'CONVERTED' },
+    { label: 'Lost', value: 'LOST' }
+  ];
 
   return (
     <div className="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 overflow-hidden">
@@ -42,8 +48,8 @@ export default function LeadsTable({ leads, onOpenSlideOver, onStatusChange, onD
               </tr>
             ) : (
               leads.map((lead) => (
-                <tr key={lead._id} className="hover:bg-gray-50/50 transition-colors">
-                  
+                <tr key={lead.id} className="hover:bg-gray-50/50 transition-colors">
+                  {console.log(lead.id)}
                   {/* Customer Info */}
                   <td className="px-6 py-4">
                     <div className="font-extrabold text-gray-900">{lead.customerName}</div>
@@ -74,8 +80,8 @@ export default function LeadsTable({ leads, onOpenSlideOver, onStatusChange, onD
                   {/* Status Dropdown (Headless UI) */}
                   <td className="px-6 py-4">
                     <Menu as="div" className="relative inline-block text-left">
-                      <MenuButton className={`inline-flex items-center justify-between w-32 gap-x-1.5 rounded-full px-3 py-1.5 text-xs font-extrabold ring-1 ring-inset ${statusColors[lead.status]}`}>
-                        {lead.status}
+                      <MenuButton className={`inline-flex items-center justify-between w-32 gap-x-1.5 rounded-full px-3 py-1.5 text-xs font-extrabold ring-1 ring-inset ${statusColors[lead.status] || ''}`}>
+                        {lead.status ? lead.status.charAt(0) + lead.status.slice(1).toLowerCase() : ''}
                         <ChevronDown size={14} aria-hidden="true" />
                       </MenuButton>
 
@@ -91,15 +97,15 @@ export default function LeadsTable({ leads, onOpenSlideOver, onStatusChange, onD
                         <MenuItems className="absolute z-10 mt-2 w-40 origin-top-left rounded-xl bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">
                           <div className="py-1">
                             {statusOptions.map((status) => (
-                              <MenuItem key={status}>
+                              <MenuItem key={status.value}>
                                 {({ focus }) => (
                                   <button
-                                    onClick={() => onStatusChange(lead._id, status)}
+                                    onClick={() => onStatusChange(lead.id, status.value)}
                                     className={`block w-full text-left px-4 py-2 text-sm font-bold ${
                                       focus ? 'bg-gray-50 text-primary' : 'text-gray-700'
-                                    } ${lead.status === status ? 'bg-primary/5 text-primary' : ''}`}
+                                    } ${lead.status === status.value ? 'bg-primary/5 text-primary' : ''}`}
                                   >
-                                    {status}
+                                    {status.label}
                                   </button>
                                 )}
                               </MenuItem>
@@ -121,7 +127,7 @@ export default function LeadsTable({ leads, onOpenSlideOver, onStatusChange, onD
                       </button>
                       
                       <button
-                        onClick={() => onDeleteLead(lead._id)}
+                        onClick={() => onDeleteLead(lead.id)}
                         className="inline-flex items-center gap-2 rounded-lg bg-white px-3 py-2 text-sm font-bold text-red-600 shadow-sm ring-1 ring-inset ring-red-200 hover:bg-red-50 transition-colors"
                       >
                         <Trash2 size={16} /> Delete

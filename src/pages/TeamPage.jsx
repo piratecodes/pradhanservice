@@ -56,9 +56,9 @@ export default function TeamPage() {
 
   // UI Helpers for Roles
   const roleStyles = {
-    'super-admin': { color: 'bg-purple-100 text-purple-700', icon: Star, label: 'Super Admin' },
-    'admin': { color: 'bg-blue-100 text-blue-700', icon: Shield, label: 'Manager' },
-    'sales-agent': { color: 'bg-orange-100 text-orange-700', icon: User, label: 'Sales Agent' }
+    'SUPER_ADMIN': { color: 'bg-purple-100 text-purple-700', icon: Star, label: 'Super Admin' },
+    'ADMIN': { color: 'bg-blue-100 text-blue-700', icon: Shield, label: 'Manager' },
+    'SALES_AGENT': { color: 'bg-orange-100 text-orange-700', icon: User, label: 'Sales Agent' }
   };
 
   return (
@@ -96,7 +96,7 @@ export default function TeamPage() {
                 {team.map((member) => {
                   const RoleIcon = roleStyles[member.role]?.icon || User;
                   return (
-                    <tr key={member._id} className="hover:bg-gray-50/50 transition-colors">
+                    <tr key={member.id} className="hover:bg-gray-50/50 transition-colors">
                       <td className="px-6 py-4">
                         <p className="font-extrabold text-gray-900">{member.name}</p>
                         <p className="text-xs text-gray-500 font-medium mt-0.5">@{member.username}</p>
@@ -120,7 +120,7 @@ export default function TeamPage() {
                           <button onClick={() => handleEdit(member)} className="text-primary hover:text-secondary transition-colors" title="Edit Profile">
                             <Edit3 size={18} />
                           </button>
-                          <button onClick={() => handleDelete(member._id)} className="text-red-400 hover:text-red-600 transition-colors" title="Delete User">
+                          <button onClick={() => handleDelete(member.id)} className="text-red-400 hover:text-red-600 transition-colors" title="Delete User">
                             <Trash2 size={18} />
                           </button>
                         </div>

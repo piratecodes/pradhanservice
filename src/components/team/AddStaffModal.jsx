@@ -8,7 +8,7 @@ export default function AddStaffModal({ isOpen, setIsOpen, staffData, onSuccess 
   const [isLoading, setIsLoading] = useState(false);
   
   const [formData, setFormData] = useState({
-    name: '', username: '', email: '', phone: '', role: 'sales-agent', password: ''
+    name: '', username: '', email: '', phone: '', role: 'SALES_AGENT', password: ''
   });
 
   // Populate or clear form when modal opens
@@ -19,11 +19,11 @@ export default function AddStaffModal({ isOpen, setIsOpen, staffData, onSuccess 
         username: staffData.username || '',
         email: staffData.email || '',
         phone: staffData.phone || '',
-        role: staffData.role || 'sales-agent',
+        role: staffData.role || 'SALES_AGENT',
         password: '' // Kept empty, backend rejects password updates here
       });
     } else {
-      setFormData({ name: '', username: '', email: '', phone: '', role: 'sales-agent', password: '' });
+      setFormData({ name: '', username: '', email: '', phone: '', role: 'SALES_AGENT', password: '' });
     }
   }, [staffData, isOpen]);
 
@@ -33,9 +33,9 @@ export default function AddStaffModal({ isOpen, setIsOpen, staffData, onSuccess 
 
     try {
       if (staffData) {
-        // UPDATE (Remove password from payload so backend doesn't throw an error)
-        const { password, ...updateData } = formData;
-        await fetchClient(`/admins/${staffData._id}`, { method: 'PATCH', body: JSON.stringify(updateData) });
+        // UPDATE (Remove password and username from payload so backend doesn't throw an error)
+        const { password, username, ...updateData } = formData;
+        await fetchClient(`/admins/${staffData.id}`, { method: 'PATCH', body: JSON.stringify(updateData) });
         toast.success('Staff profile updated');
       } else {
         // CREATE NEW
@@ -98,9 +98,9 @@ export default function AddStaffModal({ isOpen, setIsOpen, staffData, onSuccess 
                     <div>
                       <label className="block text-sm font-bold text-gray-700 mb-1">System Role <span className="text-red-500">*</span></label>
                       <select required className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary outline-none font-bold text-gray-700" value={formData.role} onChange={(e) => setFormData({...formData, role: e.target.value})}>
-                        <option value="sales-agent">Sales Agent</option>
-                        <option value="admin">Manager (Admin)</option>
-                        <option value="super-admin">Super Admin (Boss)</option>
+                        <option value="SALES_AGENT">Sales Agent</option>
+                        <option value="ADMIN">Manager (Admin)</option>
+                        <option value="SUPER_ADMIN">Super Admin (Boss)</option>
                       </select>
                     </div>
                     

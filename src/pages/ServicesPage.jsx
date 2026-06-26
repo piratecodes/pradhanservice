@@ -64,7 +64,7 @@ export default function ServicesPage() {
 
   const handleToggleStatus = async (categoryId) => {
     const original = [...categories];
-    setCategories(categories.map(c => c._id === categoryId ? { ...c, isActive: !c.isActive } : c));
+    setCategories(categories.map(c => c.id === categoryId ? { ...c, isActive: !c.isActive } : c));
     try {
       await fetchClient(`/service-options/${categoryId}/toggle`, { method: 'PATCH' });
       toast.success('Status updated');
@@ -160,7 +160,7 @@ export default function ServicesPage() {
                 </thead>
                 <tbody className="divide-y divide-gray-50">
                   {categories.map((cat) => (
-                    <tr key={cat._id} className="hover:bg-gray-50/50">
+                    <tr key={cat.id} className="hover:bg-gray-50/50">
                       <td className="py-4 text-sm text-gray-400 font-bold">#{cat.order || 0}</td>
                       <td className="py-4 font-bold text-gray-900">
                         {cat.categoryName}
@@ -171,7 +171,7 @@ export default function ServicesPage() {
                       </td>
                       <td className="py-4">
                         <button
-                          onClick={() => handleToggleStatus(cat._id)}
+                          onClick={() => handleToggleStatus(cat.id)}
                           className={`text-xs font-bold px-3 py-1 rounded-full ${
                             cat.isActive ? 'bg-emerald-50 text-emerald-600' : 'bg-red-50 text-red-600'
                           }`}
@@ -183,7 +183,7 @@ export default function ServicesPage() {
                         <button onClick={() => handleEdit(cat)} className="text-primary hover:text-secondary p-2 transition-colors" title="Edit Category">
                           <Edit3 size={18} />
                         </button>
-                        <button onClick={() => handleDelete(cat._id)} className="text-red-400 hover:text-red-600 p-2 transition-colors" title="Delete Category">
+                        <button onClick={() => handleDelete(cat.id)} className="text-red-400 hover:text-red-600 p-2 transition-colors" title="Delete Category">
                           <Trash2 size={18} />
                         </button>
                       </td>

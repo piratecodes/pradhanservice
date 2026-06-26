@@ -40,7 +40,7 @@ export default function CrmPage() {
 
   const handleStatusChange = async (leadId, newStatus) => {
     const originalLeads = [...leads];
-    setLeads(leads.map(lead => lead._id === leadId ? { ...lead, status: newStatus } : lead));
+    setLeads(leads.map(lead => lead.id === leadId ? { ...lead, status: newStatus } : lead));
 
     try {
       await fetchClient(`/leads/${leadId}`, {
@@ -60,7 +60,7 @@ export default function CrmPage() {
   };
 
   const handleLeadUpdated = (updatedLead) => {
-    setLeads(leads.map(lead => lead._id === updatedLead._id ? updatedLead : lead));
+    setLeads(leads.map(lead => lead.id === updatedLead.id ? updatedLead : lead));
   };
 
   const handleDeleteLead = async (leadId) => {
@@ -68,7 +68,7 @@ export default function CrmPage() {
 
     try {
       await fetchClient(`/leads/${leadId}`, { method: 'DELETE' });
-      setLeads(leads.filter((lead) => lead._id !== leadId));
+      setLeads(leads.filter((lead) => lead.id !== leadId));
       toast.success('Lead permanently deleted.');
     } catch (error) {
       toast.error(error.message || 'Failed to delete lead');

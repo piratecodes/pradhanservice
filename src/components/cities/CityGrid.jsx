@@ -27,7 +27,7 @@ export default function CityGrid({ cities, onEditCity, onToggleStatus, onDeleteC
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
       {cities.map((city) => (
         <div 
-          key={city._id} 
+          key={city.id} 
           className={`bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border transition-all duration-300 hover:-translate-y-1 ${
             city.isActive ? 'border-gray-100' : 'border-red-100 bg-red-50/30'
           }`}
@@ -57,7 +57,7 @@ export default function CityGrid({ cities, onEditCity, onToggleStatus, onDeleteC
             {/* ACTION BUTTONS */}
             <div className="flex items-center justify-between pt-4 border-t border-gray-100">
               <button
-                onClick={() => onToggleStatus(city._id)}
+                onClick={() => onToggleStatus(city.id)}
                 className={`text-xs font-bold px-3 py-1.5 rounded-full transition-colors ${
                   city.isActive 
                     ? 'bg-red-50 text-red-600 hover:bg-red-100' 

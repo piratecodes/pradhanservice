@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import StatsRow from '@/components/dashboard/StatsRow.jsx';
+import LeadsChartWidget from '@/components/dashboard/LeadsChartWidget.jsx';
 import RecentLeadsWidget from '@/components/dashboard/RecentLeadsWidget.jsx';
 import { PlusCircle, MapPinPlusInside } from 'lucide-react';
 import useDocumentMeta from '@/hooks/useDocumentMeta';
@@ -30,6 +31,7 @@ export default function DashboardPage() {
 
       {/* The 4 Metric Cards */}
       <StatsRow />
+      <LeadsChartWidget />
 
       {/* The Bottom Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">

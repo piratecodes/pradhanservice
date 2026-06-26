@@ -33,43 +33,68 @@ export default function GalleryAlbumFormDrawer({ isOpen, setIsOpen, albumData, o
     }
   }, [albumData, isOpen]);
 
-  // 🌟 CLOUDINARY BULK/SINGLE UPLOAD 🌟
-  const openCloudinaryWidget = async (uploadType) => {
+  // 🌟 CLOUDINARY WIDGET (FIXED: Removed the pre-fetch, uses strictly POST Callback!)
+  const openCloudinaryWidget = (uploadType) => {
     if (!window.cloudinary) return toast.error("Cloudinary script missing.");
-    try {
-      const res = await fetchClient('/location-pages/cloudinary-signature');
-      const { timestamp, signature, cloudName, apiKey } = res.data;
-      const isBulk = uploadType === 'gallery';
+    const isBulk = uploadType === 'gallery';
 
-      window.cloudinary.openUploadWidget({
-          cloudName, apiKey, uploadSignatureTimestamp: timestamp, uploadSignature: signature,
-          cropping: !isBulk, multiple: isBulk, folder: 'gallery-albums', 
-          // Customizing the widget to match our dark theme!
-          styles: { palette: { window: "#18181b", sourceBg: "#27272a", windowBorder: "#3f3f46", tabIcon: "#c5a059", inactiveTabIcon: "#a1a1aa", menuIcons: "#e4e4e7", link: "#c5a059", action: "#c5a059", inProgress: "#3b82f6", complete: "#10b981", error: "#ef4444", textDark: "#000000", textLight: "#ffffff" } }
-      }, (error, result) => {
-        if (!error && result && result.event === "success") {
-          const imageUrl = result.info.secure_url;
-          if (uploadType === 'featured') {
-            setFormData(prev => ({ ...prev, featuredImage: { ...prev.featuredImage, url: imageUrl } }));
-            toast.success("Cover photo uploaded!");
-          } else {
-            setFormData(prev => ({ ...prev, images: [...prev.images, { url: imageUrl, alt: '' }] }));
+    window.cloudinary.openUploadWidget({
+        cloudName: import.meta.env.VITE_CLOUDINARY_CLOUD_NAME,
+        apiKey: import.meta.env.VITE_CLOUDINARY_API_KEY,
+        folder: import.meta.env.MODE === 'development' ? 'dev/gallery' : 'gallery',
+        cropping: !isBulk, 
+        multiple: isBulk, 
+        // 🌟 MAGIC CALLBACK FIX: Signs the parameters exactly when needed!
+        uploadSignature: async (callback, params_to_sign) => {
+          try {
+            const res = await fetchClient('/location-pages/cloudinary-signature', {
+              method: 'POST',
+              body: JSON.stringify(params_to_sign)
+            });
+            callback(res.data.signature);
+          } catch (err) {
+            toast.error("Signature failed");
           }
+        },
+        styles: { palette: { window: "#18181b", sourceBg: "#27272a", windowBorder: "#3f3f46", tabIcon: "#c5a059", inactiveTabIcon: "#a1a1aa", menuIcons: "#e4e4e7", link: "#c5a059", action: "#c5a059", inProgress: "#3b82f6", complete: "#10b981", error: "#ef4444", textDark: "#000000", textLight: "#ffffff" } }
+    }, (error, result) => {
+      if (!error && result && result.event === "success") {
+        const imageUrl = result.info.secure_url;
+        
+        if (uploadType === 'featured') {
+          // Auto-delete old cover photo if replacing
+          const oldCover = formData.featuredImage?.url;
+          if (oldCover && oldCover !== imageUrl) {
+             fetchClient('/location-pages/delete-image', { method: 'POST', body: JSON.stringify({ imageUrl: oldCover }) }).catch(console.error);
+          }
+          setFormData(prev => ({ ...prev, featuredImage: { ...prev.featuredImage, url: imageUrl } }));
+          toast.success("Cover photo uploaded!");
+        } else {
+          setFormData(prev => ({ ...prev, images: [...prev.images, { url: imageUrl, alt: '' }] }));
         }
-      });
-    } catch (err) {
-      toast.error("Failed to authenticate image uploader.");
+      }
+      if (!error && result && result.event === "queues-end" && isBulk) {
+         toast.success("All gallery images uploaded!");
+      }
+    });
+  };
+
+  // Destroy image from Cloudinary when clicking the trash can in the gallery grid
+  const removeGalleryImage = async (index) => {
+    const targetImage = formData.images[index];
+    if (targetImage?.url) {
+      await fetchClient('/location-pages/delete-image', { method: 'POST', body: JSON.stringify({ imageUrl: targetImage.url }) }).catch(console.error);
     }
+    setFormData(prev => ({
+      ...prev,
+      images: prev.images.filter((_, i) => i !== index)
+    }));
   };
 
   const updateGalleryAltText = (index, newAlt) => {
     const newImages = [...formData.images];
     newImages[index].alt = newAlt;
     setFormData({ ...formData, images: newImages });
-  };
-
-  const removeGalleryImage = (index) => {
-    setFormData({ ...formData, images: formData.images.filter((_, i) => i !== index) });
   };
 
   const handleSubmit = async (e) => {
@@ -88,7 +113,7 @@ export default function GalleryAlbumFormDrawer({ isOpen, setIsOpen, albumData, o
       onSuccess();
       setIsOpen(false);
     } catch (error) {
-      toast.error(error.message);
+      toast.error(error.message || "Failed to publish album");
     } finally {
       setIsLoading(false);
     }
@@ -110,7 +135,7 @@ export default function GalleryAlbumFormDrawer({ isOpen, setIsOpen, albumData, o
   };
 
   return (
-    <Transition show={isOpen === true ? true : false} as={Fragment}>
+    <Transition show={isOpen ? true : false} as={Fragment}>
       <Dialog as="div" className="relative z-50" onClose={() => setIsOpen(false)}>
         <TransitionChild as={Fragment} enter="ease-in-out duration-300" enterFrom="opacity-0" enterTo="opacity-100" leave="ease-in-out duration-300" leaveFrom="opacity-100" leaveTo="opacity-0">
           <div className="fixed inset-0 bg-black/80 backdrop-blur-sm" />
@@ -121,7 +146,6 @@ export default function GalleryAlbumFormDrawer({ isOpen, setIsOpen, albumData, o
             <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
               <TransitionChild as={Fragment} enter="transform transition ease-in-out duration-300" enterFrom="translate-x-full" enterTo="translate-x-0" leave="transform transition ease-in-out duration-300" leaveFrom="translate-x-0" leaveTo="translate-x-full">
                 
-                {/* 🌟 DARK THEME PANEL 🌟 */}
                 <DialogPanel className="pointer-events-auto w-screen max-w-3xl">
                   <form onSubmit={handleSubmit} className="flex h-full flex-col bg-zinc-950 text-zinc-100 shadow-2xl border-l border-zinc-800">
                     
@@ -172,9 +196,27 @@ export default function GalleryAlbumFormDrawer({ isOpen, setIsOpen, albumData, o
                                 <ImageIcon size={24} className="mb-2 opacity-50" />
                               </div>
                             )}
-                            <button type="button" onClick={() => openCloudinaryWidget('featured')} className="w-full py-2.5 bg-zinc-800 border border-zinc-700 text-zinc-300 text-sm font-bold rounded-xl hover:bg-zinc-700 hover:text-white transition-colors flex justify-center items-center gap-2">
-                              <UploadCloud size={16} /> {formData.featuredImage.url ? 'Replace Cover' : 'Upload Cover'}
-                            </button>
+                            
+                            {/* 🌟 ADDED COVER PHOTO REMOVE BUTTON 🌟 */}
+                            <div className="flex gap-2 w-full">
+                              <button type="button" onClick={() => openCloudinaryWidget('featured')} className="flex-1 py-2.5 bg-zinc-800 border border-zinc-700 text-zinc-300 text-xs font-bold rounded-xl hover:bg-zinc-700 hover:text-white transition-colors flex justify-center items-center gap-1.5">
+                                <UploadCloud size={14} /> {formData.featuredImage.url ? 'Change' : 'Upload Cover'}
+                              </button>
+                              
+                              {formData.featuredImage.url && (
+                                <button 
+                                  type="button" 
+                                  onClick={async () => {
+                                    await fetchClient('/location-pages/delete-image', { method: 'POST', body: JSON.stringify({ imageUrl: formData.featuredImage.url }) }).catch(console.error);
+                                    setFormData(prev => ({ ...prev, featuredImage: { url: '', alt: '' } }));
+                                  }} 
+                                  className="px-3 py-2.5 bg-red-500/10 border border-red-500/30 text-red-400 text-xs font-bold rounded-xl hover:bg-red-500 hover:text-white transition-colors"
+                                >
+                                  Remove
+                                </button>
+                              )}
+                            </div>
+
                           </div>
                           <div className="flex-1 w-full">
                             <label className="block text-sm font-bold text-zinc-300 mb-1">Alt Text (SEO) <span className="text-red-500">*</span></label>
@@ -216,7 +258,7 @@ export default function GalleryAlbumFormDrawer({ isOpen, setIsOpen, albumData, o
                         )}
                       </div>
 
-                      {/* 🌟 DELETE ALBUM ZONE (Only shows if editing) 🌟 */}
+                      {/* 🌟 DELETE ALBUM ZONE */}
                       {albumData && (
                         <div className="p-6 rounded-2xl border border-red-500/20 bg-red-500/5">
                           <div className="flex items-center justify-between">

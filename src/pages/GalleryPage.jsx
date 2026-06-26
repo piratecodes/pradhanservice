@@ -58,7 +58,7 @@ export default function AdminGalleryPage() {
         </div>
         <button 
           onClick={openCreateDrawer}
-          className="flex items-center gap-2 bg-primary hover:bg-[#112440] text-white px-6 py-3 rounded-xl font-bold transition-all shadow-sm"
+          className="flex items-center gap-2 bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-xl font-bold transition-all shadow-sm"
         >
           <Plus size={20} /> Create New Album
         </button>

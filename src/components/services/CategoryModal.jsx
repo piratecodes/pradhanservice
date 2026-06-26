@@ -60,7 +60,7 @@ export default function CategoryModal({ isOpen, setIsOpen, categoryData, activeS
 
     try {
       if (categoryData) {
-        await fetchClient(`/service-options/${categoryData._id}`, { method: 'PATCH', body: JSON.stringify(payload) });
+        await fetchClient(`/service-options/${categoryData.id}`, { method: 'PATCH', body: JSON.stringify(payload) });
         toast.success('Category updated successfully');
       } else {
         await fetchClient('/service-options', { method: 'POST', body: JSON.stringify(payload) });

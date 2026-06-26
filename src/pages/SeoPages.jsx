@@ -72,7 +72,7 @@ export default function SeoPages() {
     return pages.filter((page) => {
       const city = (page.citySlug || '').toLowerCase();
       const service = (page.serviceSlug || '').toLowerCase();
-      const title = (page.header?.title || '').toLowerCase();
+      const title = (page.headerTitle || '').toLowerCase();
       const query = searchQuery.toLowerCase().trim();
 
       // 1. Search Bar Match
@@ -185,7 +185,7 @@ export default function SeoPages() {
               </thead>
               <tbody className="divide-y divide-gray-50">
                 {filteredPages.map((page) => (
-                  <tr key={page._id} className="hover:bg-gray-50/50 transition-colors">
+                  <tr key={page.id} className="hover:bg-gray-50/50 transition-colors">
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-2">
                         <MapPin size={16} className="text-secondary" />
@@ -200,7 +200,7 @@ export default function SeoPages() {
                     </td>
                     <td className="px-6 py-4">
                       <p className="font-bold text-gray-700 text-sm line-clamp-1">
-                        {page.header?.title || <span className="text-red-300 italic font-medium">Untitled Page</span>}
+                        {page.headerTitle || <span className="text-red-300 italic font-medium">Untitled Page</span>}
                       </p>
                     </td>
                     <td className="px-6 py-4">
@@ -222,7 +222,7 @@ export default function SeoPages() {
                           <Edit3 size={18} />
                         </button>
                         <button 
-                          onClick={() => handleDelete(page._id)} 
+                          onClick={() => handleDelete(page.id)} 
                           className="p-2 text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all"
                           title="Delete"
                         >

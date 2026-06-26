@@ -13,8 +13,8 @@ export default function LoginForm() {
     e.preventDefault();
     setIsLoading(true);
     
-    // We will use a manual toast instead of toast.promise for ultimate control
-    const loadingToastId = toast.loading('Verifying bank-grade credentials...');
+    // 🌟 FIX: Updated to a generic, highly professional security message
+    const loadingToastId = toast.loading('Verifying secure credentials...');
 
     try {
       // 1. Await the response directly from our custom fetchClient
@@ -46,10 +46,11 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-gray-50">
+    // 🌟 Added 'relative' and 'flex-col' to carefully position the footer without moving the form
+    <div className="w-full lg:w-1/2 flex flex-col items-center justify-center p-8 bg-gray-50 relative">
       
       {/* The Form Card */}
-      <div className="w-full max-w-md bg-white p-10 rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100">
+      <div className="w-full max-w-md bg-white p-10 rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 relative z-10">
         
         {/* Mobile Logo (Only shows on phones since Hero is hidden) */}
         <div className="lg:hidden flex items-center gap-3 mb-8">
@@ -112,14 +113,39 @@ export default function LoginForm() {
           <div className="pt-4">
             <button
               type="submit"
-              className="w-full bg-slate-600 hover:bg-[#112440] text-white font-bold text-lg p-4 rounded-xl flex items-center justify-center gap-3 transition-all transform hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/30 active:translate-y-0"
+              disabled={isLoading}
+              className="w-full bg-slate-600 hover:bg-[#112440] disabled:bg-slate-400 text-white font-bold text-lg p-4 rounded-xl flex items-center justify-center gap-3 transition-all transform hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/30 active:translate-y-0"
             >
-              Secure Login <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+              {isLoading ? (
+                <>
+                  <Loader2 size={20} className="animate-spin" /> Authenticating...
+                </>
+              ) : (
+                <>
+                  Secure Login <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+                </>
+              )}
             </button>
           </div>
           
         </form>
       </div>
+
+      {/* 🌟 NEW: Absolute positioned developer credit for the login screen */}
+      <div className="absolute bottom-6 left-0 right-0 text-center px-4">
+        <p className="text-xs md:text-sm text-gray-400 font-medium">
+          Developed by:{' '}
+          <a 
+            href="https://straxcel.com" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="font-bold text-gray-500 hover:text-primary transition-colors"
+          >
+            Straxcel Business Solutions
+          </a>
+        </p>
+      </div>
+
     </div>
   );
 }

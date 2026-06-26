@@ -1,6 +1,7 @@
 import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@headlessui/react';
 import { Fragment, useState, useEffect } from 'react';
-import { X, MapPin, Phone, Mail, Calendar, Truck, Save, Loader2 } from 'lucide-react';
+// Added 'Clock' to the lucide-react imports!
+import { X, MapPin, Phone, Mail, Calendar, Truck, Save, Loader2, Clock } from 'lucide-react';
 import { fetchClient } from '@/api/fetchClient';
 import toast from 'react-hot-toast';
 
@@ -17,7 +18,7 @@ export default function LeadSlideOver({ isOpen, setIsOpen, lead, onLeadUpdated }
     if (!lead) return;
     setIsSaving(true);
     try {
-      const response = await fetchClient(`/leads/${lead._id}`, {
+      const response = await fetchClient(`/leads/${lead.id}`, {
         method: 'PATCH',
         body: JSON.stringify({ adminNotes }),
       });
@@ -99,6 +100,16 @@ export default function LeadSlideOver({ isOpen, setIsOpen, lead, onLeadUpdated }
                           <div className="flex items-center gap-3 text-sm text-gray-700 font-medium">
                             <Mail size={16} className="text-primary" /> {lead.customerEmail}
                           </div>
+                          {/* 🌟 NEW: Date & Time of creation! */}
+                          {lead.createdAt && (
+                            <div className="flex items-center gap-3 text-sm text-gray-700 font-medium border-t border-gray-200 pt-3 mt-1">
+                              <Clock size={16} className="text-primary" /> 
+                              Received: {new Date(lead.createdAt).toLocaleString('en-US', {
+                                dateStyle: 'medium',
+                                timeStyle: 'short'
+                              })}
+                            </div>
+                          )}
                         </div>
                       </div>
 
@@ -125,9 +136,10 @@ export default function LeadSlideOver({ isOpen, setIsOpen, lead, onLeadUpdated }
                           {lead.shiftingDate && (
                             <div className="flex items-center gap-3 border-t border-gray-200 pt-3">
                               <Calendar size={18} className="text-secondary" />
-                              <p className="text-sm font-bold text-gray-900">
-                                {new Date(lead.shiftingDate).toLocaleDateString()}
-                              </p>
+                              <div>
+                                <p className="text-xs text-gray-500 font-bold">SHIFTING DATE</p>
+                                <p className="text-sm font-bold text-gray-900">{new Date(lead.shiftingDate).toLocaleDateString()}</p>
+                              </div>
                             </div>
                           )}
                         </div>
@@ -168,6 +180,15 @@ export default function LeadSlideOver({ isOpen, setIsOpen, lead, onLeadUpdated }
                           value={adminNotes}
                           onChange={(e) => setAdminNotes(e.target.value)}
                         />
+                        {lead.updatedAt && (
+                            <div className="flex items-center gap-3 text-sm text-gray-700 font-medium">
+                              <Clock size={16} className="text-primary" /> 
+                              Admin Update: {new Date(lead.updatedAt).toLocaleString('en-US', {
+                                dateStyle: 'medium',
+                                timeStyle: 'short'
+                              })}
+                            </div>
+                          )}
                         <button
                           onClick={handleSaveNotes}
                           disabled={isSaving || adminNotes === (lead.adminNotes || '')}

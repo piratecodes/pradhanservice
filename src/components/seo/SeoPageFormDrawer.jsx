@@ -40,14 +40,14 @@ export default function SeoPageFormDrawer({ isOpen, setIsOpen, pageData, onSucce
     if (pageData) {
       setFormData({
         citySlug: pageData.citySlug || '', serviceSlug: pageData.serviceSlug || 'packers-and-movers',
-        metaTitle: pageData.seo?.metaTitle || '', 
-        metaDescription: pageData.seo?.metaDescription || '', 
-        metaKeywords: pageData.seo?.metaKeywords || '', 
-        canonicalUrl: pageData.seo?.canonicalUrl || '', 
-        isNoIndex: pageData.seo?.isNoIndex || false, 
-        jsonLdSchema: pageData.seo?.jsonLdSchema || '',
-        headerTitle: pageData.header?.title || '', 
-        introText: pageData.header?.introText || '',
+        metaTitle: pageData.seoMetaTitle || '', 
+        metaDescription: pageData.seoMetaDescription || '', 
+        metaKeywords: pageData.seoMetaKeywords || '', 
+        canonicalUrl: pageData.seoCanonicalUrl || '', 
+        isNoIndex: pageData.seoIsNoIndex || false, 
+        jsonLdSchema: pageData.seoJsonLdSchema || '',
+        headerTitle: pageData.headerTitle || '', 
+        introText: pageData.headerIntroText || '',
         // Ensure legacy sections get the new image object
         sections: (pageData.sections || []).map(s => ({
           ...s,
@@ -128,7 +128,13 @@ export default function SeoPageFormDrawer({ isOpen, setIsOpen, pageData, onSucce
     });
   };
 
-  const removeSection = (index) => {
+  const removeSection = async (index) => {
+    const section = formData.sections[index];
+    // Delete image from Cloudinary if it exists in this section
+    if (section.image?.url) {
+      fetchClient('/location-pages/delete-image', { method: 'POST', body: JSON.stringify({ imageUrl: section.image.url }) }).catch(console.error);
+    }
+    
     setFormData(prev => ({
       ...prev,
       sections: prev.sections.filter((_, i) => i !== index)
@@ -144,39 +150,45 @@ export default function SeoPageFormDrawer({ isOpen, setIsOpen, pageData, onSucce
   };
 
   // 🌟 CLOUDINARY UPLOAD WIDGET TRIGGER 🌟
-  const openCloudinaryWidget = async (sectionIndex) => {
-    if (!window.cloudinary) {
-      return toast.error("Cloudinary script not loaded. Check index.html.");
-    }
+  const openCloudinaryWidget = (sectionIndex) => {
+    if (!window.cloudinary) return toast.error("Cloudinary script not loaded. Check index.html.");
 
-    try {
-      // 1. Fetch Secure Signature from Backend
-      const res = await fetchClient('/location-pages/cloudinary-signature');
-      const { timestamp, signature, cloudName, apiKey } = res.data;
-
-      // 2. Open Widget
-      window.cloudinary.openUploadWidget(
-        {
-          cloudName: cloudName,
-          apiKey: apiKey,
-          uploadSignatureTimestamp: timestamp,
-          uploadSignature: signature,
-          cropping: true, // Gives admin ability to crop & zoom
-          multiple: false,
-          folder: 'seo-pages', // Keeps your cloudinary dashboard clean
-        },
-        (error, result) => {
-          if (!error && result && result.event === "success") {
-            const imageUrl = result.info.secure_url;
-            updateSection(sectionIndex, 'image', 'url', imageUrl);
-            toast.success("Image uploaded & optimized successfully!");
+    window.cloudinary.openUploadWidget(
+      {
+        cloudName: import.meta.env.VITE_CLOUDINARY_CLOUD_NAME,
+        apiKey: import.meta.env.VITE_CLOUDINARY_API_KEY,
+        folder: import.meta.env.MODE === 'development' ? 'dev/seo-pages' : 'seo-pages',
+        cropping: true,
+        multiple: false,
+        // 🌟 This tells Cloudinary to ask your backend for a signature right BEFORE it uploads
+        uploadSignature: async (callback, params_to_sign) => {
+          try {
+            const res = await fetchClient('/location-pages/cloudinary-signature', {
+              method: 'POST',
+              body: JSON.stringify(params_to_sign)
+            });
+            // Send the signature back to the widget
+            callback(res.data.signature);
+          } catch (err) {
+            toast.error("Signature failed");
           }
         }
-      );
-    } catch (err) {
-      console.error(err);
-      toast.error("Failed to authenticate image uploader.");
-    }
+      },
+      (error, result) => {
+        if (!error && result && result.event === "success") {
+          const newImageUrl = result.info.secure_url;
+          const oldImageUrl = formData.sections[sectionIndex].image?.url;
+          
+          // If they are replacing an image, destroy the old one in Cloudinary!
+          if (oldImageUrl && oldImageUrl !== newImageUrl) {
+             fetchClient('/location-pages/delete-image', { method: 'POST', body: JSON.stringify({ imageUrl: oldImageUrl }) }).catch(console.error);
+          }
+
+          updateSection(sectionIndex, 'image', 'url', newImageUrl);
+          toast.success("Image uploaded successfully!");
+        }
+      }
+    );
   };
 
   const handleSubmit = async (e) => {
@@ -187,23 +199,26 @@ export default function SeoPageFormDrawer({ isOpen, setIsOpen, pageData, onSucce
     const payload = {
       citySlug: formData.citySlug,
       serviceSlug: formData.serviceSlug,
-      seo: {
-        metaTitle: formData.metaTitle,
-        metaDescription: formData.metaDescription,
-        metaKeywords: formData.metaKeywords,
-        canonicalUrl: formData.canonicalUrl,
-        isNoIndex: formData.isNoIndex,
-        jsonLdSchema: formData.jsonLdSchema
-      },
-      header: { title: formData.headerTitle, introText: formData.introText },
+      seoMetaTitle: formData.metaTitle,
+      seoMetaDescription: formData.metaDescription,
+      seoMetaKeywords: formData.metaKeywords,
+      seoCanonicalUrl: formData.canonicalUrl,
+      seoIsNoIndex: formData.isNoIndex,
+      seoJsonLdSchema: formData.jsonLdSchema,
+      headerTitle: formData.headerTitle,
+      headerIntroText: formData.introText,
       sections: formData.sections
     };
 
     try {
       if (pageData) {
-        await fetchClient(`/location-pages/${pageData._id}`, { 
+        const patchPayload = { ...payload };
+        delete patchPayload.citySlug;
+        delete patchPayload.serviceSlug;
+
+        await fetchClient(`/location-pages/${pageData.id}`, { 
           method: 'PATCH', 
-          body: JSON.stringify(payload) 
+          body: JSON.stringify(patchPayload) 
         });
         toast.success('Page updated successfully');
       } else {
@@ -223,7 +238,7 @@ export default function SeoPageFormDrawer({ isOpen, setIsOpen, pageData, onSucce
   };
 
   return (
-    <Transition show={isOpen} as={Fragment}>
+    <Transition show={isOpen === true ? true : false} as={Fragment}>
       <Dialog as="div" className="relative z-50" onClose={() => setIsOpen(false)}>
         <TransitionChild as={Fragment} enter="ease-in-out duration-300" enterFrom="opacity-0" enterTo="opacity-100" leave="ease-in-out duration-300" leaveFrom="opacity-100" leaveTo="opacity-0">
           <div className="fixed inset-0 bg-primary/40 backdrop-blur-sm" />
@@ -362,7 +377,7 @@ export default function SeoPageFormDrawer({ isOpen, setIsOpen, pageData, onSucce
                                   </div>
                                </div>
 
-                               {/* 🌟 NEW: IMAGE & ALT TEXT BLOCK 🌟 */}
+                               {/* 🌟 NEW: IMAGE & ALT TEXT BLOCK WITH REMOVE BUTTON 🌟 */}
                                 <div className="bg-gray-50 p-4 rounded-xl border border-gray-100 mb-6">
                                   <label className="text-xs font-bold text-gray-500 mb-3 uppercase flex items-center gap-2">
                                     <ImageIcon size={14} /> Section Image (Optional)
@@ -381,13 +396,33 @@ export default function SeoPageFormDrawer({ isOpen, setIsOpen, pageData, onSucce
                                           <span className="text-[10px] font-bold uppercase">No Image</span>
                                         </div>
                                       )}
-                                      <button 
-                                        type="button" 
-                                        onClick={() => openCloudinaryWidget(sIndex)}
-                                        className="w-full py-2 bg-white border border-gray-200 text-primary text-xs font-bold rounded-lg hover:bg-gray-50 transition-colors flex justify-center items-center gap-1 shadow-sm"
-                                      >
-                                        <UploadCloud size={14} /> {section.image?.url ? 'Change Image' : 'Upload Image'}
-                                      </button>
+                                      
+                                      <div className="flex gap-2 w-full mt-1">
+                                        <button 
+                                          type="button" 
+                                          onClick={() => openCloudinaryWidget(sIndex)}
+                                          className="flex-1 py-2.5 bg-white border border-gray-200 text-primary text-xs font-bold rounded-lg hover:bg-gray-50 transition-colors flex justify-center items-center gap-1 shadow-sm"
+                                        >
+                                          <UploadCloud size={14} /> {section.image?.url ? 'Change' : 'Upload Image'}
+                                        </button>
+
+                                        {/* 🌟 THE SAFE REMOVE IMAGE BUTTON 🌟 */}
+                                        {section.image?.url && (
+                                          <button type="button" 
+                                            onClick={async () => {
+                                              if (section.image?.url) {
+                                                await fetchClient('/location-pages/delete-image', { method: 'POST', body: JSON.stringify({ imageUrl: section.image.url }) }).catch(console.error);
+                                              }
+                                              updateSection(sIndex, 'image', 'url', '');
+                                              updateSection(sIndex, 'image', 'alt', '');
+                                            }}
+                                            className="px-3 py-2 bg-red-50 border border-red-200 text-red-600 text-xs font-bold rounded-lg hover:bg-red-100 transition-colors shadow-sm"
+                                          >
+                                            Remove
+                                          </button>
+                                        )}
+                                      </div>
+
                                     </div>
 
                                     {/* Alt Text Input */}

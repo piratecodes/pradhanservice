@@ -10,7 +10,13 @@ const SERVICES = [
   { id: 'bike-transportation', label: 'Bike Transportation' },
 ];
 
-const STATUSES = ['New', 'Contacted', 'Quoted', 'Converted', 'Lost'];
+const STATUSES = [
+  { label: 'New', value: 'NEW' },
+  { label: 'Contacted', value: 'CONTACTED' },
+  { label: 'Quoted', value: 'QUOTED' },
+  { label: 'Converted', value: 'CONVERTED' },
+  { label: 'Lost', value: 'LOST' }
+];
 
 export default function LeadsHeader({ 
   searchQuery, onSearchChange, 
@@ -87,7 +93,7 @@ export default function LeadsHeader({
                     className="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-lg outline-none text-sm font-bold text-gray-700 focus:ring-2 focus:ring-primary"
                   >
                     <option value="All">All Statuses</option>
-                    {STATUSES.map(status => <option key={status} value={status}>{status}</option>)}
+                    {STATUSES.map(status => <option key={status.value} value={status.value}>{status.label}</option>)}
                   </select>
                 </div>
 

@@ -48,7 +48,7 @@ export default function CityFormDrawer({ isOpen, setIsOpen, cityData, onSuccess 
 
     try {
       if (cityData) {
-        await fetchClient(`/cities/${cityData._id}`, { method: 'PATCH', body: JSON.stringify(payload) });
+        await fetchClient(`/cities/${cityData.id}`, { method: 'PATCH', body: JSON.stringify(payload) });
         toast.success('City updated successfully');
       } else {
         await fetchClient('/cities', { method: 'POST', body: JSON.stringify(payload) });
