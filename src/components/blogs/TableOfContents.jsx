@@ -44,7 +44,7 @@ export default function TableOfContents() {
 
   return (
     <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
-      <h3 className="text-lg font-bold text-gray-900 mb-4 tracking-tight uppercase text-xs">Table of Contents</h3>
+      <h3 className="text-lg font-bold text-gray-900 mb-4 tracking-tight uppercase">Table of Contents</h3>
       <aside className="space-y-1 max-h-[60vh] overflow-y-auto pr-2 custom-scrollbar">
         {headings.map((heading) => (
           <a

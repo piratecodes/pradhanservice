@@ -67,6 +67,15 @@ body {
 }
 
 /* Jodit Blog Content Unreset (Fixed for Tailwind Typography) */
+.blog-content h1,
+.blog-content h2,
+.blog-content h3,
+.blog-content h4,
+.blog-content h5,
+.blog-content h6 {
+  scroll-margin-top: 6rem !important; /* Prevents navbar overlap on anchor links */
+}
+
 .blog-content [style*="font-size"] {
   font-size: var(--jodit-font-size, inherit) !important;
 }
