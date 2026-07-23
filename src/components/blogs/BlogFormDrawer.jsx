@@ -1,6 +1,6 @@
 import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild, Combobox, ComboboxInput, ComboboxButton, ComboboxOptions, ComboboxOption } from '@headlessui/react';
 import { Fragment, useState, useEffect, useMemo, useRef } from 'react';
-import { X, Save, Loader2, Image as ImageIcon, Plus, Trash2, UploadCloud, FileText, Settings, Code, ChevronsUpDown, Check } from 'lucide-react';
+import { X, Save, Loader2, Image as ImageIcon, Plus, Trash2, UploadCloud, FileText, Settings, Code, ChevronsUpDown, Check, Link, Unlink, RotateCcw } from 'lucide-react';
 import { fetchClient } from '@/api/fetchClient';
 import toast from 'react-hot-toast';
 import JoditEditor from 'jodit-react';
@@ -39,6 +39,21 @@ export default function BlogFormDrawer({ isOpen, onClose, blog, onSuccess }) {
       'hr', 'table', 'link', 'symbol', '|',
       'align', 'undo', 'redo', '|',
       'find', 'source', 'fullsize', 'preview', 'print'
+    ]
+  }), []);
+
+  const minimalJoditConfig = useMemo(() => ({
+    readonly: false,
+    placeholder: 'Answer (supports formatting & links)...',
+    height: 90,
+    toolbarAdaptive: false,
+    useNativeTooltip: true,
+    buttons: [
+      'bold', 'italic', 'underline', 'strikethrough', 'eraser', '|',
+      'ul', 'ol', '|',
+      'superscript', 'subscript', 'brush', '|',
+      'align', 'undo', 'redo', '|',
+      'link', 'source', 'fullsize'
     ]
   }), []);
 
@@ -85,6 +100,8 @@ export default function BlogFormDrawer({ isOpen, onClose, blog, onSuccess }) {
     } catch(e) {}
   };
 
+  const [touchedFields, setTouchedFields] = useState({ seoMetaTitle: false, seoMetaDescription: false, seoJsonLdSchema: false });
+
   useEffect(() => {
     if (blog && isOpen) {
       setFormData({
@@ -105,6 +122,11 @@ export default function BlogFormDrawer({ isOpen, onClose, blog, onSuccess }) {
         seoIsNoIndex: blog.seoIsNoIndex ?? false,
         seoJsonLdSchema: blog.seoJsonLdSchema || ''
       });
+      setTouchedFields({
+        seoMetaTitle: !!blog.seoMetaTitle,
+        seoMetaDescription: !!blog.seoMetaDescription,
+        seoJsonLdSchema: !!blog.seoJsonLdSchema
+      });
       setActiveTab('basic');
     } else if (!blog && isOpen) {
       // Reset
@@ -113,6 +135,7 @@ export default function BlogFormDrawer({ isOpen, onClose, blog, onSuccess }) {
         isPublished: true, faqs: [], seoMetaTitle: '', seoMetaDescription: '', 
         seoMetaKeywords: '', seoCanonicalUrl: '', seoIsNoIndex: false, seoJsonLdSchema: ''
       });
+      setTouchedFields({ seoMetaTitle: false, seoMetaDescription: false, seoJsonLdSchema: false });
       setActiveTab('basic');
     }
   }, [blog, isOpen]);
@@ -124,29 +147,35 @@ export default function BlogFormDrawer({ isOpen, onClose, blog, onSuccess }) {
       let changed = false;
 
       // 1. Meta Title
-      if (!prev.seoMetaTitle && prev.title) {
+      if (!touchedFields.seoMetaTitle && prev.title !== prev.seoMetaTitle) {
         updated.seoMetaTitle = prev.title;
         changed = true;
       }
 
       // 2. Meta Description
-      if (!prev.seoMetaDescription && prev.content) {
+      if (!touchedFields.seoMetaDescription) {
         const strippedText = prev.content.replace(/<[^>]*>?/gm, ' ').replace(/\s+/g, ' ').trim();
-        const excerpt = strippedText.length > 120 ? strippedText.substring(0, 120) + '...' : strippedText;
-        if (excerpt) {
+        const excerpt = strippedText.length > 180 ? strippedText.substring(0, 180) + '...' : strippedText;
+        if (excerpt && excerpt !== prev.seoMetaDescription) {
           updated.seoMetaDescription = excerpt;
           changed = true;
         }
       }
 
       // 3. JSON-LD Schema
-      if (!prev.seoJsonLdSchema && prev.title) {
+      if (!touchedFields.seoJsonLdSchema) {
         const authorName = prev.customAuthor || "Admin";
         
+        const currentMetaDesc = updated.seoMetaDescription !== undefined ? updated.seoMetaDescription : prev.seoMetaDescription;
+        const currentMetaTitle = updated.seoMetaTitle !== undefined ? updated.seoMetaTitle : prev.seoMetaTitle;
+
+        const datePublished = (blog?.createdAt ? new Date(blog.createdAt) : new Date()).toISOString().split('T')[0];
+        const dateModified = new Date().toISOString().split('T')[0];
+
         const schemaObj = {
           "@context": "https://schema.org",
           "@type": "Article",
-          "headline": prev.title,
+          "headline": currentMetaTitle || prev.title,
           "image": prev.coverImage ? [prev.coverImage] : [],
           "author": {
             "@type": "Person",
@@ -160,31 +189,23 @@ export default function BlogFormDrawer({ isOpen, onClose, blog, onSuccess }) {
               "url": "https://pradhanservice.com/logo.png"
             }
           },
-          "datePublished": (blog?.createdAt ? new Date(blog.createdAt) : new Date()).toISOString().split('T')[0],
-          "dateModified": (blog?.updatedAt ? new Date(blog.updatedAt) : new Date()).toISOString().split('T')[0],
-          "description": updated.seoMetaDescription || "",
+          "datePublished": datePublished,
+          "dateModified": dateModified,
+          "description": currentMetaDesc || "",
           "url": prev.seoCanonicalUrl || `https://pradhanservice.com/blogs/${prev.slug || ''}`,
           "mainEntityOfPage": `https://pradhanservice.com/blogs/${prev.slug || ''}`
         };
 
-        updated.seoJsonLdSchema = JSON.stringify(schemaObj, null, 2);
-        changed = true;
-      } else if (prev.seoJsonLdSchema) {
-        // Automatically sync the image URL into the schema if it changes
-        try {
-          const parsed = JSON.parse(prev.seoJsonLdSchema);
-          const currentImage = prev.coverImage ? [prev.coverImage] : [];
-          if (JSON.stringify(parsed.image) !== JSON.stringify(currentImage)) {
-            parsed.image = currentImage;
-            updated.seoJsonLdSchema = JSON.stringify(parsed, null, 2);
-            changed = true;
-          }
-        } catch(e) {}
+        const newSchemaStr = JSON.stringify(schemaObj, null, 2);
+        if (newSchemaStr !== prev.seoJsonLdSchema) {
+          updated.seoJsonLdSchema = newSchemaStr;
+          changed = true;
+        }
       }
 
       return changed ? updated : prev;
     });
-  }, [formData.title, formData.content, formData.coverImage, formData.slug, formData.customAuthor, formData.seoCanonicalUrl, blog]);
+  }, [formData.title, formData.content, formData.coverImage, formData.slug, formData.customAuthor, formData.seoCanonicalUrl, formData.seoMetaTitle, formData.seoMetaDescription, touchedFields, blog]);
 
   // Cloudinary Widget
   const openCloudinaryWidget = () => {
@@ -431,7 +452,8 @@ export default function BlogFormDrawer({ isOpen, onClose, blog, onSuccess }) {
                           ref={editorRef}
                           value={formData.content}
                           config={joditConfig}
-                          onChange={newContent => setFormData({...formData, content: newContent})}
+                          onBlur={newContent => setFormData({...formData, content: newContent})}
+                          onChange={() => {}} // Empty onChange to satisfy prop requirements without triggering cursor jump
                         />
                       </div>
 
@@ -453,7 +475,14 @@ export default function BlogFormDrawer({ isOpen, onClose, blog, onSuccess }) {
                                 </button>
                                 <div className="space-y-3 pr-8">
                                   <input type="text" value={faq.question} onChange={e => updateFaq(idx, 'question', e.target.value)} placeholder="Question..." className="w-full font-bold text-gray-900 bg-transparent border-b border-gray-300 focus:border-primary focus:outline-none pb-1" />
-                                  <textarea value={faq.answer} onChange={e => updateFaq(idx, 'answer', e.target.value)} placeholder="Answer..." className="w-full text-sm text-gray-700 bg-transparent resize-none h-16 focus:outline-none" />
+                                  <div className="mt-2 bg-white rounded-lg overflow-hidden border border-gray-200">
+                                    <JoditEditor
+                                      value={faq.answer}
+                                      config={minimalJoditConfig}
+                                      onBlur={newContent => updateFaq(idx, 'answer', newContent)}
+                                      onChange={() => {}} // Empty onChange to satisfy prop requirements without triggering cursor jump
+                                    />
+                                  </div>
                                 </div>
                               </div>
                             ))}
@@ -471,13 +500,49 @@ export default function BlogFormDrawer({ isOpen, onClose, blog, onSuccess }) {
                       </div>
 
                       <div>
-                        <label className="block text-sm font-semibold text-gray-900 mb-1">Meta Title</label>
-                        <input type="text" value={formData.seoMetaTitle} onChange={e => setFormData({...formData, seoMetaTitle: e.target.value})} className="w-full p-2 border border-gray-200 rounded-lg" placeholder="Defaults to Blog Title" />
+                        <div className="flex items-center justify-between mb-1">
+                          <label className="block text-sm font-semibold text-gray-900">Meta Title</label>
+                          <div className="flex items-center gap-2">
+                            {touchedFields.seoMetaTitle ? (
+                              <span className="flex items-center gap-1 text-[10px] font-bold text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200">
+                                <Unlink className="w-3 h-3" /> Manual Override
+                              </span>
+                            ) : (
+                              <span className="flex items-center gap-1 text-[10px] font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded-full border border-green-200">
+                                <Link className="w-3 h-3" /> Auto Syncing
+                              </span>
+                            )}
+                            {touchedFields.seoMetaTitle && (
+                              <button onClick={() => setTouchedFields(prev => ({...prev, seoMetaTitle: false}))} className="text-[10px] flex items-center gap-1 font-semibold text-primary hover:text-primary-dark transition-colors">
+                                <RotateCcw className="w-3 h-3" /> Reset
+                              </button>
+                            )}
+                          </div>
+                        </div>
+                        <input type="text" value={formData.seoMetaTitle} onChange={e => { setFormData({...formData, seoMetaTitle: e.target.value}); if (!touchedFields.seoMetaTitle) setTouchedFields(prev => ({...prev, seoMetaTitle: true})); }} className="w-full p-2 border border-gray-200 rounded-lg focus:border-primary focus:ring-1 focus:ring-primary outline-none" placeholder="Defaults to Blog Title" />
                       </div>
                       
                       <div>
-                        <label className="block text-sm font-semibold text-gray-900 mb-1">Meta Description</label>
-                        <textarea value={formData.seoMetaDescription} onChange={e => setFormData({...formData, seoMetaDescription: e.target.value})} className="w-full p-2 border border-gray-200 rounded-lg h-24" placeholder="Defaults to Excerpt" />
+                        <div className="flex items-center justify-between mb-1">
+                          <label className="block text-sm font-semibold text-gray-900">Meta Description</label>
+                          <div className="flex items-center gap-2">
+                            {touchedFields.seoMetaDescription ? (
+                              <span className="flex items-center gap-1 text-[10px] font-bold text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200">
+                                <Unlink className="w-3 h-3" /> Manual Override
+                              </span>
+                            ) : (
+                              <span className="flex items-center gap-1 text-[10px] font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded-full border border-green-200">
+                                <Link className="w-3 h-3" /> Auto Syncing
+                              </span>
+                            )}
+                            {touchedFields.seoMetaDescription && (
+                              <button onClick={() => setTouchedFields(prev => ({...prev, seoMetaDescription: false}))} className="text-[10px] flex items-center gap-1 font-semibold text-primary hover:text-primary-dark transition-colors">
+                                <RotateCcw className="w-3 h-3" /> Reset
+                              </button>
+                            )}
+                          </div>
+                        </div>
+                        <textarea value={formData.seoMetaDescription} onChange={e => { setFormData({...formData, seoMetaDescription: e.target.value}); if (!touchedFields.seoMetaDescription) setTouchedFields(prev => ({...prev, seoMetaDescription: true})); }} className="w-full p-2 border border-gray-200 rounded-lg h-24 focus:border-primary focus:ring-1 focus:ring-primary outline-none" placeholder="Defaults to Excerpt" />
                       </div>
                       
                       <div>
@@ -492,8 +557,26 @@ export default function BlogFormDrawer({ isOpen, onClose, blog, onSuccess }) {
                       </div>
 
                       <div>
-                        <label className="block text-sm font-semibold text-gray-900 mb-1">Custom JSON-LD Schema (Optional)</label>
-                        <textarea value={formData.seoJsonLdSchema} onChange={e => setFormData({...formData, seoJsonLdSchema: e.target.value})} className="w-full p-2 border border-gray-200 rounded-lg font-mono text-xs h-40 bg-gray-900 text-green-400" placeholder='{ "@context": "https://schema.org"... }' />
+                        <div className="flex items-center justify-between mb-1">
+                          <label className="block text-sm font-semibold text-gray-900">Custom JSON-LD Schema (Optional)</label>
+                          <div className="flex items-center gap-2">
+                            {touchedFields.seoJsonLdSchema ? (
+                              <span className="flex items-center gap-1 text-[10px] font-bold text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200">
+                                <Unlink className="w-3 h-3" /> Manual Override
+                              </span>
+                            ) : (
+                              <span className="flex items-center gap-1 text-[10px] font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded-full border border-green-200">
+                                <Link className="w-3 h-3" /> Auto Syncing
+                              </span>
+                            )}
+                            {touchedFields.seoJsonLdSchema && (
+                              <button onClick={() => setTouchedFields(prev => ({...prev, seoJsonLdSchema: false}))} className="text-[10px] flex items-center gap-1 font-semibold text-primary hover:text-primary-dark transition-colors">
+                                <RotateCcw className="w-3 h-3" /> Reset
+                              </button>
+                            )}
+                          </div>
+                        </div>
+                        <textarea value={formData.seoJsonLdSchema} onChange={e => { setFormData({...formData, seoJsonLdSchema: e.target.value}); if (!touchedFields.seoJsonLdSchema) setTouchedFields(prev => ({...prev, seoJsonLdSchema: true})); }} className="w-full p-2 border border-gray-200 rounded-lg font-mono text-xs h-40 bg-gray-900 text-green-400 focus:border-primary focus:ring-1 focus:ring-primary outline-none" placeholder='{ "@context": "https://schema.org"... }' />
                       </div>
 
                       <div className="flex items-center gap-3">
