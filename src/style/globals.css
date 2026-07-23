@@ -6,38 +6,49 @@
 
 @theme {
   /* Pradhan Packers Branding */
-  --color-primary: #112440;    /* Deep Blue */
-  --color-secondary: #372fa0;  /* The luxury Blue */
+  --color-primary: #112440;
+  /* Deep Blue */
+  --color-secondary: #372fa0;
+  /* The luxury Blue */
 }
 
-@plugin 'tailwind-scrollbar'{
-    nocompatible: true;
-    preferredStrategy: 'pseudoelements';
-};
+@plugin "@tailwindcss/typography";
+
+@plugin 'tailwind-scrollbar' {
+  nocompatible: true;
+  preferredStrategy: 'pseudoelements';
+}
+
+;
+
 
 @utility container {
-    margin-inline: auto;
+  margin-inline: auto;
 }
 
 html,
-body{
-  scroll-behavior: smooth; /* This makes all native link clicks smooth */
+body {
+  scroll-behavior: smooth;
+  /* This makes all native link clicks smooth */
   background-image: url("data:image/svg+xml,%3Csvg width='12' height='16' viewBox='0 0 12 16' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 .99C4 .445 4.444 0 5 0c.552 0 1 .45 1 .99v4.02C6 5.555 5.556 6 5 6c-.552 0-1-.45-1-.99V.99zm6 8c0-.546.444-.99 1-.99.552 0 1 .45 1 .99v4.02c0 .546-.444.99-1 .99-.552 0-1-.45-1-.99V8.99z' fill='%239C92AC' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
 }
 
 @layer base {
 
-    input[type="number"]::-webkit-inner-spin-button,
-    input[type="number"]::-webkit-outer-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-    }
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
+
   html {
     @apply font-sans;
   }
@@ -55,22 +66,23 @@ body{
   text-shadow: none;
 }
 
-/* Jodit Blog Content Unreset */
-.blog-content * {
-  font-size: inherit;
-}
+/* Jodit Blog Content Unreset (Fixed for Tailwind Typography) */
 .blog-content [style*="font-size"] {
   font-size: var(--jodit-font-size, inherit) !important;
 }
+
 .blog-content table {
   width: 100% !important;
   border-collapse: collapse !important;
   margin: 1.5rem 0 !important;
 }
-.blog-content table td, .blog-content table th {
+
+.blog-content table td,
+.blog-content table th {
   border: 1px solid #e2e8f0 !important;
   padding: 0.75rem !important;
 }
+
 .blog-content table th {
   background-color: #f8fafc !important;
   font-weight: 700 !important;
@@ -80,35 +92,48 @@ body{
   margin-bottom: 1.25rem !important;
   line-height: 1.7 !important;
 }
+
 .blog-content ul {
   list-style-type: disc !important;
   padding-left: 2rem !important;
-  margin-bottom: 1.25rem !important;
+  margin-bottom: 1rem !important;
 }
+
 .blog-content ol {
   list-style-type: decimal !important;
   padding-left: 2rem !important;
-  margin-bottom: 1.25rem !important;
+  margin-bottom: 1rem !important;
 }
+
 .blog-content li {
-  margin-bottom: 0.5rem !important;
+  margin-bottom: -5px !important;
+  /* Reduced gap between bullets */
   display: list-item !important;
 }
 
+/* Tighter gaps for nested sub-points */
+.blog-content ul ul,
+.blog-content ol ol,
+.blog-content ul ol,
+.blog-content ol ul {
+  margin-bottom: 0 !important;
+  margin-top: 0.25rem !important;
+}
+
 .blog-content a {
-    color: #738eb3 !important;
-    font-weight: 700 !important;
-    text-decoration: underline !important;
-    text-decoration-color: #3e4c66 !important;
-    text-underline-offset: 4px !important;
-    text-decoration-thickness: 2px !important;
-    transition: all 0.2s ease !important;
+  color: #738eb3 !important;
+  font-weight: 700 !important;
+  text-decoration: underline !important;
+  text-decoration-color: #3e4c66 !important;
+  text-underline-offset: 4px !important;
+  text-decoration-thickness: 2px !important;
+  transition: all 0.2s ease !important;
 }
 
 .blog-content a:hover {
-    color: #7387ac !important;
-    text-decoration-color: #44505c !important;
-    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite !important;
+  color: #7387ac !important;
+  text-decoration-color: #44505c !important;
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite !important;
 }
 
 @theme inline {

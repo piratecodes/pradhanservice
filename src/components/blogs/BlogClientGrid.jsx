@@ -54,7 +54,7 @@ export default function BlogClientGrid({ initialBlogs, categories }) {
 
   // Main Card Component to avoid duplication
   const BlogCard = ({ blog }) => (
-    <Link href={`/blogs/${blog.slug}`} key={blog.id} className="group bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col h-full">
+    <Link href={`/blogs/${blog.slug}`} key={blog.id} className="group bg-white/25 border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col h-full z-10">
       <div className="relative h-48 w-full overflow-hidden shrink-0">
         <Image
           src={blog.coverImage || '/default-placeholder.png'}
@@ -102,7 +102,7 @@ export default function BlogClientGrid({ initialBlogs, categories }) {
                           fill sizes="100vw" priority className="object-cover object-top hover:scale-110 transition transform duration-500"
                         />
                       </figure>
-                      <div className="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/40 to-transparent" />
+                      <div className="absolute inset-0 bg-linear-to-t from-gray-900/90 via-gray-900/40 to-transparent" />
                       <div className="absolute bottom-0 left-0 p-6 md:p-10 w-full md:w-3/4">
                         {initialBlogs[0].category && (
                           <span className="inline-block bg-[#c5a059] text-white text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full mb-4 shadow-md">
@@ -131,11 +131,11 @@ export default function BlogClientGrid({ initialBlogs, categories }) {
                   <div key={cat} className="pt-8 border-t border-gray-100">
                     <div className="flex items-center justify-between mb-8">
                       <h3 className="text-2xl font-bold text-gray-900">{cat}</h3>
-                      <button onClick={() => handleCategorySelect(cat)} className="text-sm font-bold text-secondary hover:animate-pulse hover:cursor-pointer flex items-center gap-1 transition-colors">
+                      <button onClick={() => handleCategorySelect(cat)} className="text-sm font-bold text-secondary hover:animate-pulse hover:cursor-pointer flex items-center gap-1 transition-colors z-10">
                         Show More <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path></svg>
                       </button>
                     </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 z-10">
                       {catBlogs.map(blog => <BlogCard key={blog.id} blog={blog} />)}
                     </div>
                   </div>
@@ -171,7 +171,7 @@ export default function BlogClientGrid({ initialBlogs, categories }) {
         </div>
 
         {/* RIGHT SIDEBAR */}
-        <aside className="lg:w-80 shrink-0 sticky top-24 h-fit flex flex-col gap-8 hidden lg:flex">
+        <aside className="lg:w-80 shrink-0 sticky top-24 h-fit flex-col gap-8 hidden lg:flex">
 
           {/* SEARCH BOX */}
           <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">

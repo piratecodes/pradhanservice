@@ -6,6 +6,7 @@ import "@/style/globals.css";
 import { Partytown } from "@qwik.dev/partytown/react";
 
 import Threads from "@/components/Threads"
+import Particles from '@/components/particles'
 
 //Header & footer Files to add in layout.jsx
 import Nav from "@/components/nav";
@@ -88,8 +89,9 @@ export default function RootLayout({ children }) {
         <Script strategy='afterInteractive' type="text/partytown" src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_MeasurementId_ga}`} />
 
         <NextTopLoader color="#675fdf" initialPosition={0.08} crawlSpeed={200} height={3} crawl={true} showSpinner={false} easing="ease" speed={200} shadow="0 0 10px #f1a4c7,0 0 5px #f1a4c7" />
-        <div className="w-full h-screen absolute inset-0 z-0">
-          <Threads amplitude={1.5} distance={0} enableMouseInteraction />
+        <div className="w-full h-screen fixed inset-0 z-0">
+          {/* <Threads amplitude={1} distance={0} enableMouseInteraction /> */}
+          <Particles particleCount={555} particleSpread={55} speed={0.5} particleColors={["#1a3fb0", "#1c1d6e"]} moveParticlesOnHover particleHoverFactor={1} alphaParticles={false} particleBaseSize={222} sizeRandomness={1} cameraDistance={55} disableRotation={false} />
         </div>
         <Nav />
         {children}

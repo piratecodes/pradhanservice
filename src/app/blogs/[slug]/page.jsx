@@ -136,7 +136,7 @@ export default async function SingleBlogPage({ params }) {
         <div className="flex flex-col lg:flex-row gap-12 mt-16">
 
           {/* Main Article Content */}
-          <article className="flex-1 min-w-0">
+          <article className="flex-1 min-w-0 z-10">
             {/* The blog-content class is used by TableOfContents to find headings */}
             <div
               className="blog-content prose prose-lg prose-blue max-w-none prose-headings:font-bold prose-headings:text-primary prose-a:text-secondary hover:prose-a:opacity-80 prose-img:rounded-2xl prose-img:shadow-md"
