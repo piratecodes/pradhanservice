@@ -108,7 +108,7 @@ export default function ActiveDevicesModal({ isOpen, setIsOpen }) {
                                   {isCurrent && <span className="text-[10px] bg-primary text-white px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">Current</span>}
                                 </p>
                                 <p className="text-xs text-gray-500 mt-0.5">
-                                  {session.ipAddress} • Last active: {new Date(session.lastActive).toLocaleDateString()}
+                                  {session.ipAddress} • Last active: {new Date(session.lastActive).toLocaleString(undefined, { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' })}
                                 </p>
                               </div>
                             </div>
