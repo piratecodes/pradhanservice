@@ -1,12 +1,13 @@
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect, useRef } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/react';
-import { Bell, Search, UserCircle, LogOut, ChevronDown, KeyRound } from 'lucide-react';
+import { Bell, Search, UserCircle, LogOut, ChevronDown, KeyRound, Menu as MenuIcon, Monitor } from 'lucide-react';
 import LoadingBar from 'react-top-loading-bar';
-import { fetchClient } from '@/api/fetchClient';
+import { useAuth } from '@/contexts/AuthContext.jsx';
 
 import MyAccountModal from './MyAccountModal';
 import ChangePasswordModal from './ChangePasswordModal';
+import ActiveDevicesModal from './ActiveDevicesModal';
 
 // THE BULLETPROOF URL BUILDER
 const getImageUrl = (pic) => {
@@ -19,36 +20,31 @@ const getImageUrl = (pic) => {
   return `${baseUrl}/uploads/${pic}`;
 };
 
-export default function TopNav({ loadingBarRef }) {
+export default function TopNav({ setIsSidebarOpen }) {
   const navigate = useNavigate();
+  const location = useLocation();
+  const loadingBarRef = useRef(null);
+  const { user: adminData, logout } = useAuth();
+  
   const [isAccountModalOpen, setIsAccountModalOpen] = useState(false);
+  const [isActiveDevicesOpen, setIsActiveDevicesOpen] = useState(false);
   const [isChangePasswordOpen, setIsChangePasswordOpen] = useState(false);
   
-  const [adminName, setAdminName] = useState('Admin');
-  const [adminDesignation, setAdminDesignation] = useState('');
-  const [profilePic, setProfilePic] = useState(null);
+  const adminName = adminData?.name || 'Admin';
+  const adminDesignation = adminData?.designation || '';
+  const profilePic = adminData?.profilePic || null;
 
+  // Auto-close menu on route change
   useEffect(() => {
-    const fetchProfileData = async () => {
-      try {
-        const res = await fetchClient('/auth/me');
-        const me = res.data?.user || res.data?.admin; 
-        
-        if (me) {
-          setAdminName(me.name || 'Admin');
-          setAdminDesignation(me.designation || '');
-          setProfilePic(me.profilePic || null); 
-        }
-      } catch (error) {
-        console.error("Could not fetch user profile for TopNav");
-      }
-    };
-    fetchProfileData();
-  }, [isAccountModalOpen]); 
-
-  const handleLogout = () => {
+    setIsAccountModalOpen(false);
+  }, [location.pathname]); 
+  const handleLogout = async () => {
     loadingBarRef.current.continuousStart();
-    sessionStorage.removeItem('pradhan_token');
+    try {
+      await logout();
+    } catch (e) {
+      console.error('Logout error', e);
+    }
     setTimeout(() => {
       loadingBarRef.current.complete();
       navigate('/login');
@@ -60,10 +56,17 @@ export default function TopNav({ loadingBarRef }) {
 
   return (
     <>
-      <header className="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-6 z-10 sticky top-0">
+      <header className="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-6 z-50 sticky top-0">
         <LoadingBar color="#c5a059" ref={loadingBarRef} shadow={true} height={3} />
 
         <div className="flex items-center gap-4 flex-1">
+          <button 
+            className="md:hidden p-2 -ml-2 text-gray-600 hover:text-primary transition-colors focus:outline-none"
+            onClick={() => setIsSidebarOpen(true)}
+            aria-label="Open Sidebar"
+          >
+            <MenuIcon size={24} />
+          </button>
           {/* ... Search Bar ... */}
         </div>
 
@@ -94,7 +97,7 @@ export default function TopNav({ loadingBarRef }) {
               <ChevronDown size={16} className="text-gray-400" />
             </MenuButton>
 
-            <MenuItems transition className="absolute right-0 mt-2 w-48 origin-top-right bg-white rounded-xl shadow-lg ring-1 ring-black/5 focus:outline-none transition duration-100 ease-out data-[closed]:scale-95 data-[closed]:opacity-0">
+            <MenuItems transition className="absolute right-0 mt-2 w-48 origin-top-right bg-white rounded-xl shadow-lg ring-1 ring-black/5 focus:outline-none z-50 transition duration-100 ease-out data-[closed]:scale-95 data-[closed]:opacity-0">
               <div className="p-1">
                 <MenuItem>
                   {({ focus }) => (
@@ -107,6 +110,13 @@ export default function TopNav({ loadingBarRef }) {
                   {({ focus }) => (
                     <button onClick={() => setIsChangePasswordOpen(true)} className={`flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium ${focus ? 'bg-gray-50 text-primary' : 'text-gray-700'}`}>
                       <KeyRound size={16} /> Change Password
+                    </button>
+                  )}
+                </MenuItem>
+                <MenuItem>
+                  {({ focus }) => (
+                    <button onClick={() => setIsActiveDevicesOpen(true)} className={`flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium ${focus ? 'bg-gray-50 text-primary' : 'text-gray-700'}`}>
+                      <Monitor size={16} /> Active Devices
                     </button>
                   )}
                 </MenuItem>
@@ -125,6 +135,7 @@ export default function TopNav({ loadingBarRef }) {
       </header>
 
       <MyAccountModal isOpen={isAccountModalOpen} onProfileUpdate={(newPic) => { if (newPic) setProfilePic(newPic); }} setIsOpen={setIsAccountModalOpen} />
+      <ActiveDevicesModal isOpen={isActiveDevicesOpen} setIsOpen={setIsActiveDevicesOpen} />
       <ChangePasswordModal isOpen={isChangePasswordOpen} setIsOpen={setIsChangePasswordOpen} />
     </>
   );

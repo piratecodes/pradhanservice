@@ -77,7 +77,7 @@ export default function CategoryModal({ isOpen, setIsOpen, categoryData, activeS
 
   return (
     <Transition show={isOpen} as={Fragment}>
-      <Dialog as="div" className="relative z-[60]" onClose={() => setIsOpen(false)}>
+      <Dialog as="div" className="relative z-60" onClose={() => setIsOpen(false)}>
         <TransitionChild as={Fragment} enter="ease-out duration-300" enterFrom="opacity-0" enterTo="opacity-100" leave="ease-in duration-200" leaveFrom="opacity-100" leaveTo="opacity-0">
           <div className="fixed inset-0 bg-primary/40 backdrop-blur-sm" />
         </TransitionChild>

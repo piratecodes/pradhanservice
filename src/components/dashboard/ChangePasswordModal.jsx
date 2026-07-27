@@ -6,6 +6,7 @@ import toast from 'react-hot-toast';
 
 export default function ChangePasswordModal({ isOpen, setIsOpen }) {
   const [isLoading, setIsLoading] = useState(false);
+  const [logoutOtherDevices, setLogoutOtherDevices] = useState(false);
   const [passwords, setPasswords] = useState({
     currentPassword: '',
     newPassword: '',
@@ -27,13 +28,15 @@ export default function ChangePasswordModal({ isOpen, setIsOpen }) {
         method: 'PATCH',
         body: JSON.stringify({
           currentPassword: passwords.currentPassword,
-          newPassword: passwords.newPassword
+          newPassword: passwords.newPassword,
+          logoutOtherDevices
         })
       });
       
       toast.success('Password updated successfully!');
       setIsOpen(false);
       setPasswords({ currentPassword: '', newPassword: '', confirmPassword: '' });
+      setLogoutOtherDevices(false);
     } catch (error) {
       toast.error(error.message || 'Failed to update password');
     } finally {
@@ -74,7 +77,20 @@ export default function ChangePasswordModal({ isOpen, setIsOpen }) {
                     <input type="password" required minLength={8} className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary outline-none" value={passwords.confirmPassword} onChange={(e) => setPasswords({...passwords, confirmPassword: e.target.value})} />
                   </div>
 
-                  <div className="pt-4 mt-2 border-t border-gray-100">
+                  <div className="flex items-center gap-3 mt-4 pt-2 border-t border-gray-100">
+                    <input
+                      type="checkbox"
+                      id="logoutOtherDevices"
+                      className="w-4 h-4 rounded text-primary focus:ring-primary border-gray-300"
+                      checked={logoutOtherDevices}
+                      onChange={(e) => setLogoutOtherDevices(e.target.checked)}
+                    />
+                    <label htmlFor="logoutOtherDevices" className="text-sm font-medium text-gray-700 select-none">
+                      Log out of all other devices
+                    </label>
+                  </div>
+
+                  <div className="pt-4 mt-2">
                     <button type="submit" disabled={isLoading} className="w-full flex justify-center items-center gap-2 bg-primary hover:bg-[#112440] disabled:bg-primary/50 text-white font-bold py-3.5 rounded-xl transition-all">
                       {isLoading ? <Loader2 size={18} className="animate-spin" /> : <Save size={18} />}
                       Update Password

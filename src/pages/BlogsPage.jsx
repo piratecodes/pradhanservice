@@ -150,12 +150,12 @@ export default function BlogsPage() {
             />
           </div>
           
-          <div className="flex items-center gap-3 w-full md:w-auto z-10">
+          <div className="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto z-10">
             <div className="relative w-full md:w-40">
               <Listbox value={statusFilter} onChange={setStatusFilter}>
                 <div className="relative">
                   <ListboxButton className="relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-sm border border-gray-200 focus:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/50 sm:text-sm">
-                    <span className="block truncate font-medium text-gray-700 flex items-center gap-2">
+                    <span className="block truncate font-medium text-gray-700 items-center gap-2">
                       <Filter className="h-4 w-4 text-gray-400" />
                       {statusFilter === 'ALL' ? 'All Status' : statusFilter === 'PUBLISHED' ? 'Published' : 'Drafts'}
                     </span>
@@ -260,7 +260,7 @@ export default function BlogsPage() {
           </div>
         ) : (
           <>
-            <div className="overflow-x-auto min-h-[400px]">
+            <div className="overflow-x-auto min-h-100">
               <table className="w-full text-left text-sm">
                 <thead className="bg-gray-50 text-gray-600 font-medium border-b border-gray-100">
                   <tr>
@@ -287,7 +287,7 @@ export default function BlogsPage() {
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-2">
                           <img src={blog.author?.profilePic && blog.author.profilePic !== 'default-avatar.png' ? `${(import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api/v1').replace('/api/v1', '')}/uploads/${blog.author.profilePic}` : '/default-avatar.png'} alt="Author" className="h-6 w-6 rounded-full object-cover" />
-                          <span className="text-gray-700 truncate max-w-[100px]">{blog.author?.name || 'Unknown'}</span>
+                          <span className="text-gray-700 truncate max-w-25">{blog.author?.name || 'Unknown'}</span>
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-xs">
@@ -341,7 +341,7 @@ export default function BlogsPage() {
                           </span>
                         </ListboxButton>
                         <Transition as={Fragment} leave="transition ease-in duration-100" leaveFrom="opacity-100" leaveTo="opacity-0">
-                          <ListboxOptions className="absolute bottom-full mb-1 max-h-60 w-full overflow-auto rounded-lg bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm z-[100]">
+                          <ListboxOptions className="absolute bottom-full mb-1 max-h-60 w-full overflow-auto rounded-lg bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm z-100">
                             {itemsPerPageOptions.map((opt) => (
                               <ListboxOption key={opt} className={({ active }) => `relative cursor-default select-none py-2 px-4 ${active ? 'bg-primary/10 text-primary' : 'text-gray-900'}`} value={opt}>
                                 {({ selected }) => <span className={`block truncate ${selected ? 'font-medium text-primary' : 'font-normal'}`}>{opt}</span>}

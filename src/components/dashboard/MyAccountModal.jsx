@@ -1,6 +1,6 @@
 import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@headlessui/react';
 import { Fragment, useState, useEffect, useRef } from 'react';
-import { X, Save, Loader2, UserCircle, Camera, Check, RotateCcw } from 'lucide-react';
+import { X, Save, Loader2, UserCircle, Camera, Check, RotateCcw, ShieldCheck, Monitor, Smartphone, Globe, LogOut } from 'lucide-react';
 import { fetchClient } from '@/api/fetchClient';
 import toast from 'react-hot-toast';
 import Cropper from 'react-easy-crop'; 
@@ -52,7 +52,7 @@ const getImageUrl = (pic) => {
 };
 // ------------------------------------------
 
-export default function MyAccountModal({ isOpen, setIsOpen, onProfileUpdate }) {
+export default function MyAccountModal({ isOpen, setIsOpen, initialTab = 'profile', onProfileUpdate }) {
   const [isLoading, setIsLoading] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
   
@@ -165,6 +165,13 @@ export default function MyAccountModal({ isOpen, setIsOpen, onProfileUpdate }) {
 
   const displayImage = previewUrl ? previewUrl : getImageUrl(formData.profilePic);
 
+  const getDeviceIcon = (deviceInfo) => {
+    const info = (deviceInfo || '').toLowerCase();
+    if (info.includes('mobile') || info.includes('iphone') || info.includes('android')) return <Smartphone className="text-primary/70" size={24} />;
+    if (info.includes('windows') || info.includes('mac') || info.includes('linux')) return <Monitor className="text-primary/70" size={24} />;
+    return <Globe className="text-primary/70" size={24} />;
+  };
+
   return (
     <Transition show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-[70]" onClose={() => setIsOpen(false)}>
@@ -179,7 +186,7 @@ export default function MyAccountModal({ isOpen, setIsOpen, onProfileUpdate }) {
                 
                 <div className="bg-primary px-6 py-4 text-white flex items-center justify-between">
                   <DialogTitle className="text-lg font-extrabold tracking-tight flex items-center gap-2">
-                    <UserCircle size={20} className="text-secondary" /> {imageToCrop ? 'Adjust Photo' : 'My Profile'}
+                    <UserCircle size={20} className="text-secondary" /> {imageToCrop ? 'Adjust Photo' : 'My Account'}
                   </DialogTitle>
                   <button onClick={() => { setIsOpen(false); setImageToCrop(null); }} className="text-white/70 hover:text-white transition-colors"><X size={20} /></button>
                 </div>
@@ -252,7 +259,7 @@ export default function MyAccountModal({ isOpen, setIsOpen, onProfileUpdate }) {
                         <input type="file" ref={fileInputRef} onChange={handleFileChange} accept="image/jpeg, image/png, image/webp" className="hidden" />
                       </div>
 
-                      <div className="grid grid-cols-2 gap-4">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                           <label className="block text-sm font-bold text-gray-700 mb-1">Full Name <span className="text-red-500">*</span></label>
                           <input type="text" required className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary outline-none" value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} />
@@ -263,7 +270,7 @@ export default function MyAccountModal({ isOpen, setIsOpen, onProfileUpdate }) {
                         </div>
                       </div>
 
-                      <div className="grid grid-cols-2 gap-4">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                           <label className="block text-sm font-bold text-gray-700 mb-1">Email <span className="text-red-500">*</span></label>
                           <input type="email" required className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary outline-none" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} />

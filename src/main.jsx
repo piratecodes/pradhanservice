@@ -5,11 +5,13 @@ import { Toaster } from 'react-hot-toast'
 import '@/style/global.css'
 
 // 1. Guards & Layouts
-import AuthGuard from '@/components/common/authGuard.jsx'
+import AuthGuard from '@/components/common/AuthGuard.jsx'
 import GuestGuard from '@/components/common/GuestGuard.jsx'
 import ForgotPassword from '@/pages/ForgotPassword'
 import ResetPassword from '@/pages/ResetPassword'
 import DashboardLayout from '@/layouts/DashboardLayout.jsx'
+import { AuthProvider } from '@/contexts/AuthContext.jsx'
+import ErrorBoundary from '@/components/common/ErrorBoundary.jsx'
 
 // 2. The Pages!
 import LoginPage from '@/pages/LoginPage.jsx'
@@ -96,7 +98,11 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <Toaster position="top-right" />
-    <RouterProvider router={router} />
+    <ErrorBoundary>
+      <AuthProvider>
+        <Toaster position="top-right" />
+        <RouterProvider router={router} />
+      </AuthProvider>
+    </ErrorBoundary>
   </StrictMode>,
 )

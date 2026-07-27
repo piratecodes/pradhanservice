@@ -5,6 +5,37 @@ import { fetchClient } from '@/api/fetchClient';
 import toast from 'react-hot-toast';
 import JoditEditor from 'jodit-react';
 
+// --- Subcomponent for FAQ Items to prevent Jodit cursor jumps ---
+const FaqItem = ({ faq, idx, removeFaq, updateFaq, minimalJoditConfig }) => {
+  // We only pass the initial answer to Jodit so it doesn't reset when parent re-renders!
+  const [initialAnswer] = useState(faq.answer || '');
+  
+  return (
+    <div className="bg-gray-50 border border-gray-200 p-4 rounded-lg relative group">
+      <button onClick={() => removeFaq(idx)} className="absolute top-2 right-2 text-red-400 hover:text-red-600 bg-white rounded shadow-sm p-1 opacity-0 group-hover:opacity-100 transition-opacity">
+        <Trash2 size={14} />
+      </button>
+      <div className="space-y-3 pr-8">
+        <input 
+          type="text" 
+          value={faq.question} 
+          onChange={e => updateFaq(idx, 'question', e.target.value)} 
+          placeholder="Question..." 
+          className="w-full font-bold text-gray-900 bg-transparent border-b border-gray-300 focus:border-primary focus:outline-none pb-1" 
+        />
+        <div className="mt-2 bg-white rounded-lg overflow-hidden border border-gray-200">
+          <JoditEditor
+            value={initialAnswer}
+            config={minimalJoditConfig}
+            onBlur={newContent => updateFaq(idx, 'answer', newContent)}
+            onChange={() => {}} 
+          />
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export default function BlogFormDrawer({ isOpen, onClose, blog, onSuccess }) {
   const [isLoading, setIsLoading] = useState(false);
   const [activeTab, setActiveTab] = useState('basic'); // 'basic', 'content', 'seo'
@@ -101,6 +132,7 @@ export default function BlogFormDrawer({ isOpen, onClose, blog, onSuccess }) {
   };
 
   const [touchedFields, setTouchedFields] = useState({ seoMetaTitle: false, seoMetaDescription: false, seoJsonLdSchema: false });
+  const [editorContent, setEditorContent] = useState('');
 
   useEffect(() => {
     if (blog && isOpen) {
@@ -127,6 +159,7 @@ export default function BlogFormDrawer({ isOpen, onClose, blog, onSuccess }) {
         seoMetaDescription: !!blog.seoMetaDescription,
         seoJsonLdSchema: !!blog.seoJsonLdSchema
       });
+      setEditorContent(blog.content || '');
       setActiveTab('basic');
     } else if (!blog && isOpen) {
       // Reset
@@ -136,6 +169,7 @@ export default function BlogFormDrawer({ isOpen, onClose, blog, onSuccess }) {
         seoMetaKeywords: '', seoCanonicalUrl: '', seoIsNoIndex: false, seoJsonLdSchema: ''
       });
       setTouchedFields({ seoMetaTitle: false, seoMetaDescription: false, seoJsonLdSchema: false });
+      setEditorContent('');
       setActiveTab('basic');
     }
   }, [blog, isOpen]);
@@ -275,7 +309,7 @@ export default function BlogFormDrawer({ isOpen, onClose, blog, onSuccess }) {
     setFormData(prev => ({ ...prev, slug: newSlug }));
   };
 
-  const addFaq = () => setFormData(prev => ({ ...prev, faqs: [...prev.faqs, { question: '', answer: '' }] }));
+  const addFaq = () => setFormData(prev => ({ ...prev, faqs: [...prev.faqs, { _id: Date.now().toString(), question: '', answer: '' }] }));
   const removeFaq = (idx) => setFormData(prev => ({ ...prev, faqs: prev.faqs.filter((_, i) => i !== idx) }));
   const updateFaq = (idx, field, val) => {
     const newFaqs = [...formData.faqs];
@@ -433,7 +467,7 @@ export default function BlogFormDrawer({ isOpen, onClose, blog, onSuccess }) {
                       <div className="flex items-center gap-3 bg-white p-4 rounded-xl border border-gray-200">
                         <label className="relative inline-flex items-center cursor-pointer">
                           <input type="checkbox" checked={formData.isPublished} onChange={e => setFormData({...formData, isPublished: e.target.checked})} className="sr-only peer" />
-                          <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                          <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
                           <span className="ml-3 text-sm font-bold text-gray-900">Publish Immediately?</span>
                         </label>
                         <p className="text-xs text-gray-500 ml-auto">If unchecked, it saves as a Draft.</p>
@@ -450,7 +484,7 @@ export default function BlogFormDrawer({ isOpen, onClose, blog, onSuccess }) {
                         </div>
                         <JoditEditor
                           ref={editorRef}
-                          value={formData.content}
+                          value={editorContent}
                           config={joditConfig}
                           onBlur={newContent => setFormData({...formData, content: newContent})}
                           onChange={() => {}} // Empty onChange to satisfy prop requirements without triggering cursor jump
@@ -469,22 +503,14 @@ export default function BlogFormDrawer({ isOpen, onClose, blog, onSuccess }) {
                         ) : (
                           <div className="space-y-4">
                             {formData.faqs.map((faq, idx) => (
-                              <div key={idx} className="bg-gray-50 border border-gray-200 p-4 rounded-lg relative group">
-                                <button onClick={() => removeFaq(idx)} className="absolute top-2 right-2 text-red-400 hover:text-red-600 bg-white rounded shadow-sm p-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                                  <Trash2 size={14} />
-                                </button>
-                                <div className="space-y-3 pr-8">
-                                  <input type="text" value={faq.question} onChange={e => updateFaq(idx, 'question', e.target.value)} placeholder="Question..." className="w-full font-bold text-gray-900 bg-transparent border-b border-gray-300 focus:border-primary focus:outline-none pb-1" />
-                                  <div className="mt-2 bg-white rounded-lg overflow-hidden border border-gray-200">
-                                    <JoditEditor
-                                      value={faq.answer}
-                                      config={minimalJoditConfig}
-                                      onBlur={newContent => updateFaq(idx, 'answer', newContent)}
-                                      onChange={() => {}} // Empty onChange to satisfy prop requirements without triggering cursor jump
-                                    />
-                                  </div>
-                                </div>
-                              </div>
+                              <FaqItem 
+                                key={faq._id || idx} 
+                                faq={faq} 
+                                idx={idx} 
+                                removeFaq={removeFaq} 
+                                updateFaq={updateFaq} 
+                                minimalJoditConfig={minimalJoditConfig} 
+                              />
                             ))}
                           </div>
                         )}
@@ -582,7 +608,7 @@ export default function BlogFormDrawer({ isOpen, onClose, blog, onSuccess }) {
                       <div className="flex items-center gap-3">
                         <label className="relative inline-flex items-center cursor-pointer">
                           <input type="checkbox" checked={formData.seoIsNoIndex} onChange={e => setFormData({...formData, seoIsNoIndex: e.target.checked})} className="sr-only peer" />
-                          <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-500"></div>
+                          <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-500"></div>
                           <span className="ml-3 text-sm font-bold text-gray-900">NoIndex (Hide from Google)</span>
                         </label>
                       </div>

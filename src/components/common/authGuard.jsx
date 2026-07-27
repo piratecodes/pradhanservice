@@ -1,11 +1,10 @@
 import { Navigate, Outlet } from 'react-router-dom';
+import { useAuth } from '@/contexts/AuthContext.jsx';
 
 export default function AuthGuard() {
-  // Check sessionStorage instead of localStorage
-  const token = sessionStorage.getItem('pradhan_token');
-  const isAuthenticated = !!token;
+  const { user } = useAuth();
 
-  if (!isAuthenticated) {
+  if (!user) {
     return <Navigate to="/login" replace />;
   }
 

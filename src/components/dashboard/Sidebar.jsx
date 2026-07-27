@@ -1,26 +1,15 @@
 import { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { fetchClient } from '@/api/fetchClient';
-import {  LayoutDashboard,  Users,  MapPin,  FileText, PackageSearch,  Image as ImageIcon,  Settings,  ShieldAlert, Truck, BookOpen } from 'lucide-react';
+import { useAuth } from '@/contexts/AuthContext.jsx';
+import { LayoutDashboard, Users, MapPin, FileText, PackageSearch, Image as ImageIcon, Settings, ShieldAlert, Truck, BookOpen, X } from 'lucide-react';
 
-export default function Sidebar() {
+export default function Sidebar({ isOpen, setIsOpen }) {
+  const location = useLocation();
+  const { user: admin } = useAuth();
+
   // Default to the lowest permission level while loading to be safe
-  const [role, setRole] = useState('SALES_AGENT'); 
-
-  useEffect(() => {
-    const fetchUserRole = async () => {
-      try {
-        const res = await fetchClient('/auth/me');
-        const me = res.data?.admin || res.data?.user;
-        if (me && me.role) {
-          setRole(me.role);
-        }
-      } catch (error) {
-        console.error("Could not verify role for sidebar", error);
-      }
-    };
-    fetchUserRole();
-  }, []);
+  const role = admin?.role || 'SALES_AGENT';
 
   // 🛡️ ROLE-BASED ACCESS CONTROL FOR THE MENU
   const navItems = [
@@ -41,12 +30,32 @@ export default function Sidebar() {
   const visibleNavItems = navItems.filter(item => item.allowed.includes(role));
 
   return (
-    <aside className="w-64 bg-primary text-white flex flex-col h-full shadow-2xl z-20 hidden md:flex">
-      {/* Brand Header */}
-      <div className="h-16 flex items-center gap-3 px-6 bg-black/10 border-b border-white/10 shrink-0">
-        <Truck className="text-secondary" size={24} />
-        <span className="font-extrabold text-lg tracking-wide">Pradhan Services</span>
-      </div>
+    <>
+      {/* Mobile Overlay */}
+      {isOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-40 md:hidden transition-opacity" 
+          onClick={() => setIsOpen(false)}
+        />
+      )}
+
+      <aside 
+        className={`fixed inset-y-0 left-0 transform ${isOpen ? 'translate-x-0' : '-translate-x-full'} md:relative md:translate-x-0 transition-transform duration-300 ease-in-out w-64 bg-primary text-white flex flex-col h-full shadow-2xl z-50 md:z-20`}
+      >
+        {/* Brand Header */}
+        <div className="h-16 flex items-center justify-between px-6 bg-black/10 border-b border-white/10 shrink-0">
+          <div className="flex items-center gap-3">
+            <Truck className="text-secondary" size={24} />
+            <span className="font-extrabold text-lg tracking-wide">Pradhan Services</span>
+          </div>
+          <button 
+            className="md:hidden p-1 text-gray-300 hover:text-white transition-colors focus:outline-none" 
+            onClick={() => setIsOpen(false)}
+            aria-label="Close Sidebar"
+          >
+            <X size={20} />
+          </button>
+        </div>
       {console.log("role: ", role)}
       {/* Navigation Links */}
       <nav className="flex-1 py-6 px-3 space-y-1 overflow-y-auto custom-scrollbar">
@@ -54,6 +63,7 @@ export default function Sidebar() {
           <NavLink
             key={item.name}
             to={item.path}
+            onClick={() => setIsOpen(false)}
             className={({ isActive }) =>
               `flex items-center gap-3 px-3 py-3 rounded-xl transition-all font-medium ${
                 isActive 
@@ -88,6 +98,7 @@ export default function Sidebar() {
           </a>
         </div>
       </div>
-    </aside>
+      </aside>
+    </>
   );
 }

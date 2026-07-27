@@ -3,11 +3,13 @@ import { useNavigate, Link } from 'react-router-dom';
 import { Mail, Lock, ArrowRight, Truck, Loader2 } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { fetchClient } from '@/api/fetchClient';
+import { useAuth } from '@/contexts/AuthContext';
 
 export default function LoginForm() {
   const [formData, setFormData] = useState({ username: '', password: '' });
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,16 +25,16 @@ export default function LoginForm() {
         body: JSON.stringify(formData),
       });
 
-      // 2. Save the token
-      sessionStorage.setItem('pradhan_token', response.data.token);
+      // 2. Set user in AuthContext to instantly update the UI globally
+      login(response.data.admin);
       
       // 3. Update the toast to Success
       toast.success(`Welcome back, ${response.data.admin.name}!`, {
         id: loadingToastId, // This replaces the loading spinner with the checkmark
       });
 
-      // 4. Force the navigation NOW
-      navigate('/');
+      // 4. Force the navigation NOW (Removed to prevent race condition since GuestGuard auto-redirects!)
+      // navigate('/');
       
     } catch (error) {
       console.error("Login Error:", error);
@@ -50,14 +52,14 @@ export default function LoginForm() {
     <div className="w-full lg:w-1/2 flex flex-col items-center justify-center p-8 bg-gray-50 relative">
       
       {/* The Form Card */}
-      <div className="w-full max-w-md bg-white p-10 rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 relative z-10">
+      <div className="w-full max-w-md bg-white p-10 rounded-4xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 relative z-10">
         
         {/* Mobile Logo (Only shows on phones since Hero is hidden) */}
         <div className="lg:hidden flex items-center gap-3 mb-8">
           <div className="p-2 bg-primary rounded-xl shadow-md">
             <Truck size={24} className="text-secondary" />
           </div>
-          <h2 className="text-2xl font-extrabold text-primary tracking-tight text-stone-800">Pradhan Services</h2>
+          <h2 className="text-2xl font-extrabold text-primary tracking-tight">Pradhan Services</h2>
         </div>
 
         <div className="mb-10">

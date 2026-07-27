@@ -2,9 +2,10 @@ import { useState, useEffect } from 'react';
 import { fetchClient } from '@/api/fetchClient';
 import toast from 'react-hot-toast';
 import useDocumentMeta from '@/hooks/useDocumentMeta';
-import { Loader2, UserPlus, Edit3, Trash2, Shield, User, Star } from 'lucide-react';
+import { Loader2, UserPlus, Edit3, Trash2, Shield, User, Star, MonitorSmartphone } from 'lucide-react';
 
 import AddStaffModal from '@/components/team/AddStaffModal';
+import StaffSessionsModal from '@/components/team/StaffSessionsModal';
 
 export default function TeamPage() {
   //Title & Description for SEO (and nice browser tab titles!)
@@ -15,6 +16,7 @@ export default function TeamPage() {
 
   // Modal State
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSessionsModalOpen, setIsSessionsModalOpen] = useState(false);
   const [selectedStaff, setSelectedStaff] = useState(null);
 
   const loadTeam = async () => {
@@ -43,6 +45,11 @@ export default function TeamPage() {
     setIsModalOpen(true);
   };
 
+  const handleViewSessions = (staff) => {
+    setSelectedStaff(staff);
+    setIsSessionsModalOpen(true);
+  };
+
   const handleDelete = async (staffId) => {
     if (!window.confirm("Are you sure you want to permanently delete this user?")) return;
     try {
@@ -62,7 +69,7 @@ export default function TeamPage() {
   };
 
   return (
-    <div className="max-w-[1600px] mx-auto space-y-8">
+    <div className="max-w-400 mx-auto space-y-8">
       
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
@@ -117,6 +124,9 @@ export default function TeamPage() {
                       </td>
                       <td className="px-6 py-4 text-right">
                         <div className="flex justify-end gap-3">
+                          <button onClick={() => handleViewSessions(member)} className="text-gray-400 hover:text-indigo-500 transition-colors" title="View Active Devices">
+                            <MonitorSmartphone size={18} />
+                          </button>
                           <button onClick={() => handleEdit(member)} className="text-primary hover:text-secondary transition-colors" title="Edit Profile">
                             <Edit3 size={18} />
                           </button>
@@ -139,6 +149,12 @@ export default function TeamPage() {
         setIsOpen={setIsModalOpen}
         staffData={selectedStaff}
         onSuccess={loadTeam}
+      />
+
+      <StaffSessionsModal
+        isOpen={isSessionsModalOpen}
+        setIsOpen={setIsSessionsModalOpen}
+        targetStaff={selectedStaff}
       />
     </div>
   );

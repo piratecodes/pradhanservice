@@ -1,55 +1,83 @@
 // Grab the base URL from your .env file
 const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api/v1';
 
-export const fetchClient = async (endpoint, options = {}) => {
-  // 1. Get the token from sessionStorage (Ultra-secure: dies when browser closes)
-  const token = sessionStorage.getItem('pradhan_token');
+let refreshPromise = null;
 
-  // 2. Setup standard headers
+export const fetchClient = async (endpoint, options = {}) => {
+  // 1. Setup standard headers
   const isFormData = options.body instanceof FormData;
   const headers = {
     ...(!isFormData && { 'Content-Type': 'application/json' }),
     ...options.headers,
   };
 
-  // 3. Attach Bearer Token if the user is logged in
-  if (token) {
-    headers['Authorization'] = `Bearer ${token}`;
-  }
-
-  // 4. Configure the fetch payload
+  // 2. Configure the fetch payload - CRITICAL: credentials: 'include' sends HttpOnly cookies
   const config = {
     ...options,
     headers,
+    credentials: 'include',
   };
 
   try {
-    // 5. Fire the actual request to your Node.js backend
-    const response = await fetch(`${BASE_URL}${endpoint}`, config);
+    // 3. Fire the actual request to your Node.js backend
+    let response = await fetch(`${BASE_URL}${endpoint}`, config);
 
-    // 6. 🚨 SECURITY NET: If the backend says the token is expired/invalid
+    // 4. 🚨 SILENT REFRESH: If access token is expired
     if (response.status === 401) {
-      sessionStorage.removeItem('pradhan_token'); // Wipe the dead token
-      window.location.href = '/login';            // Kick them to the login screen
-      throw new Error('Session expired. Please log in again.');
+      // Don't loop infinitely on login or refresh endpoints
+      if (endpoint !== '/auth/refresh' && endpoint !== '/auth/login') {
+        if (!refreshPromise) {
+          refreshPromise = fetch(`${BASE_URL}/auth/refresh`, {
+            method: 'POST',
+            credentials: 'include',
+          }).then(res => {
+            if (!res.ok) throw new Error('Refresh failed');
+            return res;
+          }).finally(() => {
+            refreshPromise = null;
+          });
+        }
+
+        try {
+          await refreshPromise;
+          // Refresh succeeded! Retry the original request seamlessly
+          response = await fetch(`${BASE_URL}${endpoint}`, config);
+        } catch (e) {
+          window.dispatchEvent(new Event('session-expired'));
+          if (endpoint === '/auth/me') {
+            throw new Error('Session expired. Please log in again.');
+          }
+          // Return a promise that never resolves to prevent components from throwing "developer style" errors before they are unmounted
+          return new Promise(() => {});
+        }
+      } else {
+        // If we got 401 on login or refresh itself
+        throw new Error('Unauthorized');
+      }
     }
 
-    // 7. Parse the JSON response
-    const data = await response.json();
+    // 5. Parse the JSON response
+    // Sometimes response doesn't have JSON (e.g. rate limit plain text or 204), handle it safely
+    let data;
+    const contentType = response.headers.get("content-type");
+    if (contentType && contentType.includes("application/json")) {
+      data = await response.json();
+    } else {
+      const textData = await response.text();
+      data = { message: textData || 'An error occurred with the server.' };
+    }
 
-    // 8. Catch backend AppError messages 
+    // 6. Catch backend AppError messages 
     if (!response.ok) {
-      // If it's just a 404 (Empty Data), don't throw a massive error, just return empty!
-      if (response.status === 404 || options.method === 'GET') {
+      if (response.status === 404) {
         return { data: {} }; 
       }
       throw new Error(data.message || 'An error occurred with the server.');
     }
 
-    return data; // Return the clean data to your components!
+    return data; 
 
   } catch (error) {
-    // Pass the error down so react-hot-toast can display it
     throw error;
   }
 };
