@@ -224,7 +224,7 @@ export default function Nav() {
                         </div>
                       </div>
                       
-                      <a target="_blank" href="https://blog.pradhanservice.com" onClick={() => close()} className="block text-xl font-bold py-4 border-y border-gray-100">Blog</a>
+                      <Link href="/blogs" onClick={() => close()} className="block text-xl font-bold py-4 border-y border-gray-100">Blog</Link>
                       <Link href="/contact" onClick={() => close()} className="w-full block bg-black text-white text-center font-bold py-4 rounded-full mt-auto text-lg">Contact</Link>
                     </div>
                   </DisclosurePanel>

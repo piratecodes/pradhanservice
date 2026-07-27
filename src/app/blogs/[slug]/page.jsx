@@ -98,14 +98,14 @@ export default async function SingleBlogPage({ params }) {
         {/* HEADER SECTION */}
         <div className="max-w-6xl mx-auto text-center pt-8 pb-2.5">
           {blog.category && (
-            <Link href={`/blogs?category=${encodeURIComponent(blog.category)}`} className="inline-block bg-primary text-white text-xs font-bold uppercase tracking-wider px-4 py-1.5 rounded-full mb-6 shadow-sm hover:bg-secondary transition-colors">
+            <Link href={`/blogs?category=${encodeURIComponent(blog.category)}`} className="inline-block bg-primary text-white text-xs font-bold uppercase tracking-wider px-4 py-1.5 rounded-full mb-6 shadow-sm hover:bg-secondary transition-colors z-10">
               {blog.category}
             </Link>
           )}
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 leading-tight mb-6 tracking-tight">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 leading-tight mb-6 tracking-tight z-10">
             {blog.title}
           </h1>
-          <div className="pr-2.5 flex items-center justify-end gap-4 text-gray-500 font-medium">
+          <div className="pr-2.5 flex items-center justify-end gap-4 text-gray-500 font-medium z-10">
 
             <span className="text-gray-900">{blog.customAuthor || blog.author?.name || 'Admin'}</span>
             <span>•</span>
@@ -139,7 +139,7 @@ export default async function SingleBlogPage({ params }) {
           <article className="flex-1 min-w-0 z-10">
             {/* The blog-content class is used by TableOfContents to find headings */}
             <div
-              className="blog-content prose prose-lg prose-blue max-w-none prose-headings:font-bold prose-headings:text-primary prose-a:text-secondary hover:prose-a:opacity-80 prose-img:rounded-2xl prose-img:shadow-md"
+              className="blog-content prose prose-lg prose-blue max-w-none prose-headings:font-bold prose-headings:text-primary prose-headings:scroll-mt-28 prose-a:text-secondary hover:prose-a:opacity-80 prose-img:rounded-2xl prose-img:shadow-md"
               dangerouslySetInnerHTML={{ __html: blog.content }}
             />
 
