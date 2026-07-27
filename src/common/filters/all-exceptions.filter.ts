@@ -19,13 +19,24 @@ export class AllExceptionsFilter implements ExceptionFilter {
       const res = exception.getResponse();
       message = typeof res === 'string' ? res : (res as any).message || message;
     } else if (exception instanceof Error) {
-      message = exception.message;
+      // Secure fallback: Do not leak internal stack traces or Prisma schema paths
+      message = process.env.NODE_ENV === 'production' 
+        ? 'Internal server error' 
+        : exception.message;
     }
 
-    this.logger.error(
-      `${request.method} ${request.url}`,
-      exception instanceof Error ? exception.stack : 'Unknown error',
-    );
+    if (status >= 500) {
+      this.logger.error(
+        `${request.method} ${request.url}`,
+        exception instanceof Error ? exception.stack : 'Unknown error',
+      );
+    } else {
+      // Ignore routine 401 auth checks that happen on every page load
+      const isRoutineAuthCheck = status === 401 && (request.url.includes('/auth/me') || request.url.includes('/auth/refresh'));
+      if (!isRoutineAuthCheck) {
+        this.logger.warn(`${request.method} ${request.url} - ${status} ${message}`);
+      }
+    }
 
     response.status(status).json({
       success: false,

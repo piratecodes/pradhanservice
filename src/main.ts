@@ -7,6 +7,7 @@ import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
 import { ValidationPipe, VersioningType } from '@nestjs/common';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
+import cookieParser from 'cookie-parser';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
@@ -15,6 +16,9 @@ async function bootstrap() {
 
   // Enable trust proxy for Nginx/VPS reverse proxies (needed for rate-limit)
   app.set('trust proxy', 1);
+
+  // Enable Cookie Parser
+  app.use(cookieParser());
 
   // Serve static files from the "public/uploads" directory at "/uploads"
   app.useStaticAssets(join(process.cwd(), 'public', 'uploads'), {
@@ -65,4 +69,5 @@ bootstrap();
 
 // Trigger restart
 
-// Trigger restart for Prisma Client
+// Trigger restart for Prisma Client & Rate Limiter
+// Trigger restart for Prisma Client & Rate Limiter & Cookie Config

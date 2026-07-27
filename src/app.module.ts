@@ -13,6 +13,7 @@ import { LocationPageModule } from './location-page/location-page.module';
 import { ServiceOptionModule } from './service-option/service-option.module';
 import { MailModule } from './mail/mail.module';
 import { BlogModule } from './blog/blog.module';
+import { SessionModule } from './session/session.module';
 
 import { CacheModule } from '@nestjs/cache-manager';
 
@@ -31,6 +32,7 @@ import { CacheModule } from '@nestjs/cache-manager';
     GalleryModule,
     MailModule,
     BlogModule,
+    SessionModule,
   ],
   controllers: [AppController],
   providers: [AppService],

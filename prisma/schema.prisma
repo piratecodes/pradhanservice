@@ -28,6 +28,10 @@ model Admin {
   passwordResetToken   String?
   passwordResetExpires DateTime?
   isActive             Boolean   @default(true)
+
+  // Relations
+  sessions             Session[]
+
   createdAt            DateTime  @default(now())
   updatedAt            DateTime  @updatedAt
   blogs                Blog[]
@@ -68,6 +72,21 @@ model LocationPage {
   updatedAt DateTime @updatedAt
 
   @@unique([citySlug, serviceSlug])
+}
+
+model Session {
+  id               String   @id @default(uuid())
+  adminId          Int
+  admin            Admin    @relation(fields: [adminId], references: [id], onDelete: Cascade)
+  
+  refreshTokenHash String   @unique
+  deviceInfo       String?  // e.g., "Windows / Chrome"
+  ipAddress        String?  
+  lastActive       DateTime @default(now())
+  expiresAt        DateTime
+
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
 }
 
 model Contact {
