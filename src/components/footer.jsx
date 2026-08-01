@@ -47,7 +47,7 @@ export default function Footer() {
           
           {/* ================= LEFT PART: Company Profile ================= */}
           <div className="flex flex-col gap-4 w-full lg:w-[25%] shrink-0">
-            <Link href="/" className="flex items-center space-x-3 shrink-0">
+            <Link href="/" className="flex items-center space-x-3 shrink-0 z-20">
               <Image 
                 src={icon} 
                 alt="Pradhan Logo" 
@@ -55,14 +55,14 @@ export default function Footer() {
                 draggable={false} 
                 priority
               />
-              <span className="self-center text-xl text-gray-200 font-black whitespace-nowrap tracking-tight">Pradhan Services</span>
+              <span className="self-center text-xl text-gray-200 font-black whitespace-nowrap tracking-tight z-20">Pradhan Services</span>
             </Link>
-            <p className="text-sm leading-relaxed text-slate-400 mt-2">
+            <p className="text-sm leading-relaxed text-slate-400 mt-2 z-20">
               Your trusted partner for safe, hassle-free, and premium relocation services across India. We ensure your belongings reach their destination securely and on time.
             </p>
             
             {/* Social Media Icons */}
-            <div className="flex items-center gap-3 mt-2">
+            <div className="flex items-center gap-3 mt-2 z-20">
               {contactData.facebookUrl && (
                 <a href={contactData.facebookUrl} target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center hover:bg-[#1877F2] hover:text-white transition-colors">
                   <FaFacebookSquare size={16} />
@@ -95,32 +95,33 @@ export default function Footer() {
           <div className="w-full flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-12 md:gap-2">
             
             {/* Quick Links (Takes 3/12 of the right side) */}
-            <div className="flex flex-col gap-4 lg:col-span-3">
+            <div className="flex flex-col gap-4 lg:col-span-3 z-20">
               <h4 className="text-white font-semibold mb-1">Quick Links</h4>
               <ul className="flex flex-col gap-2.5 text-sm">
-                <li><Link href="/" className="hover:text-secondary transition-colors">Home</Link></li>
-                <li><a target="_blank" href="https://blog.pradhanservice.com" className="hover:text-secondary transition-colors">Blogs</a></li>
-                <li><Link href="/photo-gallery" className="hover:text-secondary transition-colors">Gallery</Link></li>
-                <li><Link href="/about" className="hover:text-secondary transition-colors">About Us</Link></li>
-                <li><Link href="/contact" className="hover:text-secondary transition-colors">Contact Us</Link></li>
+                <li><Link href="/" className="hover:text-secondary transition-colors z-20 relative">Home</Link></li>
+                <li><a target="_blank" href="https://blog.pradhanservice.com" className="hover:text-secondary transition-colors z-20 relative">Blogs</a></li>
+                <li><Link href="/photo-gallery" className="hover:text-secondary transition-colors z-20 relative">Gallery</Link></li>
+                <li><Link href="/about" className="hover:text-secondary transition-colors z-20 relative">About Us</Link></li>
+                <li><Link href="/refer-and-earn" className="hover:text-secondary transition-colors z-20 relative">Refer & Earn</Link></li>
+                <li><Link href="/contact" className="hover:text-secondary transition-colors z-20 relative">Contact Us</Link></li>
               </ul>
             </div>
 
             {/* Contact Info (Takes 4/12 of the right side) */}
             <div className="flex flex-col gap-4 lg:col-span-4">
-              <h4 className="text-white font-semibold mb-1">Contact Us</h4>
+              <h4 className="text-white font-semibold mb-1 z-20">Contact Us</h4>
               <ul className="flex flex-col gap-3 text-sm">
-                <li className="flex items-start gap-3">
+                <li className="flex items-start gap-3 z-20">
                   <span className="text-secondary mt-0.5 shrink-0">📍</span>
                   <span className="text-slate-400 leading-relaxed">{contactData.headOfficeAddress}</span>
                 </li>
-                <li className="flex items-center gap-3">
+                <li className="flex items-center gap-3 z-20">
                   <span className="text-secondary shrink-0">📞</span>
                   <a href={`tel:${contactData.primaryPhone.replace(/\s/g,'')}`} className="text-slate-400 hover:text-secondary transition-colors truncate">
                     {contactData.primaryPhone}
                   </a>
                 </li>
-                <li className="flex items-center gap-3">
+                <li className="flex items-center gap-3 z-20">
                   <span className="text-secondary shrink-0">✉️</span>
                   <a href={`mailto:${contactData.supportEmail}`} className="text-slate-400 hover:text-secondary transition-colors truncate">
                     {contactData.supportEmail}
@@ -136,10 +137,10 @@ export default function Footer() {
                 
                 <div className="flex items-center gap-2 mb-3">
                   <span className="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse shrink-0"></span>
-                  <p className="text-[11px] text-secondary font-black tracking-widest uppercase">Government Approved</p>
+                  <p className="text-[11px] text-secondary font-black tracking-widest uppercase z-20">Government Approved</p>
                 </div>
                 
-                <ul className="space-y-2 text-xs text-slate-400 font-medium">
+                <ul className="space-y-2 text-xs text-slate-400 font-medium z-20">
                   <li className="flex justify-between items-center gap-3">
                     <strong className="text-slate-300 shrink-0">GST No:</strong> 
                     <span className="text-right tracking-wide">19AANCP7639J1ZL</span>
@@ -167,8 +168,8 @@ export default function Footer() {
         <div className="border-t border-slate-800 mt-16 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-500">
           
           <div className="flex flex-col items-center md:items-start gap-1 text-center md:text-left">
-            <p>© {new Date().getFullYear()} Pradhan Services. All rights reserved.</p>
-            <p className='font-extrabold text-slate-500'>
+            <p className='z-20'>© {new Date().getFullYear()} Pradhan Services. All rights reserved.</p>
+            <p className='font-extrabold text-slate-500 z-20'>
               Developed by:{' '}
               <Link 
                 href="https://straxcel.com" 
@@ -181,7 +182,7 @@ export default function Footer() {
             </p>
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 z-20">
             <Link href="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link>
             <Link href="/terms-and-conditions" className="hover:text-white transition-colors">Terms & Conditions</Link>
             <Link href="/sitemap.xml" className="hover:text-white transition-colors">Sitemap</Link>
