@@ -151,7 +151,7 @@ export default function Footer() {
                   </li>
                   <li className="flex justify-between items-center gap-3">
                     <strong className="text-slate-300 shrink-0">UDYAM Reg:</strong> 
-                    <span className="text-right tracking-wide">UDYAN-WB-18-0052046</span>
+                    <span className="text-right tracking-wide">UDYAM-WB-18-0052046</span>
                   </li>
                   <li className="flex justify-between items-center gap-3">
                     <strong className="text-slate-300 shrink-0">Trade License:</strong> 
