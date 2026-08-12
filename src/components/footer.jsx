@@ -146,16 +146,16 @@ export default function Footer() {
                     <span className="text-right tracking-wide">19AANCP7639J1ZL</span>
                   </li>
                   <li className="flex justify-between items-center gap-3">
-                    <strong className="text-slate-300 shrink-0">CIN No:</strong> 
-                    <span className="text-right tracking-wide">U52293WB2023PTC261967</span>
+                    <strong className="text-slate-300 shrink-0">Trade License:</strong> 
+                    <span className="text-right tracking-wide">0917P387223145863</span>
                   </li>
                   <li className="flex justify-between items-center gap-3">
                     <strong className="text-slate-300 shrink-0">UDYAM Reg:</strong> 
                     <span className="text-right tracking-wide">UDYAM-WB-18-0052046</span>
                   </li>
                   <li className="flex justify-between items-center gap-3">
-                    <strong className="text-slate-300 shrink-0">Trade License:</strong> 
-                    <span className="text-right tracking-wide">0917P387223145863</span>
+                    <strong className="text-slate-300 shrink-0">CIN No:</strong> 
+                    <span className="text-right tracking-wide">U52293WB2023PTC261967</span>
                   </li>
                   <li className="pt-2 mt-2 border-t border-slate-700/80 text-[10px] text-slate-300 font-semibold leading-relaxed">
                     ISO 9001:2015, 14001:2015 & 45001:2018 Certified Company
