@@ -146,6 +146,10 @@ export default function Footer() {
                     <span className="text-right tracking-wide">19AANCP7639J1ZL</span>
                   </li>
                   <li className="flex justify-between items-center gap-3">
+                    <strong className="text-slate-300 shrink-0">CIN No:</strong> 
+                    <span className="text-right tracking-wide">U52293WB2023PTC261967</span>
+                  </li>
+                  <li className="flex justify-between items-center gap-3">
                     <strong className="text-slate-300 shrink-0">UDYAM Reg:</strong> 
                     <span className="text-right tracking-wide">UDYAN-WB-18-0052046</span>
                   </li>
