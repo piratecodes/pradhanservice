@@ -5,6 +5,18 @@ import { MessageCircle, Phone, X } from 'lucide-react';
 
 export default function FloatingContact() {
   const [isOpen, setIsOpen] = useState(false);
+  const [primaryPhone, setPrimaryPhone] = useState("+91 9830070983");
+
+  React.useEffect(() => {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/contact/`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.success && data.data?.contact?.primaryPhone) {
+          setPrimaryPhone(data.data.contact.primaryPhone);
+        }
+      })
+      .catch(err => console.error("Failed to fetch contact for floating contact", err));
+  }, []);
 
   return (
     <div 
@@ -22,7 +34,8 @@ export default function FloatingContact() {
       >
         {/* WhatsApp Button */}
         <a 
-          href="https://wa.me/+919830070983" // <-- REPLACE WITH YOUR WHATSAPP NUMBER (include country code, no +)
+          href={`https://wa.me/${primaryPhone.replace(/\s/g, '').replace('+', '')}`}
+
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center justify-end gap-3 group outline-none"
@@ -39,7 +52,7 @@ export default function FloatingContact() {
 
         {/* Phone Button */}
         <a 
-          href="tel:+919830070983" // <-- REPLACE WITH YOUR PHONE NUMBER
+          href={`tel:${primaryPhone.replace(/\s/g, '')}`}
           className="flex items-center justify-end gap-3 group outline-none"
         >
           <span className="bg-white/90 backdrop-blur-sm border border-slate-200 text-slate-700 text-xs font-bold px-3 py-1.5 rounded-lg shadow-sm opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-4 group-hover:translate-x-0">

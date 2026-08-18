@@ -25,7 +25,8 @@ export default async function sitemap() {
     '/contact',
     '/privacy-policy',
     '/terms-and-conditions',
-    '/blogs'
+    '/blogs',
+    '/refer-and-earn'
   ].map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date().toISOString(),

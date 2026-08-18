@@ -6,6 +6,19 @@ import { Disclosure, Transition, DisclosureButton, DisclosurePanel } from '@head
 import { ChevronDown, Phone } from 'lucide-react';
 
 export default function FaqSection() {
+  const [primaryPhone, setPrimaryPhone] = React.useState("+91 9830070983");
+
+  React.useEffect(() => {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/contact/`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.success && data.data?.contact?.primaryPhone) {
+          setPrimaryPhone(data.data.contact.primaryPhone);
+        }
+      })
+      .catch(err => console.error("Failed to fetch contact for faq", err));
+  }, []);
+
   const faqs = [
   {
     id: 1,
@@ -125,10 +138,10 @@ export default function FaqSection() {
             </div>
 
             <a 
-              href="tel:+919830070983"
+              href={`tel:${primaryPhone.replace(/\s/g, '')}`}
               className="group flex items-center justify-between bg-primary text-white p-2 pl-6 rounded-2xl transition-all hover:shadow-xl hover:shadow-primary/20"
             >
-              <span className="font-bold tracking-tight">+91 9830070983</span>
+              <span className="font-bold tracking-tight">{primaryPhone}</span>
               <div className="bg-secondary p-3 rounded-xl group-hover:scale-110 transition-transform">
                 <Phone size={20} fill="currentColor" />
               </div>
