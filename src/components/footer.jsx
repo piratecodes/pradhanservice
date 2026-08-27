@@ -83,7 +83,7 @@ export default function Footer() {
                   <FaTwitter size={16} />
                 </a>
               )}
-              <a href="https://www.youtube.com/@pradhanpackersandmovers" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center hover:bg-[#FF0000] hover:text-white transition-colors">
+              <a href="https://www.youtube.com/@pradhanpackersandmoverspvtltd" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center hover:bg-[#FF0000] hover:text-white transition-colors">
                   <FaYoutube size={16} />
               </a>
             </div>
