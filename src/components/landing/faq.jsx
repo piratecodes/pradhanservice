@@ -103,7 +103,24 @@ export default function FaqSection() {
   }
 ];
 
+  
+  // Generate FAQ Schema for AEO/SEO
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.map(faq => ({
+      "@type": "Question",
+      "name": faq.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": typeof faq.answer === 'string' ? faq.answer : faq.answer.props.children.map(child => typeof child === 'string' ? child : child.props.children).join('')
+      }
+    }))
+  };
+
   return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
     <section className="container px-4 pt-8 pb-16 md:py-20 relative z-10">
       <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-start">
         
@@ -197,5 +214,6 @@ export default function FaqSection() {
 
       </div>
     </section>
+    </>
   );
 }
